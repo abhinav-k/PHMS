@@ -134,8 +134,10 @@ public class UserDetailsActivity extends BaseActivity {
                 User user = dataSnapshot.getValue(User.class);
                 SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(UserDetailsActivity.this);
                 SharedPreferences.Editor editor = preferences.edit();
-                editor.putString(Preferences.NAME,user.getName());
-                editor.putString(Preferences.EMAIL,user.getEmail());
+                if(user != null) {
+                    editor.putString(Preferences.NAME, user.getName());
+                    editor.putString(Preferences.EMAIL, user.getEmail());
+                }
                 editor.apply();
             }
 

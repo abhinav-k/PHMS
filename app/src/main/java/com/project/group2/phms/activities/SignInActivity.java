@@ -99,10 +99,13 @@ public class SignInActivity extends BaseActivity implements View.OnFocusChangeLi
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     User user = dataSnapshot.getValue(User.class);
+                                    Log.e("key", dataSnapshot.getKey());
                                     SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(SignInActivity.this);
                                     SharedPreferences.Editor editor = preferences.edit();
-                                    editor.putString(Preferences.NAME,user.getName());
-                                    editor.putString(Preferences.EMAIL,user.getEmail());
+                                    if (user != null) {
+                                        editor.putString(Preferences.NAME, user.getName());
+                                        editor.putString(Preferences.EMAIL, user.getEmail());
+                                    }
                                     editor.apply();
                                 }
 
