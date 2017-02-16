@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical"
+    app:theme="@style/Theme.AppCompat.Light.NoActionBar"
+    tools:ignore="MissingPrefix">
+
+
+    <ImageView
+        android:id="@+id/phmsLogo"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_above="@+id/phmsText"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="20dp"
+        android:src="@drawable/cardiogram"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/phmsText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="P    H    M    S"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <mehdi.sakout.fancybuttons.FancyButton
+        android:id="@+id/signInButton"
+        style="@style/fancyButton"
+        android:layout_marginBottom="51dp"
+        android:clickable="true"
+        android:elevation="2dp"
+        fancy:fb_defaultColor="@color/colorPrimaryDark"
+        fancy:fb_focusColor="@color/colorAccent"
+        fancy:fb_fontIconResource="&#xf090;"
+        fancy:fb_fontIconSize="20dp"
+        fancy:fb_iconPosition="left"
+        fancy:fb_radius="30dp"
+        fancy:fb_text="Sign In"
+        fancy:fb_textColor="@android:color/white"
+        fancy:fb_textSize="15sp"
+        android:layout_alignParentBottom="true"
+        android:layout_toStartOf="@+id/phmsLogo" />
+
+    <mehdi.sakout.fancybuttons.FancyButton
+        android:id="@+id/signUpButton"
+        style="@style/fancyButton"
+        android:clickable="true"
+        android:elevation="2dp"
+        fancy:fb_defaultColor="@color/colorPrimaryDark"
+        fancy:fb_focusColor="@color/colorAccent"
+        fancy:fb_fontIconResource="&#xf08b;"
+        fancy:fb_fontIconSize="20dp"
+        fancy:fb_iconPosition="left"
+        fancy:fb_radius="30dp"
+        fancy:fb_text="Sign Up"
+        fancy:fb_textColor="@android:color/white"
+        fancy:fb_textSize="15sp"
+        android:layout_alignTop="@+id/signInButton"
+        android:layout_toEndOf="@+id/phmsText" />
+
+
+</RelativeLayout>

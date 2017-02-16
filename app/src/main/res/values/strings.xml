@@ -1,0 +1,45 @@
+<resources>
+    <string name="app_name">PHMS</string>
+
+    <!--Register Activity-->
+    <string name="register">Register</string>
+    <string name="emailHint">Email</string>
+    <string name="passwordHint">Password</string>
+    <string name="confirmPasswordHint">Confirm Password</string>
+    <string name="next">Next</string>
+
+    <!--User Details Activity-->
+    <string name="userDetails">User Details</string>
+    <string name="fullName">Full Name</string>
+    <string name="gender">Gender</string>
+    <string name="age">Age</string>
+    <string name="weight">Weight</string>
+    <string name="height">Height</string>
+    <string name="doctorName">Doctor\'s Name</string>
+    <array name="genderArray">
+        <item>Male</item>
+        <item>Female</item>
+        <item>Other</item>
+    </array>
+    <array name="weightArray">
+        <item>kgs</item>
+        <item>lbs</item>
+    </array>
+    <array name="heightArray">
+        <item>cm</item>
+        <item>m</item>
+        <item>ft</item>
+    </array>
+    
+    <!--Vitals Fragment-->
+    <string name="vitals">Vitals</string>
+    <string name="bloodPressure">Blood Pressure</string>
+    <string name="glucose">Glucose Level</string>
+    <string name="cholesterol">Cholesterol</string>
+    <string name="bpUnit">mmHg</string>
+    <string name="systolic">Systolic</string>
+    <string name="diastolic">Diastolic</string>
+    <string name="glucoseUnit">mg/dL</string>
+    <string name="cholesterolUnit">mg</string>
+
+</resources>
