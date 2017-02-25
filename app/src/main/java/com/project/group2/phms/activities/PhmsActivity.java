@@ -1,6 +1,5 @@
 package com.project.group2.phms.activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
@@ -8,11 +7,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -37,7 +34,6 @@ import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader;
 import com.mikepenz.materialdrawer.util.DrawerImageLoader;
 import com.project.group2.phms.R;
 import com.project.group2.phms.fragments.VitalsFragment;
-import com.project.group2.phms.model.User;
 import com.project.group2.phms.preferences.Preferences;
 import com.squareup.picasso.Picasso;
 
@@ -158,7 +154,7 @@ public class PhmsActivity extends BaseActivity {
                         break;
                     case 2:
                         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                        transaction.replace(R.id.fragment_container, new VitalsFragment());
+                        transaction.replace(R.id.fragment_container, new VitalsFragment()).addToBackStack(null);
                         transaction.commit();
                         result.getActionBarDrawerToggle().setDrawerIndicatorEnabled(false);
                         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -200,6 +196,9 @@ public class PhmsActivity extends BaseActivity {
             result.closeDrawer();
         }else {
             super.onBackPressed();
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            result.getActionBarDrawerToggle().setDrawerIndicatorEnabled(true);
+            getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         }
     }
 

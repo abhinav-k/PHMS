@@ -16,6 +16,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.project.group2.phms.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.HashMap;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -76,6 +80,7 @@ public class VitalsActivity extends BaseActivity {
 
     private void writeVitals() {
         showProgressDialog("Saving...");
+        HashMap<String,String> vitalsMap = new HashMap<>();
         String systolic = systolicEditText.getText().toString().trim();
         String diastolic = diastolicEditText.getText().toString().trim();
         String glucose = glucoseEditText.getText().toString().trim();
@@ -86,15 +91,19 @@ public class VitalsActivity extends BaseActivity {
             return;
         }
 
-        databaseReference.child("systolic").setValue(systolic);
-        databaseReference.child("diastolic").setValue(diastolic);
-        databaseReference.child("glucose").setValue(glucose);
-        databaseReference.child("cholesterol").setValue(cholesterol);
+        Calendar c = Calendar.getInstance();
+        System.out.println("Current time => " + c.getTime());
+        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
+        String formattedDate = df.format(c.getTime());
+        vitalsMap.put("systolic",systolic);
+        vitalsMap.put("diastolic",diastolic);
+        vitalsMap.put("glucose",glucose);
+        vitalsMap.put("cholesterol",cholesterol);
+        vitalsMap.put("date",formattedDate);
+        databaseReference.push().setValue(vitalsMap);
+
         hideProgressDialog();
-//        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-//        SharedPreferences.Editor editor = preferences.edit();
-//        editor.putBoolean(Preferences.LOGGED_IN, true);
-//        editor.apply();
+
         Toast.makeText(this, "Vitals saved!",Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(VitalsActivity.this, PhmsActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

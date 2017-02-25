@@ -1,24 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="10dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/bpInputLayout"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/vitals_recycler"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:scrollbars="none"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/bpEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/bloodPressure"
-            android:inputType="number"
-            android:maxLength="25"
-            tools:ignore="MissingPrefix" />
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/addButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:src="@mipmap/ic_add_white_24dp"
+        android:translationZ="12dp"
+        android:layout_marginBottom="10dp"
+        app:fabSize="normal" />
 
-    </android.support.design.widget.TextInputLayout>
-
-</LinearLayout>
+</FrameLayout>

@@ -22,7 +22,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.project.group2.phms.R;
-import com.project.group2.phms.fragments.VitalsFragment;
 import com.project.group2.phms.model.User;
 import com.project.group2.phms.preferences.Preferences;
 import com.satsuware.usefulviews.LabelledSpinner;
@@ -138,6 +137,7 @@ public class UserDetailsActivity extends BaseActivity {
                     editor.putString(Preferences.NAME, user.getName());
                     editor.putString(Preferences.EMAIL, user.getEmail());
                 }
+                editor.putString(Preferences.USERID, getUid());
                 editor.apply();
             }
 
