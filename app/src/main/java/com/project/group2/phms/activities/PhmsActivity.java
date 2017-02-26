@@ -33,6 +33,7 @@ import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader;
 import com.mikepenz.materialdrawer.util.DrawerImageLoader;
 import com.project.group2.phms.R;
+import com.project.group2.phms.fragments.ProfileFragment;
 import com.project.group2.phms.fragments.VitalsFragment;
 import com.project.group2.phms.preferences.Preferences;
 import com.squareup.picasso.Picasso;
@@ -148,12 +149,18 @@ public class PhmsActivity extends BaseActivity {
 
                 int drawItemId = (int) drawerItem.getIdentifier();
                 Intent intent;
+                FragmentTransaction transaction;
                 switch (drawItemId) {
 
                     case 1:
+                        transaction = getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.fragment_container, new ProfileFragment()).addToBackStack(null);
+                        transaction.commit();
+                        result.getActionBarDrawerToggle().setDrawerIndicatorEnabled(false);
+                        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                         break;
                     case 2:
-                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                        transaction = getSupportFragmentManager().beginTransaction();
                         transaction.replace(R.id.fragment_container, new VitalsFragment()).addToBackStack(null);
                         transaction.commit();
                         result.getActionBarDrawerToggle().setDrawerIndicatorEnabled(false);
