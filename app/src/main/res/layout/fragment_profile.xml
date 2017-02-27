@@ -54,9 +54,12 @@
 
                     android:id="@+id/cameraButton"
                     style="@style/fancyButton"
-                    fancy:fb_defaultColor="@color/colorPrimary"
+                    fancy:fb_borderColor="@color/colorPrimary"
+                    fancy:fb_borderWidth="2dp"
+                    fancy:fb_defaultColor="@android:color/transparent"
                     fancy:fb_radius="30dp"
                     fancy:fb_text="Camera"
+                    fancy:fb_textColor="@color/colorPrimary"
                     fancy:fb_textSize="15sp" />
 
                 <mehdi.sakout.fancybuttons.FancyButton
@@ -65,31 +68,28 @@
                     style="@style/fancyButton"
                     android:layout_marginStart="10dp"
                     android:layout_toEndOf="@+id/cameraButton"
-                    fancy:fb_defaultColor="@color/colorPrimary"
+                    fancy:fb_borderColor="@color/colorPrimary"
+                    fancy:fb_borderWidth="2dp"
+                    fancy:fb_defaultColor="@android:color/transparent"
                     fancy:fb_radius="30dp"
                     fancy:fb_text="Gallery"
+                    fancy:fb_textColor="@color/colorPrimary"
                     fancy:fb_textSize="15sp" />
 
-                <LinearLayout
-                    android:id="@+id/removePicLayout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:gravity="center"
-                    android:orientation="horizontal">
+                <mehdi.sakout.fancybuttons.FancyButton
 
-                    <TextView
-                        android:id="@+id/removePictureText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="10dp"
-                        android:text="Remove Picture"
-                        android:textColor="@android:color/darker_gray"
-                        android:textSize="12sp"
-                        tools:ignore="MissingPrefix" />
+                    android:id="@+id/removeButton"
+                    style="@style/fancyButton"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/galleryButton"
+                    fancy:fb_borderColor="@color/colorPrimary"
+                    fancy:fb_borderWidth="2dp"
+                    fancy:fb_defaultColor="@android:color/transparent"
+                    fancy:fb_radius="30dp"
+                    fancy:fb_text="Remove"
+                    fancy:fb_textColor="@color/colorPrimary"
+                    fancy:fb_textSize="15sp" />
 
-
-                </LinearLayout>
 
             </RelativeLayout>
         </android.support.v7.widget.CardView>
@@ -109,6 +109,7 @@
                     android:id="@+id/nameTextEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:enabled="false"
                     android:hint="@string/fullName"
                     android:inputType="textCapWords|textPersonName"
                     android:maxLength="25"
@@ -132,6 +133,7 @@
                     android:id="@+id/ageEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:enabled="false"
                     android:hint="@string/age"
                     android:inputType="number"
                     android:maxLength="2"
@@ -154,6 +156,7 @@
                         android:id="@+id/weightEditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:enabled="false"
                         android:hint="@string/weight"
                         android:inputType="number"
                         android:maxLength="3"
@@ -186,6 +189,7 @@
                         android:id="@+id/heightEditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:enabled="false"
                         android:hint="@string/height"
                         android:inputType="numberDecimal"
                         android:maxLength="3"

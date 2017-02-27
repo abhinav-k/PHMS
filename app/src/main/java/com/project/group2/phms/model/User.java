@@ -12,19 +12,21 @@ public class User {
     private String gender;
     private String weight;
     private String height;
+    private String profile;
 
 
     public User() {
 
     }
 
-    public User(String email, String name, String gender, String age, String weight, String height){
+    public User(String email, String name, String gender, String age, String weight, String height, String profile){
         this.email = email;
         this.name = name;
         this.gender = gender;
         this.age = age;
         this.weight = weight;
         this.height = height;
+        this.profile = profile;
     }
 
     public String getName(){
@@ -51,4 +53,7 @@ public class User {
         return height;
     }
 
+    public String getProfile() {
+        return profile;
+    }
 }

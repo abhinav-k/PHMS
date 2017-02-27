@@ -126,7 +126,7 @@ public class UserDetailsActivity extends BaseActivity {
         databaseReference.child("age").setValue(age);
         databaseReference.child("weight").setValue(weight + weightUnit);
         databaseReference.child("height").setValue(height + heightUnit);
-
+        databaseReference.child("profile").setValue("https://firebasestorage.googleapis.com/v0/b/phms-65aa3.appspot.com/o/ic_account_circle_black_48dp.png?alt=media&token=20dba348-4406-4117-86ee-d2b0a06280d5");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

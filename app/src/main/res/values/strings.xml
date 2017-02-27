@@ -41,5 +41,6 @@
     <string name="diastolic">Diastolic</string>
     <string name="glucoseUnit">mg/dL</string>
     <string name="cholesterolUnit">mg</string>
+    <string name="trashIcon"></string>
 
 </resources>

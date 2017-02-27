@@ -1,5 +1,6 @@
 package com.project.group2.phms.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
@@ -10,6 +11,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -21,6 +23,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.mikepenz.fontawesome_typeface_library.FontAwesome;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
+import com.mikepenz.iconics.context.IconicsContextWrapper;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
@@ -35,6 +38,7 @@ import com.mikepenz.materialdrawer.util.DrawerImageLoader;
 import com.project.group2.phms.R;
 import com.project.group2.phms.fragments.ProfileFragment;
 import com.project.group2.phms.fragments.VitalsFragment;
+import com.project.group2.phms.model.User;
 import com.project.group2.phms.preferences.Preferences;
 import com.squareup.picasso.Picasso;
 
@@ -74,7 +78,7 @@ public class PhmsActivity extends BaseActivity {
             onAuthFailure();
         }
 
-        PrimaryDrawerItem profile = new PrimaryDrawerItem().withName("Profile").withIdentifier(1).withIcon(GoogleMaterial.Icon.gmd_account);
+        final PrimaryDrawerItem profile = new PrimaryDrawerItem().withName("Profile").withIdentifier(1).withIcon(GoogleMaterial.Icon.gmd_account);
         PrimaryDrawerItem vitals = new PrimaryDrawerItem().withName("Vitals").withIdentifier(2).withIcon(FontAwesome.Icon.faw_stethoscope);
         PrimaryDrawerItem medication = new PrimaryDrawerItem().withName("Medication").withIdentifier(3).withIcon(GoogleMaterial.Icon.gmd_local_hospital);
         PrimaryDrawerItem diet = new PrimaryDrawerItem().withName("Diet").withIdentifier(4).withIcon(FontAwesome.Icon.faw_cutlery);
@@ -94,20 +98,6 @@ public class PhmsActivity extends BaseActivity {
             }
         });
 
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-//                User user = dataSnapshot.getValue(User.class);
-//                String name = user.getName();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
         String name = preferences.getString(Preferences.NAME, "");
         String email = preferences.getString(Preferences.EMAIL, "");
         final ProfileDrawerItem userProfile = new ProfileDrawerItem().withName(name).withEmail(email).withIcon(R.mipmap.ic_account_circle_white_24dp);
@@ -124,6 +114,25 @@ public class PhmsActivity extends BaseActivity {
                     }
                 })
                 .build();
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                User user = dataSnapshot.getValue(User.class);
+                String profilePic = user.getProfile();
+                if (!profilePic.equals("")){
+                    Log.d("profile",profilePic);
+                    userProfile.withIcon(profilePic);
+                    headerResult.updateProfile(userProfile);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         result = new DrawerBuilder()
                 .withActivity(this)
@@ -217,5 +226,10 @@ public class PhmsActivity extends BaseActivity {
         if (firebaseAuth.getCurrentUser() == null) {
             onAuthFailure();
         }
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(IconicsContextWrapper.wrap(newBase));
     }
 }
