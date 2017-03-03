@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -41,8 +42,13 @@ import com.project.group2.phms.fragments.MedicationFragment;
 import com.project.group2.phms.fragments.NotesFragment;
 import com.project.group2.phms.fragments.ProfileFragment;
 import com.project.group2.phms.fragments.VitalsFragment;
+import com.project.group2.phms.model.User;
 import com.project.group2.phms.preferences.Preferences;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.Queue;
+import java.util.Stack;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -60,20 +66,35 @@ public class PhmsActivity extends BaseActivity {
     DatabaseReference databaseReference;
     private Drawer result = null;
     AccountHeader headerResult;
+    boolean profileFlag, vitalsFlag = false, medFlag = false, dietFlag = false, notesFlag = false, homeFlag = true;
+    ArrayList<Fragment> fragmentList;
+    Stack<PrimaryDrawerItem> fragmentStack;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_phms);
+        ButterKnife.bind(this);
+        firebaseAuth = FirebaseAuth.getInstance();
+        setSupportActionBar(toolbar);
 
+        fragmentList = new ArrayList<>();
+        fragmentStack = new Stack<>();
         Fragment home_fragment = new HomeFragment();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, home_fragment);
         transaction.commit();
 
-        ButterKnife.bind(this);
-        firebaseAuth = FirebaseAuth.getInstance();
-        setSupportActionBar(toolbar);
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            profileFlag = extras.getBoolean("profileFlag");
+            vitalsFlag = extras.getBoolean("vitalsFlag");
+            medFlag = extras.getBoolean("medFlag");
+            dietFlag = extras.getBoolean("dietFlag");
+            notesFlag = extras.getBoolean("notesFlag");
+            homeFlag = extras.getBoolean("homeFlag");
+        }
+
 
         final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -85,14 +106,14 @@ public class PhmsActivity extends BaseActivity {
         } else {
             onAuthFailure();
         }
+
         final PrimaryDrawerItem home = new PrimaryDrawerItem().withName("Home").withIdentifier(1).withIcon(GoogleMaterial.Icon.gmd_home);
         final PrimaryDrawerItem profile = new PrimaryDrawerItem().withName("Profile").withIdentifier(2).withIcon(GoogleMaterial.Icon.gmd_account);
-        PrimaryDrawerItem vitals = new PrimaryDrawerItem().withName("Vitals").withIdentifier(3).withIcon(FontAwesome.Icon.faw_stethoscope);
-        PrimaryDrawerItem medication = new PrimaryDrawerItem().withName("Medication").withIdentifier(4).withIcon(GoogleMaterial.Icon.gmd_local_hospital);
-        PrimaryDrawerItem diet = new PrimaryDrawerItem().withName("Diet").withIdentifier(5).withIcon(FontAwesome.Icon.faw_cutlery);
-        PrimaryDrawerItem notes = new PrimaryDrawerItem().withName("Notes").withIdentifier(6).withIcon(GoogleMaterial.Icon.gmd_calendar_note);
-        PrimaryDrawerItem appointments = new PrimaryDrawerItem().withName("Appointment").withIdentifier(7).withIcon(GoogleMaterial.Icon.gmd_alarm);
-        PrimaryDrawerItem logout = new PrimaryDrawerItem().withName("Logout").withIdentifier(8).withIcon(FontAwesome.Icon.faw_sign_out);
+        final PrimaryDrawerItem vitals = new PrimaryDrawerItem().withName("Vitals").withIdentifier(3).withIcon(FontAwesome.Icon.faw_stethoscope);
+        final PrimaryDrawerItem medication = new PrimaryDrawerItem().withName("Medication").withIdentifier(4).withIcon(GoogleMaterial.Icon.gmd_local_hospital);
+        final PrimaryDrawerItem diet = new PrimaryDrawerItem().withName("Diet").withIdentifier(5).withIcon(FontAwesome.Icon.faw_cutlery);
+        final PrimaryDrawerItem notes = new PrimaryDrawerItem().withName("Notes").withIdentifier(6).withIcon(GoogleMaterial.Icon.gmd_calendar_note);
+        final PrimaryDrawerItem logout = new PrimaryDrawerItem().withName("Logout").withIdentifier(7).withIcon(FontAwesome.Icon.faw_sign_out);
 
 
         DrawerImageLoader.init(new AbstractDrawerImageLoader() {
@@ -104,20 +125,6 @@ public class PhmsActivity extends BaseActivity {
             @Override
             public void cancel(ImageView imageView) {
                 Picasso.with(imageView.getContext()).cancelRequest(imageView);
-            }
-        });
-
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-//                User user = dataSnapshot.getValue(User.class);
-//                String name = user.getName();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
             }
         });
 
@@ -153,10 +160,45 @@ public class PhmsActivity extends BaseActivity {
                 .addDrawerItems(medication)
                 .addDrawerItems(diet)
                 .addDrawerItems(notes)
-                .addDrawerItems(appointments)
                 .addDrawerItems(new DividerDrawerItem())
                 .addDrawerItems(logout)
                 .buildForFragment();
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+//                User user = dataSnapshot.getValue(User.class);
+//                String name = user.getName();
+                User user = dataSnapshot.getValue(User.class);
+                String profilePic = user.getProfile();
+                if (profilePic != null && !profilePic.equals("")) {
+                    userProfile.withIcon(profilePic);
+                    headerResult.updateProfile(userProfile);
+                }else {
+                    userProfile.withIcon(R.mipmap.ic_account_circle_white_24dp);
+                    headerResult.updateProfile(userProfile);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        if (vitalsFlag) {
+            vitalsFlag = false;
+            Fragment fragment = new VitalsFragment();
+            startFragment(fragment);
+            result.setSelection(vitals);
+        }
+        if (medFlag) {
+            medFlag = false;
+            Fragment fragment = new MedicationFragment();
+            startFragment(fragment);
+            result.setSelection(medication);
+        }
 
         result.setOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
             @Override
@@ -164,34 +206,43 @@ public class PhmsActivity extends BaseActivity {
 
                 int drawItemId = (int) drawerItem.getIdentifier();
                 Intent intent;
-                Fragment fragment = null;
+                Fragment fragment;
                 switch (drawItemId) {
+
                     case 1:
                         fragment = new HomeFragment();
+                        fragmentStack.add(home);
                         break;
                     case 2:
                         fragment = new ProfileFragment();
+                        fragmentStack.add(profile);
                         break;
                     case 3:
                         fragment = new VitalsFragment();
+                        fragmentStack.add(vitals);
                         break;
                     case 4:
                         fragment = new MedicationFragment();
+                        fragmentStack.add(medication);
                         break;
                     case 5:
                         fragment = new DietFragment();
+                        fragmentStack.add(diet);
                         break;
                     case 6:
                         fragment = new NotesFragment();
+                        fragmentStack.add(notes);
                         break;
-                    case 7:
-                        fragment = new AppointmentsFragment();
-                        break;
+//                    case 7:
+//                        fragment = new AppointmentsFragment();
+//
+//                        break;
                     default:
                         fragment = new HomeFragment();
+
                         break;
                 }
-                if(drawItemId == 8){
+                if (drawItemId == 7) {
                     FirebaseAuth.getInstance().signOut();
                     SharedPreferences.Editor editor = preferences.edit();
                     editor.clear();
@@ -201,14 +252,21 @@ public class PhmsActivity extends BaseActivity {
                     startActivity(intent);
                     finish();
                 }
+
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragment_container, fragment);
+                transaction.replace(R.id.fragment_container, fragment).addToBackStack(null);
                 transaction.commit();
-                result.getActionBarDrawerToggle().setDrawerIndicatorEnabled(true);
-                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                 return false;
             }
         });
+
+    }
+
+    private void startFragment(Fragment fragment) {
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, fragment);
+        transaction.commit();
 
     }
 
@@ -222,13 +280,16 @@ public class PhmsActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        if (result.isDrawerOpen()){
+        if (result.isDrawerOpen()) {
             result.closeDrawer();
-        }else {
+        } else {
+
             super.onBackPressed();
+            result.setSelection(-1);
             getSupportActionBar().setDisplayHomeAsUpEnabled(false);
             result.getActionBarDrawerToggle().setDrawerIndicatorEnabled(true);
             getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
         }
     }
 
@@ -241,4 +302,29 @@ public class PhmsActivity extends BaseActivity {
             onAuthFailure();
         }
     }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        result.closeDrawer();
+//        getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+//        getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+    }
+
+    @Override
+    protected void onResume() {
+//        getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        super.onResume();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
 }

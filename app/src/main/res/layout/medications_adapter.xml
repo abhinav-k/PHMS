@@ -14,20 +14,20 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/medication_key"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/medication_key"
             android:gravity="start"
             android:text=""
             android:visibility="gone" />
 
         <TextView
+            android:id="@+id/dateMedAdd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/dateMedAdd"
-            android:text="@string/date"
             android:gravity="end"
-            android:textStyle="bold"/>
+            android:text="@string/date"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -53,8 +53,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="5dp">
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="0dp"
@@ -75,8 +75,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="5dp">
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="0dp"
@@ -97,8 +97,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="5dp">
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="0dp"
@@ -119,8 +119,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="5dp">
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="0dp"
@@ -141,8 +141,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="5dp">
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="0dp"

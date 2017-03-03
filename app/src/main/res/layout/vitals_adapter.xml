@@ -17,9 +17,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/vitals_recycler_key"
-            android:gravity="start"
-            android:text=""
-            android:visibility="gone" />
+            android:visibility="gone"
+            android:text="@string/None" />
 
         <TextView
             android:layout_width="match_parent"

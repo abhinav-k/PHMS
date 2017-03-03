@@ -6,6 +6,9 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
@@ -19,6 +22,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.project.group2.phms.R;
 import com.project.group2.phms.adapter.VitalsAdapter;
+import com.project.group2.phms.fragments.ProfileFragment;
+import com.project.group2.phms.fragments.VitalsFragment;
 import com.project.group2.phms.model.Vitals;
 
 import java.text.SimpleDateFormat;
@@ -60,12 +65,19 @@ public class VitalsActivity extends BaseActivity {
     DatabaseReference databaseReference;
     Vitals vitals=null;
     ValueEventListener listner;
+    boolean firstTime = false;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vitals);
 
         ButterKnife.bind(this);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            firstTime = extras.getBoolean("firstTime");
+
+        }
 
         setSupportActionBar(toolbar);
         if (getUid() != null) {
@@ -101,7 +113,7 @@ public class VitalsActivity extends BaseActivity {
                         glucoseEditText.setText(vitals.getGlucose());
                         cholesterolEditText.setText(vitals.getCholesterol());
                     }
-                }
+                    }
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
                 }
@@ -122,16 +134,16 @@ public class VitalsActivity extends BaseActivity {
     private void writeVitals() {
         showProgressDialog("Saving...");
 
-        HashMap<String, String> vitalsMap = new HashMap<>();
-        String systolic = systolicEditText.getText().toString().trim();
-        String diastolic = diastolicEditText.getText().toString().trim();
-        String glucose = glucoseEditText.getText().toString().trim();
-        String cholesterol = cholesterolEditText.getText().toString().trim();
+            HashMap<String, String> vitalsMap = new HashMap<>();
+            String systolic = systolicEditText.getText().toString().trim();
+            String diastolic = diastolicEditText.getText().toString().trim();
+            String glucose = glucoseEditText.getText().toString().trim();
+            String cholesterol = cholesterolEditText.getText().toString().trim();
 
-        if (!validateForm(systolic, diastolic, glucose, cholesterol)) {
-            hideProgressDialog();
-            return;
-        }
+            if (!validateForm(systolic, diastolic, glucose, cholesterol)) {
+                hideProgressDialog();
+                return;
+            }
         vitalsMap.put("systolic", systolic);
         vitalsMap.put("diastolic", diastolic);
         vitalsMap.put("glucose", glucose);
@@ -157,11 +169,13 @@ public class VitalsActivity extends BaseActivity {
             hideProgressDialog();
             Toast.makeText(this, "Vitals Updated!", Toast.LENGTH_SHORT).show();
         }
-        Intent intent = new Intent(VitalsActivity.this, PhmsActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+        Intent intent = new Intent(VitalsActivity.this,PhmsActivity.class);
+        if (!firstTime) {
+            intent.putExtra("vitalsFlag", true);
+        }
         startActivity(intent);
         finish();
-
 
     }
 

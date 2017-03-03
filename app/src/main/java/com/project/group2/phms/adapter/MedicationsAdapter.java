@@ -2,12 +2,7 @@ package com.project.group2.phms.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -17,20 +12,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.project.group2.phms.R;
-import com.project.group2.phms.activities.BaseActivity;
 import com.project.group2.phms.activities.MedicationActivity;
 import com.project.group2.phms.activities.PhmsActivity;
 import com.project.group2.phms.model.Medication;
-import com.project.group2.phms.model.Vitals;
-import com.project.group2.phms.preferences.Preferences;
 
 import java.util.ArrayList;
-
-import butterknife.Optional;
 
 /**
  * Created by ramajseepha on 2/24/17.
