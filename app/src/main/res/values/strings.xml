@@ -6,6 +6,13 @@
     <string name="emailHint">Email</string>
     <string name="passwordHint">Password</string>
     <string name="confirmPasswordHint">Confirm Password</string>
+    <string name="btn_forgot_password">Forgot Password?</string>
+    <string name="btn_reset_password">Reset Password</string>
+    <string name="btn_back">Back</string>
+
+    <string name="forgot_password_msg">Please enter the email Address for us to send your Reset Password Instructions.</string>
+
+
     <string name="next">Next</string>
 
     <!--User Details Activity-->
@@ -31,24 +38,6 @@
         <item>ft</item>
     </array>
 
-    <!--  Medication Table related String arrays -->
-    <array name="medicationNameArray">
-        <item>Drug 1</item>
-        <item>Drug 2</item>
-        <item>Drug 3</item>
-        <item>Drug 4</item>
-        <item>Drug 5</item>
-
-    </array>
-
-    <array name="manufacturerArray">
-        <item>Manufacturer 1</item>
-        <item>Manufacturer 2</item>
-        <item>Manufacturer 3</item>
-        <item>Manufacturer 4</item>
-        <item>Manufacturer 5</item>
-
-    </array>
 
     <array name="frequencyArray">
         <item>Hours</item>

@@ -9,6 +9,8 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
@@ -21,12 +23,6 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -36,8 +32,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.mikepenz.iconics.context.IconicsContextWrapper;
 import com.project.group2.phms.JSONUtils.BackGroundTask;
 import com.project.group2.phms.R;
+import com.project.group2.phms.fragments.MedicationFragment;
 import com.project.group2.phms.model.Medication;
-import com.satsuware.usefulviews.LabelledSpinner;
+
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -46,8 +43,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -96,7 +91,7 @@ public class MedicationActivity extends BaseActivity implements View.OnClickList
     String medicationName = "Drug A";
 
     //Changes for populating the spinner with JSON data - Ramji
-    ArrayList<String> medicationList=new ArrayList<String>();
+    ArrayList<String> medicationList = new ArrayList<String>();
     ArrayAdapter<String> adapter;
 
     //JSON_URL node information
@@ -152,7 +147,7 @@ public class MedicationActivity extends BaseActivity implements View.OnClickList
                     DataSnapshot snapshot = dataSnapshot.child(medication_key_value);
                     medication = snapshot.getValue(Medication.class);
                     if (medication != null) {
-                        medicationNameSpinner.setSelection(getIndex(medicationNameSpinner,medication.getMedicationName()));
+                        medicationNameSpinner.setSelection(getIndex(medicationNameSpinner, medication.getMedicationName()));
                         medicationDosageEditText.setText(medication.getDosage());
                         initialTimeEditText.setText(medication.getInitialTime());
                         startDateEditText.setText(medication.getStartDate());
@@ -208,15 +203,15 @@ public class MedicationActivity extends BaseActivity implements View.OnClickList
         apiParams.add(new BasicNameValuePair("call", "medicationsList"));
 
         backgroundTask = new BackGroundTask(MAP_API_URL, "GET", apiParams);
-        try{
+        try {
             JSONObject medicationNamesJSON = backgroundTask.execute().get();
             JSONArray medicationNames = medicationNamesJSON.getJSONArray(TAG_DATA);
 
-            for(int i=0 ; i< medicationNames.length() ; i++){
+            for (int i = 0; i < medicationNames.length(); i++) {
                 JSONObject medNames = medicationNames.getJSONObject(i);
                 String medName = medNames.getString(TAG_NAME);
                 medicationList.add(medName);
-                adapter = new ArrayAdapter<String>(this,R.layout.spinnertext,R.id.medicationNameText,medicationList);
+                adapter = new ArrayAdapter<String>(this, R.layout.spinnertext, R.id.medicationNameText, medicationList);
 
                 medicationNameSpinner.setAdapter(adapter);
 
@@ -265,7 +260,7 @@ public class MedicationActivity extends BaseActivity implements View.OnClickList
             return 2;
         } else if (medicationName.equalsIgnoreCase("Months")) {
             return 3;
-        }else {
+        } else {
             return 1;
         }
     }

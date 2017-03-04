@@ -39,15 +39,6 @@
     </item>
     <item
         is-multidex="false"
-        jar="/Users/ramajseepha/.gradle/caches/modules-2/files-2.1/com.mcxiaoke.volley/library/1.0.18/38da306aafee11459cd935a01d2c92a98dc670a4/library-1.0.18.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="38da306aafee11459cd935a01d2c92a98dc670a4">
-        <dex dex="/Users/ramajseepha/Downloads/PHMS-master/app/build/intermediates/pre-dexed/debug/library-1.0.18_16227105b0384c8bbb5608b4d2188e553712527b.jar" />
-    </item>
-    <item
-        is-multidex="false"
         jar="/Users/ramajseepha/Downloads/PHMS-master/app/build/intermediates/exploded-aar/com.android.support/support-core-ui/25.2.0/jars/classes.jar"
         jumboMode="false"
         optimize="true"
