@@ -6,6 +6,7 @@ package com.project.group2.phms.activities;
         import android.support.design.widget.FloatingActionButton;
         import android.support.design.widget.TextInputEditText;
         import android.support.v7.app.AppCompatActivity;
+        import android.support.v7.widget.Toolbar;
         import android.text.TextUtils;
         import android.view.View;
         import android.widget.Toast;
@@ -26,6 +27,8 @@ public class ResetPassActivity extends AppCompatActivity {
     @BindView(R.id.resetPassBtn)
     protected FloatingActionButton resetBtn;
     FirebaseAuth firebaseAuth;
+    @BindView(R.id.toolbar)
+    protected Toolbar toolbar;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -37,7 +40,7 @@ public class ResetPassActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reset_pass);
         ButterKnife.bind(this);
-
+        setSupportActionBar(toolbar);
         firebaseAuth = FirebaseAuth.getInstance();
 
         resetBtn.setOnClickListener(new View.OnClickListener() {
