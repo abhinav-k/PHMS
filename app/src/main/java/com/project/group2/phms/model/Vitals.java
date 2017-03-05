@@ -6,12 +6,13 @@ package com.project.group2.phms.model;
 
 public class Vitals {
 
+    private String key;
     private String systolic;
     private String diastolic;
     private String glucose;
     private String cholesterol;
     private String date;
-    private String key;
+
     public Vitals(){
 
     }
@@ -19,19 +20,11 @@ public class Vitals {
     public Vitals(String systolic, String diastolic, String glucose, String cholesterol, String date){
 
         this.systolic = systolic;
-        this.key = "";
         this.diastolic = diastolic;
         this.glucose = glucose;
         this.cholesterol = cholesterol;
         this.date = date;
-    }
-
-    public String getKey() {
-        return key;
-    }
-
-    public void setKey(String key) {
-        this.key = key;
+        this.key="";
     }
 
     public String getCholesterol() {
@@ -54,6 +47,10 @@ public class Vitals {
         return date;
     }
 
+    public String getKey() {
+        return key;
+    }
+
     public void setCholesterol(String cholesterol) {
         this.cholesterol = cholesterol;
     }
@@ -73,4 +70,9 @@ public class Vitals {
     public void setDate(String date) {
         this.date = date;
     }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
 }

@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,11 +22,7 @@ import butterknife.ButterKnife;
  */
 
 public class HomeFragment extends Fragment {
-    private CardView vitalsCard;
-    private CardView medicationsCard;
-    private CardView appointmentCard;
-    private CardView notesCard;
-    private CardView dietCard;
+    Toolbar toolbar;
 
     public HomeFragment(){
 
@@ -41,6 +38,8 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+        toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+        toolbar.setTitle(getString(R.string.home));
         initControls(view);
         return view;
     }
@@ -48,11 +47,11 @@ public class HomeFragment extends Fragment {
 
     public void initControls(View view){
 
-        vitalsCard = (CardView) view.findViewById(R.id.cardViewVitals);
-        medicationsCard = (CardView) view.findViewById(R.id.cardViewMedications);
-        appointmentCard =(CardView) view.findViewById(R.id.cardViewAppointments);
-        notesCard =(CardView) view.findViewById(R.id.cardViewNotes);
-        dietCard =(CardView) view.findViewById(R.id.cardViewDiet);
+        CardView vitalsCard = (CardView) view.findViewById(R.id.cardViewVitals);
+        CardView medicationsCard = (CardView) view.findViewById(R.id.cardViewMedications);
+        CardView appointmentCard = (CardView) view.findViewById(R.id.cardViewAppointments);
+        CardView notesCard = (CardView) view.findViewById(R.id.cardViewNotes);
+        CardView dietCard = (CardView) view.findViewById(R.id.cardViewDiet);
 
         Fragment fragment;
 

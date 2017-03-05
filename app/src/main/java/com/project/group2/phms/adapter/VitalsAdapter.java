@@ -1,7 +1,10 @@
 package com.project.group2.phms.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -20,6 +23,7 @@ import com.project.group2.phms.activities.BaseActivity;
 import com.project.group2.phms.activities.PhmsActivity;
 import com.project.group2.phms.activities.SignInActivity;
 import com.project.group2.phms.activities.VitalsActivity;
+import com.project.group2.phms.fragments.VitalsFragment;
 import com.project.group2.phms.model.Vitals;
 
 import java.util.ArrayList;
@@ -101,9 +105,10 @@ public class VitalsAdapter extends RecyclerView.Adapter<VitalsAdapter.ViewHolder
         {
 
             DatabaseReference databaseReference;
-
             databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("vitals").child(key);
             databaseReference.removeValue();
+
+
 
         }
         private final MenuItem.OnMenuItemClickListener vitalsMenuClicked = new MenuItem.OnMenuItemClickListener() {
@@ -121,6 +126,7 @@ public class VitalsAdapter extends RecyclerView.Adapter<VitalsAdapter.ViewHolder
                 else if(item.getTitle()=="Delete")
                 {
                     deleteVitalsByKey(key.getText().toString());
+                    Toast.makeText(mContext,"Vital Deleted",Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(mContext, PhmsActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     mContext.startActivity(intent);

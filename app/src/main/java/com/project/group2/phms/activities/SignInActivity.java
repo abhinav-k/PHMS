@@ -14,13 +14,13 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -47,6 +47,8 @@ public class SignInActivity extends BaseActivity implements View.OnFocusChangeLi
     protected TextInputLayout passwordLayout;
     @BindView(R.id.passwordTextEditText)
     protected TextInputEditText passwordEditText;
+    @BindView(R.id.btn_reset_password)
+    protected Button reset_pass;
     @BindView(R.id.doneButton)
     protected FloatingActionButton doneButton;
 
@@ -66,6 +68,16 @@ public class SignInActivity extends BaseActivity implements View.OnFocusChangeLi
             @Override
             public void onClick(View v) {
                 signInUser();
+            }
+        });
+
+        reset_pass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent resetPassIntent = new Intent(SignInActivity.this, ResetPassActivity.class);
+                resetPassIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(resetPassIntent);
+                finish();
             }
         });
 

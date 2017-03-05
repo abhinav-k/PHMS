@@ -2,7 +2,6 @@ package com.project.group2.phms.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
@@ -23,7 +22,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.project.group2.phms.R;
-import com.project.group2.phms.fragments.VitalsFragment;
 import com.project.group2.phms.model.User;
 import com.project.group2.phms.preferences.Preferences;
 import com.satsuware.usefulviews.LabelledSpinner;
@@ -68,24 +66,18 @@ public class UserDetailsActivity extends BaseActivity {
     DatabaseReference databaseReference;
     private FirebaseAuth firebaseAuth;
     String gender = "Male";
-    String medicationName = "Drug A";
-    String manufacturer = "Manufacturer A";
-    DatabaseReference dataRefMed;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_details);
         ButterKnife.bind(this);
+
         setSupportActionBar(toolbar);
         if (getUid() != null) {
             String userId = getUid();
             firebaseAuth = FirebaseAuth.getInstance();
-
             databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(userId);
-            dataRefMed = FirebaseDatabase.getInstance().getReference().child("medications");
-            dataRefMed.child("medicationName").setValue(medicationName);
-            dataRefMed.child("manufacturer").setValue(manufacturer);
 
         } else {
             onAuthFailure();
@@ -159,6 +151,7 @@ public class UserDetailsActivity extends BaseActivity {
         Toast.makeText(this, "User details saved!",Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(UserDetailsActivity.this, VitalsActivity.class);
 //        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra("firstTime",true);
         startActivity(intent);
 //        finish();
 
