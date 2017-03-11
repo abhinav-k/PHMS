@@ -32,7 +32,7 @@ import java.util.ArrayList;
  * Created by vishwath on 2/24/17.
  */
 
-public class VitalsAdapter extends RecyclerView.Adapter<VitalsAdapter.ViewHolder>  {
+public class VitalsAdapter extends RecyclerView.Adapter<VitalsAdapter.ViewHolder> {
 
     private Context mContext;
     private ArrayList<Vitals> mVitalsList;
@@ -42,7 +42,6 @@ public class VitalsAdapter extends RecyclerView.Adapter<VitalsAdapter.ViewHolder
         mVitalsList = vitalsList;
 
     }
-
 
 
     @Override
@@ -74,8 +73,8 @@ public class VitalsAdapter extends RecyclerView.Adapter<VitalsAdapter.ViewHolder
         }
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener{
-        TextView date,systolic,diastolic,cholesterol,glucose,key;
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
+        TextView date, systolic, diastolic, cholesterol, glucose, key;
 
 
         ViewHolder(View v) {
@@ -86,55 +85,44 @@ public class VitalsAdapter extends RecyclerView.Adapter<VitalsAdapter.ViewHolder
             diastolic = (TextView) v.findViewById(R.id.diastolic);
             cholesterol = (TextView) v.findViewById(R.id.cholesterol);
             glucose = (TextView) v.findViewById(R.id.glucose);
-            key=(TextView) v.findViewById(R.id.vitals_recycler_key);
+            key = (TextView) v.findViewById(R.id.vitals_recycler_key);
 
         }
-        public void onCreateContextMenu(ContextMenu menu, View v,
-                                        ContextMenu.ContextMenuInfo menuInfo) {
 
+        public void onCreateContextMenu(ContextMenu menu, final View v, ContextMenu.ContextMenuInfo menuInfo) {
             menu.setHeaderTitle("Vitals Options");
-            MenuItem edit= menu.add(0, v.getId(), 0, "Edit");//groupId, itemId, order, title
-            MenuItem  delete=menu.add(0, v.getId(), 0, "Delete");
-            Log.d("check","view "+v);
-            edit.setOnMenuItemClickListener(vitalsMenuClicked);
-            delete.setOnMenuItemClickListener(vitalsMenuClicked);
+            MenuItem edit = menu.add(0, v.getId(), 0, "Edit");//groupId, itemId, order, title
+            MenuItem delete = menu.add(0, v.getId(), 0, "Delete");
+            Log.d("check", "view " + v);
+            edit.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    Intent intent = new Intent(mContext, VitalsActivity.class);
+                    intent.putExtra("Key", key.getText().toString());
+                    mContext.startActivity(intent);
+                    return false;
+                }
+            });
+            delete.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    deleteVitalsByKey(key.getText().toString());
+                    Toast.makeText(mContext, "Vital Deleted", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+            });
 
 
         }
-        private void deleteVitalsByKey(String key)
-        {
 
+        private void deleteVitalsByKey(String key) {
             DatabaseReference databaseReference;
             databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("vitals").child(key);
             databaseReference.removeValue();
-
-
+            mVitalsList.remove(getAdapterPosition());
+            notifyDataSetChanged();
 
         }
-        private final MenuItem.OnMenuItemClickListener vitalsMenuClicked = new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                View v=item.getActionView();
-                Log.d("check","view "+v);
-                if(item.getTitle()=="Edit")
-                {
-                    Intent intent = new Intent(mContext, VitalsActivity.class);
-                    intent.putExtra("Key",key.getText().toString());
-                    mContext.startActivity(intent);
-                    return true;
-                }
-                else if(item.getTitle()=="Delete")
-                {
-                    deleteVitalsByKey(key.getText().toString());
-                    Toast.makeText(mContext,"Vital Deleted",Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(mContext, PhmsActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    mContext.startActivity(intent);
-                    return true;
-                }
-                return false;
-            }
-        };
 
     }
 

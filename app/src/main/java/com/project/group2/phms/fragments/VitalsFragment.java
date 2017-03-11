@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -70,29 +71,27 @@ public class VitalsFragment extends Fragment  {
         recyclerView.setNestedScrollingEnabled(false);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(mLayoutManager);
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        final RecyclerView.Adapter mAdapter = new VitalsAdapter(getContext(),vitalsList);
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()){
                     Vitals vitals = snapshot.getValue(Vitals.class);
                     String key=snapshot.getKey();
                     vitals.setKey(key);
-//                    Log.d("Vitals", vitals.getDiastolic());
+                    Log.d("Vitals", "Invoked");
                     vitalsList.add(vitals);
                 }
-
-                recyclerView.setAdapter(new VitalsAdapter(getContext(), vitalsList));
-                registerForContextMenu(recyclerView);
-
+                recyclerView.setAdapter(mAdapter);
             }
-
-
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
             }
         });
+
+        registerForContextMenu(recyclerView);
 
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,4 +102,6 @@ public class VitalsFragment extends Fragment  {
         });
         return view;
     }
+
+
 }

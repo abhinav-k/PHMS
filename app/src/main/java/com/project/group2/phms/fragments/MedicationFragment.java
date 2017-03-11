@@ -67,7 +67,7 @@ public class MedicationFragment extends Fragment {
         recyclerView.setNestedScrollingEnabled(false);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(mLayoutManager);
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()){
@@ -78,7 +78,6 @@ public class MedicationFragment extends Fragment {
                 }
 
                 recyclerView.setAdapter(new MedicationsAdapter(getContext(), medicationsArrayList));
-                registerForContextMenu(recyclerView);
             }
 
             @Override
@@ -86,6 +85,8 @@ public class MedicationFragment extends Fragment {
 
             }
         });
+
+        registerForContextMenu(recyclerView);
 
         addMedButton.setOnClickListener(new View.OnClickListener() {
             @Override

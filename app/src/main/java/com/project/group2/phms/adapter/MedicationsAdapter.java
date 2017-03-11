@@ -86,39 +86,32 @@ public class MedicationsAdapter extends RecyclerView.Adapter<MedicationsAdapter.
             menu.setHeaderTitle("Medications Options");
             MenuItem editMed = menu.add(0, v.getId(), 0, "Edit");//groupId, itemId, order, title
             MenuItem deleteMed = menu.add(0, v.getId(), 0, "Delete");
-            editMed.setOnMenuItemClickListener(medicationsMenuClicked);
-            deleteMed.setOnMenuItemClickListener(medicationsMenuClicked);
+            editMed.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    Intent editMedIntent = new Intent(mContext, MedicationActivity.class);
+                    editMedIntent.putExtra("medications_key", medication_key.getText());
+                    mContext.startActivity(editMedIntent);
+                    return false;
+                }
+            });
+            deleteMed.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    Toast.makeText(mContext, "Medication Deleted", Toast.LENGTH_LONG).show();
+                    deleteVitalsByKey(medication_key.getText().toString());
+                    return false;
+                }
+            });
         }
 
         private void deleteVitalsByKey(String key) {
             DatabaseReference databaseReference;
             databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("medications").child(key);
             databaseReference.removeValue();
+            mMedicationList.remove(getAdapterPosition());
+            notifyDataSetChanged();
 
         }
-
-        private final MenuItem.OnMenuItemClickListener medicationsMenuClicked = new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                View v = item.getActionView();
-                if (item.getTitle() == "Edit") {
-                    Toast.makeText(mContext, "Redirecting to edit screen", Toast.LENGTH_LONG).show();
-                    Intent editMedIntent = new Intent(mContext, MedicationActivity.class);
-                    editMedIntent.putExtra("medications_key", medication_key.getText());
-                    mContext.startActivity(editMedIntent);
-                    return true;
-                } else if (item.getTitle() == "Delete") {
-                    Toast.makeText(mContext, "Deleting", Toast.LENGTH_LONG).show();
-                    deleteVitalsByKey(medication_key.getText().toString());
-                    Intent intent = new Intent(mContext, PhmsActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    mContext.startActivity(intent);
-                    return true;
-                }
-                return false;
-            }
-        };
-
-
     }
 }

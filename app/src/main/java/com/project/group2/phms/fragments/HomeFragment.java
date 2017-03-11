@@ -53,8 +53,6 @@ public class HomeFragment extends Fragment {
         CardView notesCard = (CardView) view.findViewById(R.id.cardViewNotes);
         CardView dietCard = (CardView) view.findViewById(R.id.cardViewDiet);
 
-        Fragment fragment;
-
         vitalsCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,7 +60,7 @@ public class HomeFragment extends Fragment {
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.replace(R.id.fragment_container, VitalsFragment);
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-                ft.addToBackStack(null);
+
                 ft.commit();
             }
         });
@@ -73,7 +71,7 @@ public class HomeFragment extends Fragment {
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.replace(R.id.fragment_container, MedicationFragment);
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-                ft.addToBackStack(null);
+
                 ft.commit();
             }
         });

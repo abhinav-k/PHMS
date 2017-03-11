@@ -254,7 +254,7 @@ public class PhmsActivity extends BaseActivity {
                 }
 
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragment_container, fragment).addToBackStack(null);
+                transaction.replace(R.id.fragment_container, fragment);
                 transaction.commit();
                 return false;
             }
@@ -284,11 +284,11 @@ public class PhmsActivity extends BaseActivity {
             result.closeDrawer();
         } else {
 
-            super.onBackPressed();
-            result.setSelection(-1);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-            result.getActionBarDrawerToggle().setDrawerIndicatorEnabled(true);
-            getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+//            super.onBackPressed();
+//            result.setSelection(-1);
+//            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+//            result.getActionBarDrawerToggle().setDrawerIndicatorEnabled(true);
+//            getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
 
         }
     }
