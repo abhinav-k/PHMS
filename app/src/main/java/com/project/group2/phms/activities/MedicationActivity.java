@@ -3,19 +3,20 @@ package com.project.group2.phms.activities;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -32,7 +33,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.mikepenz.iconics.context.IconicsContextWrapper;
 import com.project.group2.phms.JSONUtils.BackGroundTask;
 import com.project.group2.phms.R;
-import com.project.group2.phms.fragments.MedicationFragment;
 import com.project.group2.phms.model.Medication;
 
 
@@ -60,8 +60,8 @@ import butterknife.ButterKnife;
  */
 
 public class MedicationActivity extends BaseActivity implements View.OnClickListener {
-    @BindView(R.id.medicationNameSpinner)
-    protected Spinner medicationNameSpinner;
+    //    @BindView(R.id.medicationNameSpinner)
+//    protected Spinner medicationNameSpinner;
     @BindView(R.id.medicationDosageInputText)
     protected TextInputLayout medicationDosageInputText;
     @BindView(R.id.medicationDosageEditText)
@@ -82,6 +82,8 @@ public class MedicationActivity extends BaseActivity implements View.OnClickList
     protected Toolbar toolbar;
     @BindView(R.id.medication_key)
     protected TextView medication_keyTextView;
+    @BindView(R.id.medicationAutoTextView)
+    protected AutoCompleteTextView medAutoTextView;
 
     FirebaseAuth firebaseAuth;
     DatabaseReference databaseReference;
@@ -93,19 +95,22 @@ public class MedicationActivity extends BaseActivity implements View.OnClickList
     //Changes for populating the spinner with JSON data - Ramji
     ArrayList<String> medicationList = new ArrayList<String>();
     ArrayAdapter<String> adapter;
+    HashMap<String, String> conflictsMap;
+    ArrayList<String> medList;
 
     //JSON_URL node information
     private static final String TAG_DATA = "results";
     private static final String TAG_NAME = "term";
-    private static final String MAP_API_URL = "https://api.fda.gov/drug/label.json?count=openfda.brand_name.exact&limit=1000";
+    private static final String MAP_API_URL = "https://api.fda.gov/drug/label.json?count=openfda.brand_name.exact&limit=20";
     private BackGroundTask backgroundTask;
+    HashMap<String, String> medicationsMap;
 
     //Changes for populating the spinner with JSON data - Ramji End
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_medication_add);
+        setContentView(R.layout.activity_medication_add);
         ButterKnife.bind(this);
 
 
@@ -114,18 +119,17 @@ public class MedicationActivity extends BaseActivity implements View.OnClickList
 
         //Changes after Sprint 2 - Ramji
         buildMedicationNamesDropdown();
-
-        /*adapter=new ArrayAdapter<String>(this,
-                R.layout.spinnertext,R.id.medicationNameText,medicationNameItems);
-        medicationNameSpinner.setCustomAdapter(adapter);
-        Changes after Sprint 2 - Ramji End */
-
+        medicationsMap = new HashMap<>();
+        conflictsMap = new HashMap<>();
+        medList = new ArrayList<>();
+        createConflictsMap();
 
         String medicationKey = null;
 
         if (intent != null) {
             medicationKey = intent.getStringExtra("medications_key");
         }
+
 
         if (getUid() != null) {
             String userId = getUid();
@@ -147,7 +151,8 @@ public class MedicationActivity extends BaseActivity implements View.OnClickList
                     DataSnapshot snapshot = dataSnapshot.child(medication_key_value);
                     medication = snapshot.getValue(Medication.class);
                     if (medication != null) {
-                        medicationNameSpinner.setSelection(getIndex(medicationNameSpinner, medication.getMedicationName()));
+//                        medicationNameSpinner.setSelection(getIndex(medicationNameSpinner, medication.getMedicationName()));
+                        medAutoTextView.setText(medication.getMedicationName());
                         medicationDosageEditText.setText(medication.getDosage());
                         initialTimeEditText.setText(medication.getInitialTime());
                         startDateEditText.setText(medication.getStartDate());
@@ -168,23 +173,6 @@ public class MedicationActivity extends BaseActivity implements View.OnClickList
         }
 
 
-      /* medicationNameSpinner.setLabelText(R.string.medicationName);
-        //medicationNameSpinner.setItemsArray(R.array.medicationNameArray);
-        medicationNameSpinner.setOnItemChosenListener(new LabelledSpinner.OnItemChosenListener() {
-            @Override
-            public void onItemChosen(View labelledSpinner, AdapterView<?> adapterView, View itemView, int position, long id) {
-
-                medicationName = adapterView.getSelectedItem().toString();
-
-            }
-
-            @Override
-            public void onNothingChosen(View labelledSpinner, AdapterView<?> adapterView) {
-                medicationName = adapterView.getSelectedItem().toString();
-            }
-        });*/
-
-
         doneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -195,6 +183,30 @@ public class MedicationActivity extends BaseActivity implements View.OnClickList
         startDateEditText.setOnClickListener(this);
         endDateEditText.setOnClickListener(this);
         initialTimeEditText.setOnClickListener(this);
+
+
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Medication med = snapshot.getValue(Medication.class);
+                    Log.d("med", med.getMedicationName());
+                    medList.add(med.getMedicationName());
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void createConflictsMap() {
+        conflictsMap.put("conflict1", "druga-drugb");
+        conflictsMap.put("conflict2", "drugb-druga");
+        conflictsMap.put("conflict3", "drugc-drugd");
+        conflictsMap.put("conflict4", "drugd-drugc");
     }
 
     //Changes after Sprint 2 - Populate medicationName spinner - Start
@@ -211,41 +223,14 @@ public class MedicationActivity extends BaseActivity implements View.OnClickList
                 JSONObject medNames = medicationNames.getJSONObject(i);
                 String medName = medNames.getString(TAG_NAME);
                 medicationList.add(medName);
-                adapter = new ArrayAdapter<String>(this, R.layout.spinnertext, R.id.medicationNameText, medicationList);
+                adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, medicationList);
 
-                medicationNameSpinner.setAdapter(adapter);
+                medAutoTextView.setAdapter(adapter);
 
-                medicationNameSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-
-                    }
-                });
             }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (InterruptedException | ExecutionException | JSONException e) {
             e.printStackTrace();
         }
-    }
-
-    private int getIndex(Spinner spinner, String myString) {
-
-        int index = 0;
-
-        for (int i = 0; i < spinner.getCount(); i++) {
-            if (spinner.getItemAtPosition(i).equals(myString)) {
-                index = i;
-            }
-        }
-        return index;
     }
 
     //Changes after Sprint 2 - Populate medicationName spinner - End
@@ -348,21 +333,22 @@ public class MedicationActivity extends BaseActivity implements View.OnClickList
         }
     }
 
+
     private void writeMedications() {
         showProgressDialog("Saving...");
-        HashMap<String, String> medicationsMap = new HashMap<>();
-        String medicationName = medicationNameSpinner.getSelectedItem().toString();
-        String dosage = medicationDosageEditText.getText().toString().trim();
-        String initialTime = initialTimeEditText.getText().toString().trim();
-        String startDate = startDateEditText.getText().toString().trim();
-        String endDate = endDateEditText.getText().toString().trim();
-        String frequencyDays = frequencyDaysEditText.getText().toString().trim();
-        String frequency = frequencySpinner.getSelectedItem().toString();
+        final String medicationName = medAutoTextView.getText().toString();
+        final String dosage = medicationDosageEditText.getText().toString().trim();
+        final String initialTime = initialTimeEditText.getText().toString().trim();
+        final String startDate = startDateEditText.getText().toString().trim();
+        final String endDate = endDateEditText.getText().toString().trim();
+        final String frequencyDays = frequencyDaysEditText.getText().toString().trim();
+        final String frequency = frequencySpinner.getSelectedItem().toString();
 
         if (!validateForm(medicationName, dosage, initialTime, startDate, endDate)) {
             hideProgressDialog();
             return;
         }
+        medicationsMap.clear();
         medicationsMap.put("medicationName", medicationName);
         medicationsMap.put("dosage", dosage);
         medicationsMap.put("initialTime", initialTime);
@@ -371,32 +357,71 @@ public class MedicationActivity extends BaseActivity implements View.OnClickList
         medicationsMap.put("frequency", frequencyDays + "" + frequency);
         if (medication_keyTextView.getText().toString().equals("")) {
             Calendar c = Calendar.getInstance();
-            System.out.println("Current time => " + c.getTime());
             SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
             String formattedDate = df.format(c.getTime());
-
             medicationsMap.put("dateMed", formattedDate);
-
-            databaseReference.push().setValue(medicationsMap);
-            hideProgressDialog();
-
-            Toast.makeText(this, "Medications saved!", Toast.LENGTH_SHORT).show();
         } else {
             medicationsMap.put("dateMed", medication.getDateMed());
+        }
+        boolean conflict = false;
+        String oldMed = "";
+        for (String med : medList) {
+            String c = med + "-" + medicationName;
+            if (conflictsMap.containsValue(c)) {
+                conflict = true;
+                oldMed = med;
+                break;
+            }
+            oldMed = med;
+        }
+        if (conflict) {
+            AlertDialog.Builder alertDialogBuilder;
+            alertDialogBuilder = new AlertDialog.Builder(this);
+            alertDialogBuilder.setTitle("Warning");
+            alertDialogBuilder.setIcon(R.mipmap.ic_warning_black_24dp);
+            alertDialogBuilder.setMessage(medicationName + " may cause health effects when taken with " + oldMed + ". Do " +
+                    "you want to still add it ?");
+            alertDialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dbPushFunction();
+
+                }
+            });
+            alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    hideProgressDialog();
+
+                }
+            });
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+            alertDialog.setCancelable(false);
+        } else {
+            dbPushFunction();
+        }
+    }
+
+
+    public void dbPushFunction() {
+        if (medication_keyTextView.getText().toString().equals("")) {
+            databaseReference.push().setValue(medicationsMap);
+            hideProgressDialog();
+            Toast.makeText(MedicationActivity.this, "Medications saved!", Toast.LENGTH_SHORT).show();
+        } else {
             databaseReference.child(medication_keyTextView.getText().toString()).updateChildren((java.util.HashMap) medicationsMap);
             hideProgressDialog();
-            Toast.makeText(this, "Medications Updated!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MedicationActivity.this, "Medications Updated!", Toast.LENGTH_SHORT).show();
         }
         Intent intent = new Intent(MedicationActivity.this, PhmsActivity.class);
         intent.putExtra("medFlag", true);
         startActivity(intent);
         finish();
-
-
     }
 
     private boolean validateForm(String medicationName, String dosage, String initialTime, String startDate, String endDate) {
-        boolean valid = true;
+        boolean valid;
         if (TextUtils.isEmpty(medicationName) || TextUtils.isEmpty(dosage) || TextUtils.isEmpty(initialTime) || TextUtils.isEmpty(startDate) || TextUtils.isEmpty(endDate)) {
             return false;
         }
@@ -416,6 +441,8 @@ public class MedicationActivity extends BaseActivity implements View.OnClickList
             endDateEditText.setError("End date should be after Start Date");
             valid = false;
         }
+
+
         return valid;
     }
 

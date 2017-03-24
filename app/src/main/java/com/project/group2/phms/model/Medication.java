@@ -14,6 +14,7 @@ public class Medication {
     private String frequency;
     private String dateMed;
     private String key;
+    
     public Medication(){
 
     }

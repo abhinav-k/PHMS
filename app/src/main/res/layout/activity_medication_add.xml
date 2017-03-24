@@ -34,13 +34,12 @@
         android:padding="16dp">
 
         <!-- Changed the medication name to Spinner -->
-        <Spinner
-            android:id="@+id/medicationNameSpinner"
+
+        <AutoCompleteTextView
+            android:hint="Medication Name"
             android:layout_width="match_parent"
-            android:layout_gravity="center"
             android:layout_height="wrap_content"
-            android:hint="@string/medicationName"
-            />
+            android:id="@+id/medicationAutoTextView"/>
 
         <LinearLayout
             android:layout_width="match_parent"
