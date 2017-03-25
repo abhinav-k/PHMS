@@ -81,6 +81,25 @@ public class DesigneeFragment extends Fragment {
         relationshipLayout = (TextInputLayout) view.findViewById(R.id.relationshipLayout);
         relationshipEditText = (TextInputEditText) view.findViewById(R.id.relationshipEditText);
 
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                DesigneeDoctor designeeDoctor = dataSnapshot.getValue(DesigneeDoctor.class);
+                doctorNameEditText.setText(designeeDoctor.getDoctorName());
+                doctorEmailEditText.setText(designeeDoctor.getDoctorEmail());
+                doctorPhoneEditText.setText(designeeDoctor.getDoctorPhone());
+                designeeNameEditText.setText(designeeDoctor.getDesigneeName());
+                designeeEmailEditText.setText(designeeDoctor.getDesigneeEmail());
+                designeePhoneEditText.setText(designeeDoctor.getDesigneePhone());
+                relationshipEditText.setText(designeeDoctor.getRelationship());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
         setHasOptionsMenu(true);
         return view;
     }

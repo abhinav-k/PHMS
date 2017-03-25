@@ -11,22 +11,32 @@ public class DesigneeDoctor {
     private String designeeName;
     private String designeePhone;
     private String designeeEmail;
+    private String relationship;
 
     public DesigneeDoctor(){
 
     }
 
-    public DesigneeDoctor(String doctorName, String doctorPhone, String doctorEmail, String designeeName, String designeePhone, String designeeEmail) {
+    public DesigneeDoctor(String doctorName, String doctorPhone, String doctorEmail, String designeeName, String designeePhone, String designeeEmail,String relationship) {
         this.doctorName = doctorName;
         this.doctorPhone = doctorPhone;
         this.doctorEmail = doctorEmail;
         this.designeeName = designeeName;
         this.designeePhone = designeePhone;
         this.designeeEmail = designeeEmail;
+        this.relationship = relationship;
     }
 
     public String getDoctorName() {
         return doctorName;
+    }
+
+    public String getRelationship() {
+        return relationship;
+    }
+
+    public void setRelationship(String relationship) {
+        this.relationship = relationship;
     }
 
     public void setDoctorName(String doctorName) {

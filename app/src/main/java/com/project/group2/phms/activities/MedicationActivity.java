@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.creativityapps.gmailbackgroundlibrary.BackgroundMail;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -33,6 +34,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.mikepenz.iconics.context.IconicsContextWrapper;
 import com.project.group2.phms.JSONUtils.BackGroundTask;
 import com.project.group2.phms.R;
+import com.project.group2.phms.model.DesigneeDoctor;
 import com.project.group2.phms.model.Medication;
 
 
@@ -86,7 +88,7 @@ public class MedicationActivity extends BaseActivity implements View.OnClickList
     protected AutoCompleteTextView medAutoTextView;
 
     FirebaseAuth firebaseAuth;
-    DatabaseReference databaseReference;
+    DatabaseReference databaseReference, designeeReference;
     ValueEventListener valueEventListener;
 
     Medication medication;
@@ -135,6 +137,7 @@ public class MedicationActivity extends BaseActivity implements View.OnClickList
             String userId = getUid();
             firebaseAuth = FirebaseAuth.getInstance();
             databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(userId).child("medications");
+            designeeReference = FirebaseDatabase.getInstance().getReference().child("users").child(userId).child("doctor_and_designee");
 
         } else {
 
@@ -384,7 +387,44 @@ public class MedicationActivity extends BaseActivity implements View.OnClickList
             alertDialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    dbPushFunction();
+                    designeeReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            DesigneeDoctor designeeDoctor = dataSnapshot.getValue(DesigneeDoctor.class);
+                            String designeeEmail = designeeDoctor.getDesigneeEmail();
+                            String doctorEmail = designeeDoctor.getDoctorEmail();
+                            BackgroundMail.newBuilder(MedicationActivity.this)
+                                    .withUsername("phms.group2@gmail.com")
+                                    .withPassword("science100")
+                                    .withMailto(designeeEmail)
+                                    .withType(BackgroundMail.TYPE_PLAIN)
+                                    .withSubject("this is the subject")
+                                    .withBody("this is the body")
+                                    .withOnSuccessCallback(new BackgroundMail.OnSuccessCallback() {
+                                        @Override
+                                        public void onSuccess() {
+                                            //do some magic
+                                            Log.d("Email","Sent Success");
+                                            dbPushFunction();
+                                        }
+                                    })
+                                    .withOnFailCallback(new BackgroundMail.OnFailCallback() {
+                                        @Override
+                                        public void onFail() {
+                                            //do some magic
+                                        }
+                                    })
+                                    .send();
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
+
 
                 }
             });
