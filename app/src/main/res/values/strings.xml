@@ -77,23 +77,30 @@
     <string name="None" />
 
     <!-- Main Screen Card Layout String -->
-    <string name="medication">Medications</string>"
-    <string name="diet">Diet</string>"
-    <string name="welcome">Welcome to PHMS</string>"
-    <string name="notes">Notes</string>"
-    <string name="appointment">Appointments</string>"
+    <string name="medication">Medications</string>
+    <string name="diet">Diet</string>
+    <string name="welcome">Welcome to PHMS</string>
+    <string name="notes">Notes</string>
+    <string name="appointment">Appointments</string>
+    <string name="designee">Designee</string>
+    <string name="doctor">Doctor</string>
 
     <!--Medications Fragment -->
-    <string name="medicationName">Medication Name</string>"
-    <string name="medManufacturer">Manufacturer</string>"
-    <string name="date">Date</string>"
-    <string name="medDosage">Dosage</string>"
-    <string name="dosageUnit">mg</string>"
-    <string name="frequency">Frequency</string>"
-    <string name="frequencyTime">Frequency</string>"
-    <string name="frequencyDays">No of Times</string>"
-    <string name="initialTime">Initial Time</string>"
-    <string name="startdate">Start Date</string>"
-    <string name="enddate">End Date</string>"
+    <string name="medicationName">Medication Name</string>
+    <string name="medManufacturer">Manufacturer</string>
+    <string name="date">Date</string>
+    <string name="medDosage">Dosage</string>
+    <string name="dosageUnit">mg</string>
+    <string name="frequency">Frequency</string>
+    <string name="frequencyTime">Frequency</string>
+    <string name="frequencyDays">No of Times</string>
+    <string name="initialTime">Initial Time</string>
+    <string name="startdate">Start Date</string>
+    <string name="enddate">End Date</string>
 
+    <!--Designee Fragment-->
+    <string name="dnd">Doctor &amp; Designee</string>
+    <string name="phone">Phone</string>
+    <string name="designeeName">Designee\'s Name</string>
+    <string name="relationship">Relationship</string>
 </resources>

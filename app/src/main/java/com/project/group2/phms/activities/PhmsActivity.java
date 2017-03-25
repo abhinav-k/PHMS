@@ -36,6 +36,7 @@ import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader;
 import com.mikepenz.materialdrawer.util.DrawerImageLoader;
 import com.project.group2.phms.R;
 import com.project.group2.phms.fragments.AppointmentsFragment;
+import com.project.group2.phms.fragments.DesigneeFragment;
 import com.project.group2.phms.fragments.DietFragment;
 import com.project.group2.phms.fragments.HomeFragment;
 import com.project.group2.phms.fragments.MedicationFragment;
@@ -113,7 +114,9 @@ public class PhmsActivity extends BaseActivity {
         final PrimaryDrawerItem medication = new PrimaryDrawerItem().withName("Medication").withIdentifier(4).withIcon(GoogleMaterial.Icon.gmd_local_hospital);
         final PrimaryDrawerItem diet = new PrimaryDrawerItem().withName("Diet").withIdentifier(5).withIcon(FontAwesome.Icon.faw_cutlery);
         final PrimaryDrawerItem notes = new PrimaryDrawerItem().withName("Notes").withIdentifier(6).withIcon(GoogleMaterial.Icon.gmd_calendar_note);
-        final PrimaryDrawerItem logout = new PrimaryDrawerItem().withName("Logout").withIdentifier(7).withIcon(FontAwesome.Icon.faw_sign_out);
+        final PrimaryDrawerItem appointments = new PrimaryDrawerItem().withName("Appointments").withIdentifier(7).withIcon(FontAwesome.Icon.faw_users);
+        final PrimaryDrawerItem designee = new PrimaryDrawerItem().withName("Doctor & Designee").withIdentifier(8).withIcon(GoogleMaterial.Icon.gmd_account_box_phone);
+        final PrimaryDrawerItem logout = new PrimaryDrawerItem().withName("Logout").withIdentifier(9).withIcon(FontAwesome.Icon.faw_sign_out);
 
 
         DrawerImageLoader.init(new AbstractDrawerImageLoader() {
@@ -160,6 +163,8 @@ public class PhmsActivity extends BaseActivity {
                 .addDrawerItems(medication)
                 .addDrawerItems(diet)
                 .addDrawerItems(notes)
+                .addDrawerItems(appointments)
+                .addDrawerItems(designee)
                 .addDrawerItems(new DividerDrawerItem())
                 .addDrawerItems(logout)
                 .buildForFragment();
@@ -167,9 +172,6 @@ public class PhmsActivity extends BaseActivity {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
-//                User user = dataSnapshot.getValue(User.class);
-//                String name = user.getName();
                 User user = dataSnapshot.getValue(User.class);
                 String profilePic = user.getProfile();
                 if (profilePic != null && !profilePic.equals("")) {
@@ -233,16 +235,20 @@ public class PhmsActivity extends BaseActivity {
                         fragment = new NotesFragment();
                         fragmentStack.add(notes);
                         break;
-//                    case 7:
-//                        fragment = new AppointmentsFragment();
-//
-//                        break;
+                    case 7:
+                        fragment = new AppointmentsFragment();
+                        fragmentStack.add(appointments);
+                        break;
+                    case 8:
+                        fragment = new DesigneeFragment();
+                        fragmentStack.add(designee);
+                        break;
                     default:
                         fragment = new HomeFragment();
 
                         break;
                 }
-                if (drawItemId == 7) {
+                if (drawItemId == 9) {
                     FirebaseAuth.getInstance().signOut();
                     SharedPreferences.Editor editor = preferences.edit();
                     editor.clear();
@@ -282,14 +288,6 @@ public class PhmsActivity extends BaseActivity {
     public void onBackPressed() {
         if (result.isDrawerOpen()) {
             result.closeDrawer();
-        } else {
-
-//            super.onBackPressed();
-//            result.setSelection(-1);
-//            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-//            result.getActionBarDrawerToggle().setDrawerIndicatorEnabled(true);
-//            getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-
         }
     }
 

@@ -52,6 +52,7 @@ public class HomeFragment extends Fragment {
         CardView appointmentCard = (CardView) view.findViewById(R.id.cardViewAppointments);
         CardView notesCard = (CardView) view.findViewById(R.id.cardViewNotes);
         CardView dietCard = (CardView) view.findViewById(R.id.cardViewDiet);
+        CardView designeeCard = (CardView) view.findViewById(R.id.cardViewDesignee);
 
         vitalsCard.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,6 +104,17 @@ public class HomeFragment extends Fragment {
                 Fragment DietFragment = new DietFragment();
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.replace(R.id.fragment_container, DietFragment);
+                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                ft.addToBackStack(null);
+                ft.commit();
+            }
+        });
+        designeeCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment DesigneeFragment = new DesigneeFragment();
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.replace(R.id.fragment_container, DesigneeFragment);
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                 ft.addToBackStack(null);
                 ft.commit();
