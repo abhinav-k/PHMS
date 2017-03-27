@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="GmailBackground-1.2.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.android/build-cache/9ee9809ecc01d77d4f29fbd39f01d29ebd0f2224/output/jars/libs/additionnal.jar!/" />
+      <root url="jar://$USER_HOME$/.android/build-cache/9ee9809ecc01d77d4f29fbd39f01d29ebd0f2224/output/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.android/build-cache/9ee9809ecc01d77d4f29fbd39f01d29ebd0f2224/output/res" />
+      <root url="jar://$USER_HOME$/.android/build-cache/9ee9809ecc01d77d4f29fbd39f01d29ebd0f2224/output/jars/libs/mail.jar!/" />
+      <root url="jar://$USER_HOME$/.android/build-cache/9ee9809ecc01d77d4f29fbd39f01d29ebd0f2224/output/jars/libs/activation.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

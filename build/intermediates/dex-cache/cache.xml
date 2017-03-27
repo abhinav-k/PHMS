@@ -2,67 +2,265 @@
 <items version="2" >
 
     <item
-        is-multidex="true"
-        jar="/Users/vishwath/.gradle/caches/modules-2/files-2.1/org.jbundle.util.osgi.wrapped/org.jbundle.util.osgi.wrapped.org.apache.http.client/4.1.2/98c86e42679fe7ac066f6c242e0d14f0bce0bb7c/org.jbundle.util.osgi.wrapped.org.apache.http.client-4.1.2.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="/Users/ramajseepha/.android/build-cache/be177cd254b6fc26fdcb4083d831f0757231c754/output/jars/classes.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.2"
-        sha1="98c86e42679fe7ac066f6c242e0d14f0bce0bb7c">
-        <dex dex="/Users/vishwath/AndroidStudioProjects/PHMS/app/build/intermediates/transforms/dex/debug/folders/1000/10/org.jbundle.util.osgi.wrapped.org.apache.http.client-4.1.2_0eb0f67cf8a4a95c18b8543e8aea3c6806b79456/classes.dex" />
+        sha1="67eb33110dbacb46a48175b08ae0c96761d2c17d">
+        <dex dex="/Users/ramajseepha/AndroidStudioProjects/PHMS/app/build/intermediates/pre-dexed/debug/classes_742df5638ed0be5be30e80457467505f7d9e8339.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="/Users/vishwath/AndroidStudioProjects/PHMS/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="/Users/ramajseepha/.android/build-cache/813bba32a25c847f44e8d524e3aa8b0eb0f7266f/output/jars/classes.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.2"
-        sha1="c82741bc129dd5f99f11a4ab8666ae24262053b6">
-        <dex dex="/Users/vishwath/AndroidStudioProjects/PHMS/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_742c783df11fe28bd1c4c4a1e8e0b632953443d0/classes.dex" />
+        sha1="ee394a892dd21c03a528139c1e8d4e0e1264ac84">
+        <dex dex="/Users/ramajseepha/AndroidStudioProjects/PHMS/app/build/intermediates/pre-dexed/debug/classes_c2c972a6c39eba8dd4192a3d849caaddc4f01b66.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="/Users/vishwath/.android/build-cache/b7bafaf005cd0136a0c3f611246138302fcd7263/output/jars/libs/activation.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="/Users/ramajseepha/.android/build-cache/383ac8f72ecdbfba2113ab72ab371dd850ea4c6e/output/jars/classes.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.2"
-        sha1="caeb02439d439d221f8be4aaf33931153bbe34db">
-        <dex dex="/Users/vishwath/AndroidStudioProjects/PHMS/app/build/intermediates/transforms/dex/debug/folders/1000/10/activation_a31ce86fcfc1c019308fb3d7eb32fe472621e0f2/classes.dex" />
+        sha1="9cca2818594cc5348806d6662133491e7ea0fa8d">
+        <dex dex="/Users/ramajseepha/AndroidStudioProjects/PHMS/app/build/intermediates/pre-dexed/debug/classes_0fce9ee97eeaf147d6dd02319546ffd759382dd8.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="/Users/vishwath/.android/build-cache/b7bafaf005cd0136a0c3f611246138302fcd7263/output/jars/classes.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="/Users/ramajseepha/.android/build-cache/f760df2fd24cee6200257946b08226aab7bfb6bc/output/jars/classes.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.2"
-        sha1="e9594f0b6eaea9e8b7dd28ff6993f4eba61da9d5">
-        <dex dex="/Users/vishwath/AndroidStudioProjects/PHMS/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_e9faceb3158eda1b0a1e1b36efcf52b6ef167466/classes.dex" />
+        sha1="8010ae6ed32828a145b25ec97bc07b7a83c6318f">
+        <dex dex="/Users/ramajseepha/AndroidStudioProjects/PHMS/app/build/intermediates/pre-dexed/debug/classes_0cc17fa97c0d5feb8c2c34fd0435b8e9cc29b5e7.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="/Users/vishwath/.android/build-cache/b7bafaf005cd0136a0c3f611246138302fcd7263/output/jars/libs/mail.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="/Users/ramajseepha/.android/build-cache/87fd48a1262edfb1718029481ba99589d803a21d/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="8f128aeeb7e31271b28a7adb9dac1f3a6ed9f5e7">
+        <dex dex="/Users/ramajseepha/AndroidStudioProjects/PHMS/app/build/intermediates/pre-dexed/debug/classes_62504a9b1c573f49b40d0b5df53d83fca2064048.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/ramajseepha/.android/build-cache/59d46b359085206ca610a5163bc91f2d5b77500f/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="810f41e5b7fd99f196ebeabe865ba2c54e7e76dc">
+        <dex dex="/Users/ramajseepha/AndroidStudioProjects/PHMS/app/build/intermediates/pre-dexed/debug/classes_82eb0c8436aa746aa66c65395ba3d86c34730683.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/ramajseepha/.android/build-cache/9ee9809ecc01d77d4f29fbd39f01d29ebd0f2224/output/jars/libs/mail.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.2"
         sha1="c1ec1665abd1e1a471dc2cb31219bc765d2fd674">
-        <dex dex="/Users/vishwath/AndroidStudioProjects/PHMS/app/build/intermediates/transforms/dex/debug/folders/1000/10/mail_f3362adbcdaf2813dcadda6aeea6153dc6915c2f/classes.dex" />
+        <dex dex="/Users/ramajseepha/AndroidStudioProjects/PHMS/app/build/intermediates/pre-dexed/debug/mail_7bc94163b02c4e2fa0c80666a7a3118689318020.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="/Users/vishwath/.android/build-cache/b7bafaf005cd0136a0c3f611246138302fcd7263/output/jars/libs/additionnal.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="/Users/ramajseepha/.android/build-cache/2328836155492c6cd69a42be53d677dc91fa08a1/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="e820b7be8c035dd522da4bc822e8a76c8e27921a">
+        <dex dex="/Users/ramajseepha/AndroidStudioProjects/PHMS/app/build/intermediates/pre-dexed/debug/classes_8cef48a3912bc7cf958e7003ff63c383e0ec3308.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/ramajseepha/.android/build-cache/44f9674d4096048803e7e58ea5c610c8a11d3ea4/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="ea6a989b83d19b1b461281e0475a6cd6514897f8">
+        <dex dex="/Users/ramajseepha/AndroidStudioProjects/PHMS/app/build/intermediates/pre-dexed/debug/classes_71d670cc243bbcd2cade8518327d504b61ca59e0.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/ramajseepha/.android/build-cache/9ee9809ecc01d77d4f29fbd39f01d29ebd0f2224/output/jars/libs/activation.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="caeb02439d439d221f8be4aaf33931153bbe34db">
+        <dex dex="/Users/ramajseepha/AndroidStudioProjects/PHMS/app/build/intermediates/pre-dexed/debug/activation_ad45a2101a0471058e40b003b720a13fdfd26374.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/ramajseepha/.android/build-cache/59629c8df7e97450759a8b93aef69e913d38ca6b/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="/Users/ramajseepha/AndroidStudioProjects/PHMS/app/build/intermediates/pre-dexed/debug/classes_84241ab8a7b93bc4d8636fff792b890ffa4c5349.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/ramajseepha/.android/build-cache/9ee9809ecc01d77d4f29fbd39f01d29ebd0f2224/output/jars/libs/additionnal.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.2"
         sha1="57adc1843cc21aa845e27adb0aa32ea9a4537cd9">
-        <dex dex="/Users/vishwath/AndroidStudioProjects/PHMS/app/build/intermediates/transforms/dex/debug/folders/1000/10/additionnal_70cde76bade0b6ab387036d62692ec190df6e554/classes.dex" />
+        <dex dex="/Users/ramajseepha/AndroidStudioProjects/PHMS/app/build/intermediates/pre-dexed/debug/additionnal_7704993945b284747a0890e1c2338ef35d7a1ee0.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="/Users/vishwath/AndroidStudioProjects/PHMS/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="/Users/ramajseepha/.android/build-cache/2653359392126593122c2696e7a8ca7c40ed4d39/output/jars/classes.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.2"
-        sha1="022c871bfad9bc1bbe85eb88075fa0b0746b10d1">
-        <dex dex="/Users/vishwath/AndroidStudioProjects/PHMS/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_da56424b3b9f05ef107eb131cdda387e3037c6d5/classes.dex" />
+        sha1="ea4b54dcbfe5ac05efb0a314105f07258118d3a7">
+        <dex dex="/Users/ramajseepha/AndroidStudioProjects/PHMS/app/build/intermediates/pre-dexed/debug/classes_87c0bd3c546cbfe9759253ec6f1cfa1c60633e27.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/ramajseepha/.android/build-cache/6e78fe2504cc859b01e51f18166acd1525a23c46/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="dd39827d2067497e60e21da48a7926000b6d4b0c">
+        <dex dex="/Users/ramajseepha/AndroidStudioProjects/PHMS/app/build/intermediates/pre-dexed/debug/classes_4a31415e1151bdf0a529ab0ae76b757b6c256530.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/ramajseepha/.android/build-cache/18270d27e666f7c4ab318e34a73344e317993e1b/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="4ef8ab5fee042023018249474bc93bd4b2b9c17e">
+        <dex dex="/Users/ramajseepha/AndroidStudioProjects/PHMS/app/build/intermediates/pre-dexed/debug/classes_157e80d42c9a951e9c3b01a966b63affa82e32de.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/ramajseepha/.android/build-cache/68c0e362c93c5e6fda4b2bd79e42ee99d9be11d7/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="cb454b52545859ed2f24a6c01366805b0fa04b22">
+        <dex dex="/Users/ramajseepha/AndroidStudioProjects/PHMS/app/build/intermediates/pre-dexed/debug/classes_d88d9a6ca70f3e626b6cd983075f9090e37d5d16.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/ramajseepha/.android/build-cache/c20fdf0fc9f9882f56550f1b7c8eb2b95b59f7b4/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="fa0446a14ed5dd3725047d6399ffea771a564b30">
+        <dex dex="/Users/ramajseepha/AndroidStudioProjects/PHMS/app/build/intermediates/pre-dexed/debug/classes_46b59b80354a19708819c9dee3629d67e1b58ad6.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/ramajseepha/.android/build-cache/a50e6ff68104f4d4cf88e72395b2726015f27073/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="e51c2f662bb72419632af5192553c37e33890a99">
+        <dex dex="/Users/ramajseepha/AndroidStudioProjects/PHMS/app/build/intermediates/pre-dexed/debug/classes_001d2d7d734a0f74fe5c7184708632047e2df1e1.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/ramajseepha/.android/build-cache/6475083bb392ebef1b2d4703606e4036e7932e1e/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="702d339bc0a81d21354cd7e2cf2b67225fa4a16c">
+        <dex dex="/Users/ramajseepha/AndroidStudioProjects/PHMS/app/build/intermediates/pre-dexed/debug/classes_195d282abe7b2f17e9db66b2f0983554fc512633.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/ramajseepha/.android/build-cache/02d0fe6c2c770a08bb4488de4d747c35de86f591/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="8fe8a8f77d651982ce5e18f6187dc4daf914ac57">
+        <dex dex="/Users/ramajseepha/AndroidStudioProjects/PHMS/app/build/intermediates/pre-dexed/debug/classes_741bbe0f273050753e9ddbf9485a54b7ae648141.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/ramajseepha/.android/build-cache/21d547710bfcfe362c46a9c90371174d47a934f0/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="30a4938ea5235ccf532b3e9f04200e68547e36ad">
+        <dex dex="/Users/ramajseepha/AndroidStudioProjects/PHMS/app/build/intermediates/pre-dexed/debug/classes_1d2c79c0fe46b86bab58eb076bff046577b6130d.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/ramajseepha/.android/build-cache/3357cf2279d872a1918ea14109d874d8a262650b/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="eb0d830e3eabb9deb9ec44869cf7ac7ea1ad794c">
+        <dex dex="/Users/ramajseepha/AndroidStudioProjects/PHMS/app/build/intermediates/pre-dexed/debug/classes_5a752132605881e280116e37fd6e33f4a6294a67.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/ramajseepha/.android/build-cache/3b847fef2196fe255abca538ea1a66921fceef9a/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="6addaba208e21c6da776d0ca75b6b23a6ccd5499">
+        <dex dex="/Users/ramajseepha/AndroidStudioProjects/PHMS/app/build/intermediates/pre-dexed/debug/classes_8cfb67008fb88a26ef867f3db72b5f9f149c2b02.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/ramajseepha/.android/build-cache/5261ae7b0c2548175a4a5afb917d355b1a8d4dc9/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="0dc8ab07eeceda5e99b305c8069765056b6e5c9d">
+        <dex dex="/Users/ramajseepha/AndroidStudioProjects/PHMS/app/build/intermediates/pre-dexed/debug/classes_62971b1c2db6a1501892310c73bbeab19809703d.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/ramajseepha/.android/build-cache/1d93b2c4b17287f0564b1d08e4ffc46d4bcb71a8/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="09cf6aa1390f95157e8295d02be7868f568825fc">
+        <dex dex="/Users/ramajseepha/AndroidStudioProjects/PHMS/app/build/intermediates/pre-dexed/debug/classes_97d7c2ca7dbc126c262c0f12627ab2bb7758d542.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/ramajseepha/.android/build-cache/3b77dd3da048cfac171b17089f9b5b1e1e224d71/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="25438f55fc6d906a0e72f30b21487541430ede43">
+        <dex dex="/Users/ramajseepha/AndroidStudioProjects/PHMS/app/build/intermediates/pre-dexed/debug/classes_3f8fe7a9d6bbcf2ba2d01ba0903baf175203702b.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/ramajseepha/.android/build-cache/9ee9809ecc01d77d4f29fbd39f01d29ebd0f2224/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="e9594f0b6eaea9e8b7dd28ff6993f4eba61da9d5">
+        <dex dex="/Users/ramajseepha/AndroidStudioProjects/PHMS/app/build/intermediates/pre-dexed/debug/classes_a489a8c8e997e6081910c972ca6ff8690804f4b7.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/ramajseepha/.android/build-cache/bced2d7c3352f95a05738eb3f2cfffc6ad0f6866/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="152de8da301561dcb0946471697a420d8f7a68c5">
+        <dex dex="/Users/ramajseepha/AndroidStudioProjects/PHMS/app/build/intermediates/pre-dexed/debug/classes_f2920bc38966f4a4dd20fd914f97fda01ef630c3.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/ramajseepha/.android/build-cache/c02d03f96694e85f8dae3db69838a0e23ef2ec63/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="756f6297eef79784f5e356dcd4f39865028b2bd0">
+        <dex dex="/Users/ramajseepha/AndroidStudioProjects/PHMS/app/build/intermediates/pre-dexed/debug/classes_5bea52d79d018a20c6afaab6abb9527a57841dcd.jar" />
     </item>
 
 </items>
