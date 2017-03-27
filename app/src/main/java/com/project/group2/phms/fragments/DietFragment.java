@@ -28,7 +28,7 @@ public class DietFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_diet_frament, container, false);
+        View view = inflater.inflate(R.layout.fragment_diet, container, false);
         toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
         toolbar.setTitle(getString(R.string.diet));
         return view;

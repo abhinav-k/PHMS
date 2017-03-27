@@ -60,6 +60,20 @@
 
     </array>
 
+    <array name="specializationArray">
+        <item>Cardiologist</item>
+        <item>Neurologist</item>
+        <item>Oncologist</item>
+        <item>Radiologist</item>
+        <item>Orthologist</item>
+        <item>General Practitioner</item>
+        <item>Trauma</item>
+        <item>Pediatrist</item>
+        <item>Gynacologist</item>
+        <item>Dermatologist</item>
+
+    </array>
+
     <!--Drawer Layout-->
     <string name="home">Home</string>
     <string name="profile">Profile</string>
@@ -103,4 +117,26 @@
     <string name="phone">Phone</string>
     <string name="designeeName">Designee\'s Name</string>
     <string name="relationship">Relationship</string>
+
+    <!--Appointments Fragment-->
+    <string name="doctorInfo">Doctor Information:</string>
+    <string name="doctorSpecialization">Doctor Specialization</string>
+    <string name="number">Phone Number</string>
+    <string name="visitinfo">Visit Information:</string>
+    <string name="appointmentdate">Appointment Date</string>
+    <string name="appointmenttime">Appointment Time</string>
+    <string name="purpose">Purpose</string>
+    <string name="prescriptionhint">Prescription/Outcomes/Results</string>
+    <string name="prescription">Prescription</string>
+
+    <!-- Diet Fragment -->
+    <string name="breakfast">Breakfast</string>
+    <string name="lunch">Lunch</string>
+    <string name="dinner">Dinner</string>
+    <string name="snacks">Snacks</string>
+    <string name="goalcal">Goal</string>
+    <string name="foodcal">Food</string>
+    <string name="exercal">Exercise</string>
+    <string name="remaining">Remaining</string>
+
 </resources>

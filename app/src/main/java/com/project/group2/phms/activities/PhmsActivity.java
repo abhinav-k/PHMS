@@ -67,7 +67,7 @@ public class PhmsActivity extends BaseActivity {
     DatabaseReference databaseReference;
     private Drawer result = null;
     AccountHeader headerResult;
-    boolean profileFlag, vitalsFlag = false, medFlag = false, dietFlag = false, notesFlag = false, homeFlag = true;
+    boolean profileFlag, vitalsFlag = false, medFlag = false, dietFlag = false,appointmentsFlag= false, notesFlag = false, homeFlag = true;
     ArrayList<Fragment> fragmentList;
     Stack<PrimaryDrawerItem> fragmentStack;
 
@@ -92,6 +92,7 @@ public class PhmsActivity extends BaseActivity {
             vitalsFlag = extras.getBoolean("vitalsFlag");
             medFlag = extras.getBoolean("medFlag");
             dietFlag = extras.getBoolean("dietFlag");
+            appointmentsFlag = extras.getBoolean("appointmentsFlag");
             notesFlag = extras.getBoolean("notesFlag");
             homeFlag = extras.getBoolean("homeFlag");
         }
@@ -200,6 +201,12 @@ public class PhmsActivity extends BaseActivity {
             Fragment fragment = new MedicationFragment();
             startFragment(fragment);
             result.setSelection(medication);
+        }
+        if (appointmentsFlag) {
+            appointmentsFlag = false;
+            Fragment fragment = new AppointmentsFragment();
+            startFragment(fragment);
+            result.setSelection(appointments);
         }
 
         result.setOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
