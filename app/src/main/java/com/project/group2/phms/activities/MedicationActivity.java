@@ -32,30 +32,29 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.mikepenz.iconics.context.IconicsContextWrapper;
-import com.project.group2.phms.JSONUtils.BackGroundTask;
 import com.project.group2.phms.R;
 import com.project.group2.phms.model.DesigneeDoctor;
 import com.project.group2.phms.model.Medication;
-
-
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * Created by vishwath on 2/14/17.
@@ -100,11 +99,12 @@ public class MedicationActivity extends BaseActivity implements View.OnClickList
     HashMap<String, String> conflictsMap;
     ArrayList<String> medList;
 
+    JSONObject jsonObject;
+
     //JSON_URL node information
     private static final String TAG_DATA = "results";
     private static final String TAG_NAME = "term";
-    private static final String MAP_API_URL = "https://api.fda.gov/drug/label.json?count=openfda.brand_name.exact&limit=20";
-    private BackGroundTask backgroundTask;
+    private static final String MAP_API_URL = "https://api.fda.gov/drug/label.json?count=openfda.brand_name.exact&limit=100";
     HashMap<String, String> medicationsMap;
 
     //Changes for populating the spinner with JSON data - Ramji End
@@ -154,7 +154,6 @@ public class MedicationActivity extends BaseActivity implements View.OnClickList
                     DataSnapshot snapshot = dataSnapshot.child(medication_key_value);
                     medication = snapshot.getValue(Medication.class);
                     if (medication != null) {
-//                        medicationNameSpinner.setSelection(getIndex(medicationNameSpinner, medication.getMedicationName()));
                         medAutoTextView.setText(medication.getMedicationName());
                         medicationDosageEditText.setText(medication.getDosage());
                         initialTimeEditText.setText(medication.getInitialTime());
@@ -212,28 +211,49 @@ public class MedicationActivity extends BaseActivity implements View.OnClickList
         conflictsMap.put("conflict4", "drugd-drugc");
     }
 
-    //Changes after Sprint 2 - Populate medicationName spinner - Start
     public void buildMedicationNamesDropdown() {
-        List<NameValuePair> apiParams = new ArrayList<NameValuePair>(1);
-        apiParams.add(new BasicNameValuePair("call", "medicationsList"));
 
-        backgroundTask = new BackGroundTask(MAP_API_URL, "GET", apiParams);
-        try {
-            JSONObject medicationNamesJSON = backgroundTask.execute().get();
-            JSONArray medicationNames = medicationNamesJSON.getJSONArray(TAG_DATA);
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(MAP_API_URL)
+                .addHeader("cache-control", "no-cache")
+                .build();
 
-            for (int i = 0; i < medicationNames.length(); i++) {
-                JSONObject medNames = medicationNames.getJSONObject(i);
-                String medName = medNames.getString(TAG_NAME);
-                medicationList.add(medName);
-                adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, medicationList);
 
-                medAutoTextView.setAdapter(adapter);
-
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Toast.makeText(MedicationActivity.this, "Connection Error", Toast.LENGTH_LONG).show();
             }
-        } catch (InterruptedException | ExecutionException | JSONException e) {
-            e.printStackTrace();
-        }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    final String responseData = response.body().string();
+                    try {
+                        jsonObject = new JSONObject(responseData);
+                        JSONArray medicationArray = jsonObject.getJSONArray(TAG_DATA);
+                        for (int i = 0; i < medicationArray.length(); i++) {
+                            JSONObject medNames = medicationArray.getJSONObject(i);
+                            String medName = medNames.getString(TAG_NAME);
+                            medicationList.add(medName);
+                        }
+                        Log.d("json", medicationList.toString());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                MedicationActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        adapter = new ArrayAdapter<>(MedicationActivity.this, android.R.layout.simple_list_item_1, android.R.id.text1, medicationList);
+                        medAutoTextView.setAdapter(adapter);
+                    }
+                });
+            }
+
+        });
     }
 
     //Changes after Sprint 2 - Populate medicationName spinner - End
@@ -394,7 +414,7 @@ public class MedicationActivity extends BaseActivity implements View.OnClickList
                             String designeeEmail = designeeDoctor.getDesigneeEmail();
                             String doctorEmail = designeeDoctor.getDoctorEmail();
                             BackgroundMail.newBuilder(MedicationActivity.this)
-                                    .withUsername("phms.group2@gmail.com")
+                                    .withUsername("phmsgroup2@gmail.com")
                                     .withPassword("science100")
                                     .withMailto(designeeEmail)
                                     .withType(BackgroundMail.TYPE_PLAIN)
@@ -404,7 +424,7 @@ public class MedicationActivity extends BaseActivity implements View.OnClickList
                                         @Override
                                         public void onSuccess() {
                                             //do some magic
-                                            Log.d("Email","Sent Success");
+                                            Log.d("Email", "Sent Success");
                                             dbPushFunction();
                                         }
                                     })
@@ -423,7 +443,6 @@ public class MedicationActivity extends BaseActivity implements View.OnClickList
 
                         }
                     });
-
 
 
                 }

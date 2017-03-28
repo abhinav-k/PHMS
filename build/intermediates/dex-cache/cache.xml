@@ -39,6 +39,15 @@
     </item>
     <item
         is-multidex="true"
+        jar="/Users/vishwath/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/okhttp/3.6.0/69edde9fc4b01c9fd51d25b83428837478c27254/okhttp-3.6.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="69edde9fc4b01c9fd51d25b83428837478c27254">
+        <dex dex="/Users/vishwath/AndroidStudioProjects/PHMS/app/build/intermediates/transforms/dex/debug/folders/1000/10/okhttp-3.6.0_c407dd6b778557f6cbf91978a158046abad8aed9/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="/Users/vishwath/.android/build-cache/b7bafaf005cd0136a0c3f611246138302fcd7263/output/jars/libs/mail.jar"
         jumboMode="true"
         optimize="true"
