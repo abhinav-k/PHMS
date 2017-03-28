@@ -61,8 +61,6 @@ import okhttp3.Response;
  */
 
 public class MedicationActivity extends BaseActivity implements View.OnClickListener {
-    //    @BindView(R.id.medicationNameSpinner)
-//    protected Spinner medicationNameSpinner;
     @BindView(R.id.medicationDosageInputText)
     protected TextInputLayout medicationDosageInputText;
     @BindView(R.id.medicationDosageEditText)
@@ -238,7 +236,6 @@ public class MedicationActivity extends BaseActivity implements View.OnClickList
                             String medName = medNames.getString(TAG_NAME);
                             medicationList.add(medName);
                         }
-                        Log.d("json", medicationList.toString());
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -416,7 +413,7 @@ public class MedicationActivity extends BaseActivity implements View.OnClickList
                             BackgroundMail.newBuilder(MedicationActivity.this)
                                     .withUsername("phmsgroup2@gmail.com")
                                     .withPassword("science100")
-                                    .withMailto(designeeEmail)
+                                    .withMailto(designeeEmail + "," + doctorEmail)
                                     .withType(BackgroundMail.TYPE_PLAIN)
                                     .withSubject("this is the subject")
                                     .withBody("this is the body")
