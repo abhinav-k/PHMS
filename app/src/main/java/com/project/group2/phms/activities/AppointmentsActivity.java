@@ -176,17 +176,17 @@ public class AppointmentsActivity extends BaseActivity implements View.OnClickLi
         } else if (specialization.equalsIgnoreCase("Radiologist")) {
             return 3;
         } else if (specialization.equalsIgnoreCase("Orthologist")) {
-            return 3;
+            return 4;
         }else if (specialization.equalsIgnoreCase("General Practitioner")) {
-            return 3;
+            return 5;
         }else if (specialization.equalsIgnoreCase("Trauma")) {
-            return 3;
+            return 6;
         }else if (specialization.equalsIgnoreCase("Pediatrist")) {
-            return 3;
+            return 7;
         }else if (specialization.equalsIgnoreCase("Gynacologist")) {
-            return 3;
+            return 8;
         }else if (specialization.equalsIgnoreCase("Dermatologist")) {
-            return 3;
+            return 9;
         }else{
             return 0;
         }
@@ -284,7 +284,7 @@ public class AppointmentsActivity extends BaseActivity implements View.OnClickLi
                             calendar.set(year, monthOfYear, dayOfMonth);
                             SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
                             String visitDate = dateFormat.format(calendar.getTime());
-                            /*try {
+                            try {
                                 Date appointDate = dateFormat.parse(visitDate);
                                 Date currentDate = new Date();
                                 if(appointDate.before(currentDate)){
@@ -295,7 +295,7 @@ public class AppointmentsActivity extends BaseActivity implements View.OnClickLi
                                 }
                             } catch (ParseException e) {
                                 e.printStackTrace();
-                            }*/
+                            }
                             appointmentDateEditText.setText(visitDate);
                         }
                     }, mYear, mMonth, mDay);
