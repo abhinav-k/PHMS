@@ -10,7 +10,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="442c0cab-0f76-4d47-a6f5-2264579ed75a" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/project/group2/phms/activities/AppointmentsActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/project/group2/phms/activities/AppointmentsActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/project/group2/phms/adapter/BreakfastAdapter.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/project/group2/phms/adapter/BreakfastAdapter.java" />
     </list>
     <ignored path="PHMS-master.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -68,11 +68,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AppointmentsAdapter.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="AppointmentsAdapter.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/project/group2/phms/adapter/AppointmentsAdapter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="186">
-              <caret line="103" column="73" selection-start-line="103" selection-start-column="73" selection-end-line="103" selection-end-column="73" />
+            <state relative-caret-position="531">
+              <caret line="130" column="0" selection-start-line="130" selection-start-column="0" selection-end-line="130" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DinnerAdapter.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/project/group2/phms/adapter/DinnerAdapter.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="630">
+              <caret line="95" column="64" selection-start-line="95" selection-start-column="64" selection-end-line="95" selection-end-column="64" />
               <folding />
             </state>
           </provider>
@@ -118,29 +128,16 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BreakfastAdapter.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="BreakfastAdapter.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/project/group2/phms/adapter/BreakfastAdapter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="231">
-              <caret line="117" column="0" selection-start-line="117" selection-start-column="0" selection-end-line="117" selection-end-column="0" />
+            <state relative-caret-position="246">
+              <caret line="112" column="88" selection-start-line="112" selection-start-column="88" selection-end-line="112" selection-end-column="88" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#3955#4392#0" expanded="true" />
-                <element signature="e#4391#4392#0" expanded="true" />
+                <element signature="e#3955#4303#0" expanded="true" />
+                <element signature="e#4302#4303#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="fragment_diet.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_diet.xml">
-          <provider editor-type-id="android-designer2">
-            <state />
-          </provider>
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="22" column="21" selection-start-line="22" selection-start-column="21" selection-end-line="22" selection-end-column="21" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -2310,12 +2307,12 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/project/group2/phms/adapter/DinnerAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/project/group2/phms/adapter/LunchAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/project/group2/phms/adapter/SnacksAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/project/group2/phms/adapter/BreakfastAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_diet.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/project/group2/phms/fragments/DietFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/project/group2/phms/activities/MedicationActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/project/group2/phms/activities/PhmsActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/project/group2/phms/activities/AppointmentsActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/project/group2/phms/adapter/BreakfastAdapter.java" />
       </list>
     </option>
   </component>
@@ -3398,14 +3395,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/project/group2/phms/adapter/DinnerAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1110">
-          <caret line="95" column="64" selection-start-line="95" selection-start-column="64" selection-end-line="95" selection-end-column="64" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/project/group2/phms/adapter/LunchAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1125">
@@ -3465,18 +3454,6 @@
         <state relative-caret-position="120">
           <caret line="16" column="13" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/project/group2/phms/adapter/BreakfastAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="231">
-          <caret line="117" column="0" selection-start-line="117" selection-start-column="0" selection-end-line="117" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#3955#4392#0" expanded="true" />
-            <element signature="e#4391#4392#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3542,9 +3519,29 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/project/group2/phms/adapter/AppointmentsAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="186">
-          <caret line="103" column="73" selection-start-line="103" selection-start-column="73" selection-end-line="103" selection-end-column="73" />
+        <state relative-caret-position="531">
+          <caret line="130" column="0" selection-start-line="130" selection-start-column="0" selection-end-line="130" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/project/group2/phms/adapter/DinnerAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="630">
+          <caret line="95" column="64" selection-start-line="95" selection-start-column="64" selection-end-line="95" selection-end-column="64" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/project/group2/phms/adapter/BreakfastAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="246">
+          <caret line="112" column="88" selection-start-line="112" selection-start-column="88" selection-end-line="112" selection-end-column="88" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#3955#4303#0" expanded="true" />
+            <element signature="e#4302#4303#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

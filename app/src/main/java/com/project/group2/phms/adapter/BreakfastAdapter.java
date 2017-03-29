@@ -111,12 +111,6 @@ public class BreakfastAdapter extends RecyclerView.Adapter<BreakfastAdapter.View
                 public boolean onMenuItemClick(MenuItem item) {
                     deleteDietByKey(key.getText().toString());
                     Toast.makeText(mContext, "Diet Deleted", Toast.LENGTH_SHORT).show();
-
-                    if(key == null){
-
-                    }else{
-
-                    }
                     return false;
                 }
             });
