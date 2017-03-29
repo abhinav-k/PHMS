@@ -168,6 +168,7 @@ public class MedicationActivity extends BaseActivity implements View.OnClickList
                         startDateEditText.setText(medication.getStartDate());
                         endDateEditText.setText(medication.getEndDate());
                         frequencyDaysEditText.setText(medication.getFrequency().substring(6, 7));
+                        //ToDo: Change
                         frequencySpinner.setSelection(frequencySelector(medication.getFrequency().substring(8)));
                     }
                 }
@@ -253,7 +254,9 @@ public class MedicationActivity extends BaseActivity implements View.OnClickList
             return 1;
         } else if (frequency.equalsIgnoreCase("Weeks")) {
             return 2;
-        } else if (frequency.equalsIgnoreCase("Months")) {
+        }
+        //ToDo: Change
+        else if (frequency.equalsIgnoreCase("Months")) {
             return 3;
         } else {
             return 1;
@@ -281,6 +284,8 @@ public class MedicationActivity extends BaseActivity implements View.OnClickList
                             calendar.set(year, monthOfYear, dayOfMonth);
                             SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
                             String startDate = dateFormat.format(calendar.getTime());
+
+                            //ToDo: Change
 
                             try {
                                 Date startDateParsed = dateFormat.parse(startDate);
@@ -378,6 +383,8 @@ public class MedicationActivity extends BaseActivity implements View.OnClickList
         medicationsMap.put("initialTime", initialTime);
         medicationsMap.put("startDate", startDate);
         medicationsMap.put("endDate", endDate);
+        //ToDo: Change
+
         medicationsMap.put("frequency", "Every " + frequencyDays + " " + frequency);
         if (medication_keyTextView.getText().toString().equals("")) {
             Calendar c = Calendar.getInstance();
@@ -496,6 +503,8 @@ public class MedicationActivity extends BaseActivity implements View.OnClickList
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        //ToDo: Change
+
         if (endDateParsed.after(startDateParsed)) {
             endDateLayout.setError(null);
         } else {

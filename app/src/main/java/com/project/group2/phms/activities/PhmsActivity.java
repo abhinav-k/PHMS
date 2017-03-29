@@ -67,6 +67,7 @@ public class PhmsActivity extends BaseActivity {
     DatabaseReference databaseReference;
     private Drawer result = null;
     AccountHeader headerResult;
+    //ToDo: Change
     boolean profileFlag, vitalsFlag = false, medFlag = false, dietFlag = false,appointmentsFlag= false, notesFlag = false, homeFlag = true;
     ArrayList<Fragment> fragmentList;
     Stack<PrimaryDrawerItem> fragmentStack;
@@ -92,6 +93,7 @@ public class PhmsActivity extends BaseActivity {
             vitalsFlag = extras.getBoolean("vitalsFlag");
             medFlag = extras.getBoolean("medFlag");
             dietFlag = extras.getBoolean("dietFlag");
+            //ToDo: Change
             appointmentsFlag = extras.getBoolean("appointmentsFlag");
             notesFlag = extras.getBoolean("notesFlag");
             homeFlag = extras.getBoolean("homeFlag");
@@ -202,6 +204,7 @@ public class PhmsActivity extends BaseActivity {
             startFragment(fragment);
             result.setSelection(medication);
         }
+        //ToDo: Change
         if (appointmentsFlag) {
             appointmentsFlag = false;
             Fragment fragment = new AppointmentsFragment();
