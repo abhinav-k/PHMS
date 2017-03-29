@@ -20,6 +20,24 @@
         <dex dex="/Users/ramajseepha/AndroidStudioProjects/PHMS/app/build/intermediates/pre-dexed/debug/classes_c2c972a6c39eba8dd4192a3d849caaddc4f01b66.jar" />
     </item>
     <item
+        is-multidex="true"
+        jar="/Users/ramajseepha/AndroidStudioProjects/PHMS/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="c82741bc129dd5f99f11a4ab8666ae24262053b6">
+        <dex dex="/Users/ramajseepha/AndroidStudioProjects/PHMS/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_d3459518139ff251cebe123eb0d88079db36d498/classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/ramajseepha/.android/build-cache/8769833e28b9df0ace25c458844768f4c3d93d07/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="bf61bf8eaae33094f5db5c6c9676e618babd9178">
+        <dex dex="/Users/ramajseepha/AndroidStudioProjects/PHMS/app/build/intermediates/pre-dexed/debug/classes_b43ba5c44803f3dc8b023ae0fa8e19c4c5408bc3.jar" />
+    </item>
+    <item
         is-multidex="false"
         jar="/Users/ramajseepha/.android/build-cache/383ac8f72ecdbfba2113ab72ab371dd850ea4c6e/output/jars/classes.jar"
         jumboMode="false"
@@ -200,6 +218,15 @@
         <dex dex="/Users/ramajseepha/AndroidStudioProjects/PHMS/app/build/intermediates/pre-dexed/debug/classes_5a752132605881e280116e37fd6e33f4a6294a67.jar" />
     </item>
     <item
+        is-multidex="true"
+        jar="/Users/ramajseepha/.android/build-cache/8769833e28b9df0ace25c458844768f4c3d93d07/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="bf61bf8eaae33094f5db5c6c9676e618babd9178">
+        <dex dex="/Users/ramajseepha/AndroidStudioProjects/PHMS/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_b43ba5c44803f3dc8b023ae0fa8e19c4c5408bc3/classes.dex" />
+    </item>
+    <item
         is-multidex="false"
         jar="/Users/ramajseepha/.android/build-cache/3b847fef2196fe255abca538ea1a66921fceef9a/output/jars/classes.jar"
         jumboMode="false"
@@ -225,6 +252,15 @@
         revision="25.0.2"
         sha1="09cf6aa1390f95157e8295d02be7868f568825fc">
         <dex dex="/Users/ramajseepha/AndroidStudioProjects/PHMS/app/build/intermediates/pre-dexed/debug/classes_97d7c2ca7dbc126c262c0f12627ab2bb7758d542.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/ramajseepha/AndroidStudioProjects/PHMS/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="e780e466d756a99652216e54fd35898285b19bf3">
+        <dex dex="/Users/ramajseepha/AndroidStudioProjects/PHMS/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_289cc87dcaa1846ee8a3051d7d9f69d5d21a5af3/classes.dex" />
     </item>
     <item
         is-multidex="false"

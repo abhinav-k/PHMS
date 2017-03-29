@@ -244,6 +244,7 @@ public class AppointmentsActivity extends BaseActivity implements View.OnClickLi
     private boolean validateForm(String doctorsName, String specialization, String phoneNumber, String emailAddress, String appointmentDate, String appointmentTime, String purpose, String prescription) {
         boolean valid=true;
         if (TextUtils.isEmpty(doctorsName) || TextUtils.isEmpty(specialization) || TextUtils.isEmpty(phoneNumber) || TextUtils.isEmpty(emailAddress) || TextUtils.isEmpty(appointmentDate) || TextUtils.isEmpty(appointmentTime) || TextUtils.isEmpty(purpose) || TextUtils.isEmpty(prescription)) {
+            Toast.makeText(AppointmentsActivity.this,"Please enter all mandatory Values", Toast.LENGTH_SHORT).show();
             return false;
         }
         Pattern patternEmail = Patterns.EMAIL_ADDRESS;
@@ -283,7 +284,7 @@ public class AppointmentsActivity extends BaseActivity implements View.OnClickLi
                             calendar.set(year, monthOfYear, dayOfMonth);
                             SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
                             String visitDate = dateFormat.format(calendar.getTime());
-                            try {
+                            /*try {
                                 Date appointDate = dateFormat.parse(visitDate);
                                 Date currentDate = new Date();
                                 if(appointDate.before(currentDate)){
@@ -294,10 +295,11 @@ public class AppointmentsActivity extends BaseActivity implements View.OnClickLi
                                 }
                             } catch (ParseException e) {
                                 e.printStackTrace();
-                            }
+                            }*/
+                            appointmentDateEditText.setText(visitDate);
                         }
                     }, mYear, mMonth, mDay);
-            datePickerDialog.getDatePicker().setMinDate(new Date().getTime());
+            datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
             datePickerDialog.show();
         }
 
