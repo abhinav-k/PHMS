@@ -5,7 +5,9 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputEditText;
@@ -35,6 +37,7 @@ import com.mikepenz.iconics.context.IconicsContextWrapper;
 import com.project.group2.phms.R;
 import com.project.group2.phms.model.DesigneeDoctor;
 import com.project.group2.phms.model.Medication;
+import com.project.group2.phms.preferences.Preferences;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -102,7 +105,7 @@ public class MedicationActivity extends BaseActivity implements View.OnClickList
     //JSON_URL node information
     private static final String TAG_DATA = "results";
     private static final String TAG_NAME = "term";
-    private static final String MAP_API_URL = "https://api.fda.gov/drug/label.json?count=openfda.brand_name.exact&limit=100";
+    private static final String MAP_API_URL = "https://api.fda.gov/drug/label.json?count=openfda.brand_name.exact&limit=1000";
     HashMap<String, String> medicationsMap;
 
     //Changes for populating the spinner with JSON data - Ramji End
@@ -203,10 +206,12 @@ public class MedicationActivity extends BaseActivity implements View.OnClickList
     }
 
     private void createConflictsMap() {
-        conflictsMap.put("conflict1", "druga-drugb");
-        conflictsMap.put("conflict2", "drugb-druga");
-        conflictsMap.put("conflict3", "drugc-drugd");
-        conflictsMap.put("conflict4", "drugd-drugc");
+        conflictsMap.put("conflict1", "Gabapentin-Aspirin");
+        conflictsMap.put("conflict2", "Aspirin-Gabapentin");
+        conflictsMap.put("conflict3", "Diphenhydramine Hydrochloride-azithromycin");
+        conflictsMap.put("conflict4", "azithromycin-Diphenhydramine Hydrochloride");
+        conflictsMap.put("conflict5", "Alprazolam-Oxycodone Hydrochloride");
+        conflictsMap.put("conflict6", "Oxycodone Hydrochloride-Alprazolam");
     }
 
     public void buildMedicationNamesDropdown() {
@@ -401,6 +406,7 @@ public class MedicationActivity extends BaseActivity implements View.OnClickList
             alertDialogBuilder.setIcon(R.mipmap.ic_warning_black_24dp);
             alertDialogBuilder.setMessage(medicationName + " may cause health effects when taken with " + oldMed + ". Do " +
                     "you want to still add it ?");
+            final String finalOldMed = oldMed;
             alertDialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -410,28 +416,37 @@ public class MedicationActivity extends BaseActivity implements View.OnClickList
                             DesigneeDoctor designeeDoctor = dataSnapshot.getValue(DesigneeDoctor.class);
                             String designeeEmail = designeeDoctor.getDesigneeEmail();
                             String doctorEmail = designeeDoctor.getDoctorEmail();
-                            BackgroundMail.newBuilder(MedicationActivity.this)
-                                    .withUsername("phmsgroup2@gmail.com")
-                                    .withPassword("science100")
-                                    .withMailto(designeeEmail + "," + doctorEmail)
-                                    .withType(BackgroundMail.TYPE_PLAIN)
-                                    .withSubject("this is the subject")
-                                    .withBody("this is the body")
-                                    .withOnSuccessCallback(new BackgroundMail.OnSuccessCallback() {
-                                        @Override
-                                        public void onSuccess() {
-                                            //do some magic
-                                            Log.d("Email", "Sent Success");
-                                            dbPushFunction();
-                                        }
-                                    })
-                                    .withOnFailCallback(new BackgroundMail.OnFailCallback() {
-                                        @Override
-                                        public void onFail() {
-                                            //do some magic
-                                        }
-                                    })
-                                    .send();
+                            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MedicationActivity.this);
+                            String fullName = sharedPreferences.getString(Preferences.NAME, "");
+                            String subject = "Warning!";
+                            String body = "Hi,\nThis email is to inform you that Mr." + fullName + " has added " + finalOldMed + " and " + medicationName
+                                    + " to the list of medications to be taken. It is advised to contact " + fullName + " immediately.\n\nRegards,\nPHMS.";
+                            if (!TextUtils.isEmpty(designeeEmail) || !TextUtils.isEmpty(doctorEmail)) {
+                                BackgroundMail.newBuilder(MedicationActivity.this)
+                                        .withUsername("phmsgroup2@gmail.com")
+                                        .withPassword("science100")
+                                        .withMailto(designeeEmail + "," + doctorEmail)
+                                        .withType(BackgroundMail.TYPE_PLAIN)
+                                        .withSubject(subject)
+                                        .withBody(body)
+                                        .withOnSuccessCallback(new BackgroundMail.OnSuccessCallback() {
+                                            @Override
+                                            public void onSuccess() {
+                                                //do some magic
+                                                Log.d("Email", "Sent Success");
+                                                dbPushFunction();
+                                            }
+                                        })
+                                        .withOnFailCallback(new BackgroundMail.OnFailCallback() {
+                                            @Override
+                                            public void onFail() {
+                                                //do some magic
+                                            }
+                                        })
+                                        .send();
+                            } else {
+                                Toast.makeText(MedicationActivity.this, "Add designee and doctor contact details", Toast.LENGTH_LONG).show();
+                            }
 
                         }
 

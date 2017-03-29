@@ -46,29 +46,29 @@
       <file leaf-file-name="MedicationActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/project/group2/phms/activities/MedicationActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-525">
-              <caret line="62" column="86" selection-start-line="62" selection-start-column="86" selection-end-line="62" selection-end-column="86" />
+            <state relative-caret-position="4050">
+              <caret line="422" column="138" selection-start-line="422" selection-start-column="138" selection-end-line="422" selection-end-column="138" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#3349#3357#0" expanded="true" />
-                <element signature="e#6460#6612#0" expanded="true" />
-                <element signature="e#6611#6612#0" expanded="true" />
-                <element signature="e#9072#9411#0" expanded="true" />
-                <element signature="e#9410#9411#0" expanded="true" />
-                <element signature="e#10382#11161#0" expanded="true" />
-                <element signature="e#11160#11161#0" expanded="true" />
-                <element signature="e#11558#12224#0" expanded="true" />
-                <element signature="e#12223#12224#0" expanded="true" />
-                <element signature="e#12633#13572#0" expanded="true" />
-                <element signature="e#13571#13572#0" expanded="true" />
-                <element signature="e#16053#18297#0" expanded="true" />
-                <element signature="e#17243#17677#0" expanded="true" />
-                <element signature="e#17676#17677#0" expanded="true" />
-                <element signature="e#17735#18025#0" expanded="true" />
-                <element signature="e#18024#18025#0" expanded="true" />
-                <element signature="e#18296#18297#0" expanded="true" />
-                <element signature="e#18355#18568#0" expanded="true" />
-                <element signature="e#18567#18568#0" expanded="true" />
+                <element signature="e#3492#3500#0" expanded="true" />
+                <element signature="e#6604#6756#0" expanded="true" />
+                <element signature="e#6755#6756#0" expanded="true" />
+                <element signature="e#9446#9785#0" expanded="true" />
+                <element signature="e#9784#9785#0" expanded="true" />
+                <element signature="e#10756#11535#0" expanded="true" />
+                <element signature="e#11534#11535#0" expanded="true" />
+                <element signature="e#11932#12598#0" expanded="true" />
+                <element signature="e#12597#12598#0" expanded="true" />
+                <element signature="e#13007#13946#0" expanded="true" />
+                <element signature="e#13945#13946#0" expanded="true" />
+                <element signature="e#16474#19693#0" expanded="true" />
+                <element signature="e#18374#18836#0" expanded="true" />
+                <element signature="e#18835#18836#0" expanded="true" />
+                <element signature="e#18898#19208#0" expanded="true" />
+                <element signature="e#19207#19208#0" expanded="true" />
+                <element signature="e#19692#19693#0" expanded="true" />
+                <element signature="e#19751#19964#0" expanded="true" />
+                <element signature="e#19963#19964#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -2260,6 +2260,28 @@
               <option name="myItemId" value="phms" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="preferences" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PHMS" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="phms" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -2802,7 +2824,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/assets/drugs.json" />
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/spinnertext.xml">
       <provider editor-type-id="android-designer2">
         <state />
@@ -3223,31 +3244,39 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/project/group2/phms/preferences/Preferences.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/project/group2/phms/activities/MedicationActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-525">
-          <caret line="62" column="86" selection-start-line="62" selection-start-column="86" selection-end-line="62" selection-end-column="86" />
+        <state relative-caret-position="4050">
+          <caret line="422" column="138" selection-start-line="422" selection-start-column="138" selection-end-line="422" selection-end-column="138" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3349#3357#0" expanded="true" />
-            <element signature="e#6460#6612#0" expanded="true" />
-            <element signature="e#6611#6612#0" expanded="true" />
-            <element signature="e#9072#9411#0" expanded="true" />
-            <element signature="e#9410#9411#0" expanded="true" />
-            <element signature="e#10382#11161#0" expanded="true" />
-            <element signature="e#11160#11161#0" expanded="true" />
-            <element signature="e#11558#12224#0" expanded="true" />
-            <element signature="e#12223#12224#0" expanded="true" />
-            <element signature="e#12633#13572#0" expanded="true" />
-            <element signature="e#13571#13572#0" expanded="true" />
-            <element signature="e#16053#18297#0" expanded="true" />
-            <element signature="e#17243#17677#0" expanded="true" />
-            <element signature="e#17676#17677#0" expanded="true" />
-            <element signature="e#17735#18025#0" expanded="true" />
-            <element signature="e#18024#18025#0" expanded="true" />
-            <element signature="e#18296#18297#0" expanded="true" />
-            <element signature="e#18355#18568#0" expanded="true" />
-            <element signature="e#18567#18568#0" expanded="true" />
+            <element signature="e#3492#3500#0" expanded="true" />
+            <element signature="e#6604#6756#0" expanded="true" />
+            <element signature="e#6755#6756#0" expanded="true" />
+            <element signature="e#9446#9785#0" expanded="true" />
+            <element signature="e#9784#9785#0" expanded="true" />
+            <element signature="e#10756#11535#0" expanded="true" />
+            <element signature="e#11534#11535#0" expanded="true" />
+            <element signature="e#11932#12598#0" expanded="true" />
+            <element signature="e#12597#12598#0" expanded="true" />
+            <element signature="e#13007#13946#0" expanded="true" />
+            <element signature="e#13945#13946#0" expanded="true" />
+            <element signature="e#16474#19693#0" expanded="true" />
+            <element signature="e#18374#18836#0" expanded="true" />
+            <element signature="e#18835#18836#0" expanded="true" />
+            <element signature="e#18898#19208#0" expanded="true" />
+            <element signature="e#19207#19208#0" expanded="true" />
+            <element signature="e#19692#19693#0" expanded="true" />
+            <element signature="e#19751#19964#0" expanded="true" />
+            <element signature="e#19963#19964#0" expanded="true" />
           </folding>
         </state>
       </provider>
