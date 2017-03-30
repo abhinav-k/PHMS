@@ -314,6 +314,9 @@ public class DietFragment extends Fragment {
                         lunchMap.put("calories", calories);
                         databaseReferenceLunch.push().setValue(lunchMap);
                         Toast.makeText(getContext(), "Lunch Item successfully added", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getContext(),PhmsActivity.class);
+                        intent.putExtra("dietFlag", true);
+                        startActivity(intent);
                     }
                 });
 
@@ -368,6 +371,9 @@ public class DietFragment extends Fragment {
                         dinnerMap.put("calories", calories);
                         databaseReferenceDinner.push().setValue(dinnerMap);
                         Toast.makeText(getContext(), "Dinner Item successfully added", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getContext(),PhmsActivity.class);
+                        intent.putExtra("dietFlag", true);
+                        startActivity(intent);
                     }
                 });
 
@@ -420,6 +426,9 @@ public class DietFragment extends Fragment {
                         snacksMap.put("calories", calories);
                         databaseReferenceSnacks.push().setValue(snacksMap);
                         Toast.makeText(getContext(), "Snack successfully added", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getContext(),PhmsActivity.class);
+                        intent.putExtra("dietFlag", true);
+                        startActivity(intent);
                     }
                 });
 
