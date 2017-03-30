@@ -3,15 +3,6 @@
 
     <item
         is-multidex="true"
-        jar="/Users/vishwath/.gradle/caches/modules-2/files-2.1/org.jbundle.util.osgi.wrapped/org.jbundle.util.osgi.wrapped.org.apache.http.client/4.1.2/98c86e42679fe7ac066f6c242e0d14f0bce0bb7c/org.jbundle.util.osgi.wrapped.org.apache.http.client-4.1.2.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="98c86e42679fe7ac066f6c242e0d14f0bce0bb7c">
-        <dex dex="/Users/vishwath/AndroidStudioProjects/PHMS/app/build/intermediates/transforms/dex/debug/folders/1000/10/org.jbundle.util.osgi.wrapped.org.apache.http.client-4.1.2_0eb0f67cf8a4a95c18b8543e8aea3c6806b79456/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="/Users/vishwath/AndroidStudioProjects/PHMS/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
         jumboMode="true"
         optimize="true"
@@ -70,7 +61,7 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="022c871bfad9bc1bbe85eb88075fa0b0746b10d1">
+        sha1="30002ad36d69877fcf43d10c48d037fe9205757b">
         <dex dex="/Users/vishwath/AndroidStudioProjects/PHMS/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_da56424b3b9f05ef107eb131cdda387e3037c6d5/classes.dex" />
     </item>
 

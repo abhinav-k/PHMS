@@ -67,7 +67,7 @@ public class PhmsActivity extends BaseActivity {
     DatabaseReference databaseReference;
     private Drawer result = null;
     AccountHeader headerResult;
-    boolean profileFlag, vitalsFlag = false, medFlag = false, dietFlag = false, notesFlag = false, homeFlag = true;
+    boolean profileFlag, vitalsFlag = false, appointmentsFlag = false, medFlag = false, dietFlag = false, notesFlag = false, homeFlag = true;
     ArrayList<Fragment> fragmentList;
     Stack<PrimaryDrawerItem> fragmentStack;
 
@@ -94,6 +94,7 @@ public class PhmsActivity extends BaseActivity {
             dietFlag = extras.getBoolean("dietFlag");
             notesFlag = extras.getBoolean("notesFlag");
             homeFlag = extras.getBoolean("homeFlag");
+            appointmentsFlag = extras.getBoolean("appointmentsFlag");
         }
 
 
@@ -177,7 +178,7 @@ public class PhmsActivity extends BaseActivity {
                 if (profilePic != null && !profilePic.equals("")) {
                     userProfile.withIcon(profilePic);
                     headerResult.updateProfile(userProfile);
-                }else {
+                } else {
                     userProfile.withIcon(R.mipmap.ic_account_circle_white_24dp);
                     headerResult.updateProfile(userProfile);
                 }
@@ -200,6 +201,18 @@ public class PhmsActivity extends BaseActivity {
             Fragment fragment = new MedicationFragment();
             startFragment(fragment);
             result.setSelection(medication);
+        }
+        if (appointmentsFlag) {
+            appointmentsFlag = false;
+            Fragment fragment = new AppointmentsFragment();
+            startFragment(fragment);
+            result.setSelection(appointments);
+        }
+        if (dietFlag) {
+            dietFlag = false;
+            Fragment fragment = new DietFragment();
+            startFragment(fragment);
+            result.setSelection(diet);
         }
 
         result.setOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {

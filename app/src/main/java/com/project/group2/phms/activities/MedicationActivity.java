@@ -59,11 +59,15 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+import static com.project.group2.phms.R.id.startDateLayout;
+
 /**
  * Created by vishwath on 2/14/17.
  */
 
 public class MedicationActivity extends BaseActivity implements View.OnClickListener {
+    @BindView(R.id.startDateLayout)
+    protected TextInputLayout startDateLayout;
     @BindView(R.id.medicationDosageInputText)
     protected TextInputLayout medicationDosageInputText;
     @BindView(R.id.medicationDosageEditText)
@@ -82,10 +86,14 @@ public class MedicationActivity extends BaseActivity implements View.OnClickList
     protected FloatingActionButton doneButton;
     @BindView(R.id.toolbar)
     protected Toolbar toolbar;
+    @BindView(R.id.frequencyDaysLayout)
+    protected TextInputLayout frequencyDaysLayout;
     @BindView(R.id.medication_key)
     protected TextView medication_keyTextView;
     @BindView(R.id.medicationAutoTextView)
     protected AutoCompleteTextView medAutoTextView;
+    @BindView(R.id.endDateLayout)
+    protected TextInputLayout endDateLayout;
 
     FirebaseAuth firebaseAuth;
     DatabaseReference databaseReference, designeeReference;
@@ -160,8 +168,8 @@ public class MedicationActivity extends BaseActivity implements View.OnClickList
                         initialTimeEditText.setText(medication.getInitialTime());
                         startDateEditText.setText(medication.getStartDate());
                         endDateEditText.setText(medication.getEndDate());
-                        frequencyDaysEditText.setText(medication.getFrequency().substring(0, 1));
-                        frequencySpinner.setSelection(frequencySelector(medication.getFrequency().substring(1)));
+                        frequencyDaysEditText.setText(medication.getFrequency().substring(6, 7));
+                        frequencySpinner.setSelection(frequencySelector(medication.getFrequency().substring(8)));
                     }
                 }
 
@@ -268,7 +276,7 @@ public class MedicationActivity extends BaseActivity implements View.OnClickList
             return 1;
         } else if (frequency.equalsIgnoreCase("Weeks")) {
             return 2;
-        } else if (medicationName.equalsIgnoreCase("Months")) {
+        } else if (frequency.equalsIgnoreCase("Months")) {
             return 3;
         } else {
             return 1;
@@ -296,11 +304,24 @@ public class MedicationActivity extends BaseActivity implements View.OnClickList
                             calendar.set(year, monthOfYear, dayOfMonth);
                             SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
                             String startDate = dateFormat.format(calendar.getTime());
+                            try {
+                                Date startDateParsed = dateFormat.parse(startDate);
+                                Date currentDate = new Date();
+                                if (startDateParsed.before(currentDate)) {
+                                    startDateLayout.setError("Please select a date within the date range");
+                                } else {
+                                    startDateLayout.setError(null);
+                                    startDateEditText.setText(startDate);
+                                }
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
                             //startDateEditText.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
-                            startDateEditText.setText(startDate);
+
 
                         }
                     }, mYear, mMonth, mDay);
+            datePickerDialog.getDatePicker().setMinDate(new Date().getTime());
             datePickerDialog.show();
         }
         if (view == endDateEditText) {
@@ -369,7 +390,7 @@ public class MedicationActivity extends BaseActivity implements View.OnClickList
         final String frequencyDays = frequencyDaysEditText.getText().toString().trim();
         final String frequency = frequencySpinner.getSelectedItem().toString();
 
-        if (!validateForm(medicationName, dosage, initialTime, startDate, endDate)) {
+        if (!validateForm(medicationName, dosage, initialTime, startDate, endDate,frequencyDays)) {
             hideProgressDialog();
             return;
         }
@@ -379,7 +400,7 @@ public class MedicationActivity extends BaseActivity implements View.OnClickList
         medicationsMap.put("initialTime", initialTime);
         medicationsMap.put("startDate", startDate);
         medicationsMap.put("endDate", endDate);
-        medicationsMap.put("frequency", frequencyDays + "" + frequency);
+        medicationsMap.put("frequency", "Every " + frequencyDays + " " + frequency);
         if (medication_keyTextView.getText().toString().equals("")) {
             Calendar c = Calendar.getInstance();
             SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
@@ -491,13 +512,14 @@ public class MedicationActivity extends BaseActivity implements View.OnClickList
         finish();
     }
 
-    private boolean validateForm(String medicationName, String dosage, String initialTime, String startDate, String endDate) {
-        boolean valid;
+    private boolean validateForm(String medicationName, String dosage, String initialTime, String startDate, String endDate, String frequencyDays) {
+        boolean valid=true;
         if (TextUtils.isEmpty(medicationName) || TextUtils.isEmpty(dosage) || TextUtils.isEmpty(initialTime) || TextUtils.isEmpty(startDate) || TextUtils.isEmpty(endDate)) {
             return false;
         }
         Date startDateParsed = null;
         Date endDateParsed = null;
+        int freqDays = Integer.parseInt(frequencyDays);
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
         try {
             startDateParsed = dateFormat.parse(startDate);
@@ -506,11 +528,16 @@ public class MedicationActivity extends BaseActivity implements View.OnClickList
             e.printStackTrace();
         }
         if (endDateParsed.after(startDateParsed)) {
-            endDateEditText.setError(null);
-            valid = true;
+            endDateLayout.setError(null);
         } else {
-            endDateEditText.setError("End date should be after Start Date");
+            endDateLayout.setError("End date should be after Start Date");
             valid = false;
+        }
+        if ((freqDays <= 0) || freqDays > 30) {
+            frequencyDaysLayout.setError("Enter a valid in the range of 1-30");
+            valid = false;
+        } else {
+            frequencyDaysLayout.setError(null);
         }
 
 
