@@ -208,7 +208,9 @@ public class LunchAdapter extends RecyclerView.Adapter<LunchAdapter.ViewHolder> 
             databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("diet").child("lunch").child(key);
             databaseReference.removeValue();
             mLunchList.remove(getAdapterPosition());
-            notifyDataSetChanged();
+            Intent intent = new Intent(mContext, PhmsActivity.class);
+            intent.putExtra("dietFlag", true);
+            mContext.startActivity(intent);
 
         }
 

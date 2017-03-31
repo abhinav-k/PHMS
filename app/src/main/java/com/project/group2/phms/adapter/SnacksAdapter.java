@@ -209,7 +209,9 @@ public class SnacksAdapter extends RecyclerView.Adapter<SnacksAdapter.ViewHolder
             databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("diet").child("snacks").child(key);
             databaseReference.removeValue();
             mSnacksList.remove(getAdapterPosition());
-            notifyDataSetChanged();
+            Intent intent = new Intent(mContext, PhmsActivity.class);
+            intent.putExtra("dietFlag", true);
+            mContext.startActivity(intent);
 
         }
 

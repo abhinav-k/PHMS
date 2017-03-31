@@ -208,7 +208,9 @@ public class DinnerAdapter extends RecyclerView.Adapter<DinnerAdapter.ViewHolder
             databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("diet").child("dinner").child(key);
             databaseReference.removeValue();
             mDinnerList.remove(getAdapterPosition());
-            notifyDataSetChanged();
+            Intent intent = new Intent(mContext, PhmsActivity.class);
+            intent.putExtra("dietFlag", true);
+            mContext.startActivity(intent);
 
         }
 

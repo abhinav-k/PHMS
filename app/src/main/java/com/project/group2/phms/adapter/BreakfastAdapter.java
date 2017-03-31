@@ -218,7 +218,9 @@ public class BreakfastAdapter extends RecyclerView.Adapter<BreakfastAdapter.View
             databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("diet").child("breakfast").child(key);
             databaseReference.removeValue();
             mBreakfastList.remove(getAdapterPosition());
-            notifyDataSetChanged();
+            Intent intent = new Intent(mContext, PhmsActivity.class);
+            intent.putExtra("dietFlag", true);
+            mContext.startActivity(intent);
 
         }
 

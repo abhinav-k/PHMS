@@ -1,5 +1,6 @@
 package com.project.group2.phms.fragments;
 
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,9 +14,13 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,9 +43,11 @@ import com.project.group2.phms.model.Lunch;
 import com.project.group2.phms.model.Snacks;
 import com.project.group2.phms.preferences.Preferences;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -53,6 +60,8 @@ public class DietFragment extends Fragment {
     TextView addLunch;
     TextView addDinner;
     TextView addSnacks;
+
+    MenuItem selectDate;
 
     String userId;
 
@@ -70,6 +79,8 @@ public class DietFragment extends Fragment {
     Button addFoodButton;
 
     TextView totalCals;
+    int calculatedCalories = 0;
+    int totalCalories =0;
 
     RecyclerView recyclerViewBreakfast;
     RecyclerView recyclerViewLunch;
@@ -126,6 +137,12 @@ public class DietFragment extends Fragment {
                     breakfast.setKey(breakfastKey);
                     breakfastArrayList.add(breakfast);
                 }
+                for(int i=0; i<breakfastArrayList.size();i++){
+                    calculatedCalories = Integer.parseInt(breakfastArrayList.get(i).getCalories());
+                    totalCalories += calculatedCalories;
+                    Toast.makeText(getContext(), "calCal" + calculatedCalories, Toast.LENGTH_SHORT).show();
+                }
+                totalCals.setText(String.valueOf(totalCalories));
 
                 recyclerViewBreakfast.setAdapter(mBreakFastAdapter);
             }
@@ -153,6 +170,12 @@ public class DietFragment extends Fragment {
                     lunch.setKey(lunchKey);
                     lunchArrayList.add(lunch);
                 }
+                for(int i=0; i<lunchArrayList.size();i++){
+                    calculatedCalories = Integer.parseInt(lunchArrayList.get(i).getCalories());
+                    totalCalories += calculatedCalories;
+                    Toast.makeText(getContext(), "calCal" + calculatedCalories, Toast.LENGTH_SHORT).show();
+                }
+                totalCals.setText(String.valueOf(totalCalories));
 
                 recyclerViewLunch.setAdapter(mLunchAdapter);
             }
@@ -179,6 +202,12 @@ public class DietFragment extends Fragment {
                     dinner.setKey(dinnerKey);
                     dinnerArrayList.add(dinner);
                 }
+                for(int i=0; i<dinnerArrayList.size();i++){
+                    calculatedCalories = Integer.parseInt(dinnerArrayList.get(i).getCalories());
+                    totalCalories += calculatedCalories;
+                    Toast.makeText(getContext(), "calCal" + calculatedCalories, Toast.LENGTH_SHORT).show();
+                }
+                totalCals.setText(String.valueOf(totalCalories));
 
                 recyclerViewDinner.setAdapter(mDinnerAdapter);
             }
@@ -206,6 +235,13 @@ public class DietFragment extends Fragment {
                     snacks.setKey(snacksKey);
                     snacksArrayList.add(snacks);
                 }
+                for(int i=0; i<snacksArrayList.size();i++){
+                    calculatedCalories = Integer.parseInt(snacksArrayList.get(i).getCalories());
+                    totalCalories += calculatedCalories;
+                    Toast.makeText(getContext(), "calCal" + calculatedCalories, Toast.LENGTH_SHORT).show();
+                }
+                totalCals.setText(String.valueOf(totalCalories));
+
                 recyclerViewSnacks.setAdapter(mSnacksAdapter);
 
             }
@@ -245,7 +281,6 @@ public class DietFragment extends Fragment {
                         String foodDescription = foodDescriptionEditText.getText().toString().trim();
                         String servingSize = servingSizeEditText.getText().toString().trim();
                         String calories = caloriesEditText.getText().toString().trim();
-                        totalCals.setText(calories);
 
                         HashMap<String, String> breakfastMap = new HashMap<>();
 
@@ -441,7 +476,40 @@ public class DietFragment extends Fragment {
             }
 
         });
+        setHasOptionsMenu(true);
         return view;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        selectDate = menu.add("Date").setIcon(R.drawable.ic_date_range_black_24dp).setShowAsActionFlags(1);
+
+        selectDate.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            int mYear;
+            int mMonth;
+            int mDay;
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                final Calendar c = Calendar.getInstance();
+                mYear = c.get(Calendar.YEAR);
+                mMonth = c.get(Calendar.MONTH);
+                mDay = c.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(),
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year,
+                                                  int monthOfYear, int dayOfMonth) {
+                                Calendar calendar = Calendar.getInstance();
+                                calendar.set(year, monthOfYear, dayOfMonth);
+                            }
+                        }, mYear, mMonth, mDay);
+                datePickerDialog.show();
+                return false;
+            }
+        });
+
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
 }

@@ -2,67 +2,22 @@
 <items version="2" >
 
     <item
-        is-multidex="true"
-        jar="/Users/vishwath/AndroidStudioProjects/PHMS/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="/Users/ramajseepha/.gradle/caches/modules-2/files-2.1/com.squareup.okio/okio/1.11.0/840897fcd7223a8143f1d9b6f69714e7be34fd50/okio-1.11.0.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.2"
-        sha1="c82741bc129dd5f99f11a4ab8666ae24262053b6">
-        <dex dex="/Users/vishwath/AndroidStudioProjects/PHMS/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_742c783df11fe28bd1c4c4a1e8e0b632953443d0/classes.dex" />
+        sha1="840897fcd7223a8143f1d9b6f69714e7be34fd50">
+        <dex dex="/Users/ramajseepha/AndroidStudioProjects/PHMS/app/build/intermediates/pre-dexed/debug/okio-1.11.0_5802abf51c6f2deae02d7fec87251e833eea7f51.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="/Users/vishwath/.android/build-cache/b7bafaf005cd0136a0c3f611246138302fcd7263/output/jars/libs/activation.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="caeb02439d439d221f8be4aaf33931153bbe34db">
-        <dex dex="/Users/vishwath/AndroidStudioProjects/PHMS/app/build/intermediates/transforms/dex/debug/folders/1000/10/activation_a31ce86fcfc1c019308fb3d7eb32fe472621e0f2/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/vishwath/.android/build-cache/b7bafaf005cd0136a0c3f611246138302fcd7263/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="e9594f0b6eaea9e8b7dd28ff6993f4eba61da9d5">
-        <dex dex="/Users/vishwath/AndroidStudioProjects/PHMS/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_e9faceb3158eda1b0a1e1b36efcf52b6ef167466/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/vishwath/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/okhttp/3.6.0/69edde9fc4b01c9fd51d25b83428837478c27254/okhttp-3.6.0.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="/Users/ramajseepha/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/okhttp/3.6.0/69edde9fc4b01c9fd51d25b83428837478c27254/okhttp-3.6.0.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.2"
         sha1="69edde9fc4b01c9fd51d25b83428837478c27254">
-        <dex dex="/Users/vishwath/AndroidStudioProjects/PHMS/app/build/intermediates/transforms/dex/debug/folders/1000/10/okhttp-3.6.0_c407dd6b778557f6cbf91978a158046abad8aed9/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/vishwath/.android/build-cache/b7bafaf005cd0136a0c3f611246138302fcd7263/output/jars/libs/mail.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="c1ec1665abd1e1a471dc2cb31219bc765d2fd674">
-        <dex dex="/Users/vishwath/AndroidStudioProjects/PHMS/app/build/intermediates/transforms/dex/debug/folders/1000/10/mail_f3362adbcdaf2813dcadda6aeea6153dc6915c2f/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/vishwath/.android/build-cache/b7bafaf005cd0136a0c3f611246138302fcd7263/output/jars/libs/additionnal.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="57adc1843cc21aa845e27adb0aa32ea9a4537cd9">
-        <dex dex="/Users/vishwath/AndroidStudioProjects/PHMS/app/build/intermediates/transforms/dex/debug/folders/1000/10/additionnal_70cde76bade0b6ab387036d62692ec190df6e554/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/vishwath/AndroidStudioProjects/PHMS/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="30002ad36d69877fcf43d10c48d037fe9205757b">
-        <dex dex="/Users/vishwath/AndroidStudioProjects/PHMS/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_da56424b3b9f05ef107eb131cdda387e3037c6d5/classes.dex" />
+        <dex dex="/Users/ramajseepha/AndroidStudioProjects/PHMS/app/build/intermediates/pre-dexed/debug/okhttp-3.6.0_55e71b7f6e16906101ac4b6a83a66748766cfe5d.jar" />
     </item>
 
 </items>

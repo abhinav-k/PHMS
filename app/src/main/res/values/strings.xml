@@ -141,5 +141,6 @@
     <string name="servingsize">Serving Size</string>
     <string name="calories">Calories</string>
     <string name="cancel">Cancel</string>
+    <string name="zerocal">0 cal</string>
 
 </resources>
