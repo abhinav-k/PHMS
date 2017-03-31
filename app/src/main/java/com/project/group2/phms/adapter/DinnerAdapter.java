@@ -1,32 +1,60 @@
 package com.project.group2.phms.adapter;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.design.widget.TextInputEditText;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.view.MenuItem;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.project.group2.phms.R;
+import com.project.group2.phms.activities.PhmsActivity;
 import com.project.group2.phms.model.Dinner;
+import com.project.group2.phms.preferences.Preferences;
+
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
- * Created by vishwath on 3/29/17.
+ * Created by ramajseepha on 3/24/17.
  */
 
 public class DinnerAdapter extends RecyclerView.Adapter<DinnerAdapter.ViewHolder> {
 
     private Context mContext;
     private ArrayList<Dinner> mDinnerList;
+
+    DatabaseReference databaseReferenceDinner;
+    String userId;
+    ValueEventListener valueEventListener;
+
+    TextInputEditText brandNameEditText;
+    TextInputEditText foodDescriptionEditText;
+    TextInputEditText servingSizeEditText;
+    TextInputEditText caloriesEditText;
+
+    Button addButton;
+    Button cancelButton;
+
+    Dinner dinner=null;
 
     public DinnerAdapter(Context context, ArrayList<Dinner> dinnerArrayList) {
         mContext = context;
@@ -89,8 +117,77 @@ public class DinnerAdapter extends RecyclerView.Adapter<DinnerAdapter.ViewHolder
             edit.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem item) {
-                    String dinnerKey = key.getText().toString();
-                    Toast.makeText(mContext,"Edit button Pressed", Toast.LENGTH_SHORT);
+                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+                    userId = sharedPreferences.getString(Preferences.USERID, null);
+                    if (userId != null) {
+                        databaseReferenceDinner = FirebaseDatabase.getInstance().getReference().child("users").child(userId).child("diet").child("dinner");
+                    }
+                    final String dinnerKey = key.getText().toString();
+                    if(dinnerKey == null){
+                        Log.d("Nothing to Edit", dinnerKey);
+                    }else{
+                        final Dialog dialog = new Dialog(mContext);
+                        dialog.setTitle("Add Food");
+                        dialog.setContentView(R.layout.dialog_add_food);
+                        valueEventListener = new ValueEventListener() {
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                DataSnapshot snapshot = dataSnapshot.child(dinnerKey);
+                                dinner = snapshot.getValue(Dinner.class);
+                                if (dinner != null) {
+                                    brandNameEditText = (TextInputEditText) dialog.findViewById(R.id.brandNameEditText);
+                                    foodDescriptionEditText = (TextInputEditText) dialog.findViewById(R.id.foodDescriptionEditText);
+                                    servingSizeEditText = (TextInputEditText) dialog.findViewById(R.id.servingSizeEditText);
+                                    caloriesEditText = (TextInputEditText) dialog.findViewById(R.id.caloriesEditText);
+
+                                    brandNameEditText.setText(dinner.getBrandName());
+                                    foodDescriptionEditText.setText(dinner.getFoodDescription());
+                                    servingSizeEditText.setText(dinner.getServingSize());
+                                    caloriesEditText.setText(dinner.getCalories());
+
+                                    addButton = (Button) dialog.findViewById(R.id.addFoodButton);
+                                    cancelButton = (Button) dialog.findViewById(R.id.cancelButton);
+
+                                    addButton.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            String brandName = brandNameEditText.getText().toString().trim();
+                                            String foodDescription = foodDescriptionEditText.getText().toString().trim();
+                                            String servingSize = servingSizeEditText.getText().toString().trim();
+                                            String calories = caloriesEditText.getText().toString().trim();
+
+                                            HashMap<String,String> dinnerMap = new HashMap<>();
+
+                                            dinnerMap.put("brandName", brandName);
+                                            dinnerMap.put("foodDescription", foodDescription);
+                                            dinnerMap.put("servingSize", servingSize);
+                                            dinnerMap.put("calories", calories);
+                                            databaseReferenceDinner.child(dinnerKey.toString()).updateChildren((java.util.HashMap)dinnerMap);
+                                            Toast.makeText(mContext, "Dinner Updated Successfully", Toast.LENGTH_SHORT).show();
+                                            Intent intent = new Intent(mContext,PhmsActivity.class);
+                                            intent.putExtra("dietFlag", true);
+                                            mContext.startActivity(intent);
+                                        }
+                                    });
+
+                                    cancelButton.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            dialog.dismiss();
+                                        }
+                                    });
+                                    dialog.show();
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+
+                        };
+
+                        databaseReferenceDinner.addValueEventListener(valueEventListener);
+                    }
                     return false;
                 }
             });
@@ -116,4 +213,5 @@ public class DinnerAdapter extends RecyclerView.Adapter<DinnerAdapter.ViewHolder
         }
 
     }
+
 }
