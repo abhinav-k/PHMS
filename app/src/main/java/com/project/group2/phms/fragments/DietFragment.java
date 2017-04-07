@@ -14,16 +14,17 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -57,8 +58,6 @@ public class DietFragment extends Fragment {
     TextView addDinner;
     TextView addSnacks;
 
-    MenuItem selectDate;
-
     String userId;
 
     DatabaseReference databaseReferenceBreakfast;
@@ -70,6 +69,10 @@ public class DietFragment extends Fragment {
     TextInputEditText foodDescriptionEditText;
     TextInputEditText servingSizeEditText;
     TextInputEditText caloriesEditText;
+
+    FloatingActionsMenu fam;
+    FloatingActionButton fab_calendar;
+    FloatingActionButton fab_clear;
 
     Button cancelButton;
     Button addFoodButton;
@@ -109,18 +112,32 @@ public class DietFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_diet, container, false);
         toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
         toolbar.setTitle(getString(R.string.diet));
+
+        //ArrayList for storing each diet objects
         breakfastArrayList = new ArrayList<>();
         lunchArrayList = new ArrayList<>();
         dinnerArrayList = new ArrayList<>();
         snacksArrayList = new ArrayList<>();
+
+        /* Floating Action Menu and button declaration
+         *  This is used for diet filter and clearing the filter
+         */
+        fam = (FloatingActionsMenu) view.findViewById(R.id.fab_menu);
+        fab_calendar = (FloatingActionButton) view.findViewById(R.id.fab_calendar);
+        fab_clear = (FloatingActionButton) view.findViewById(R.id.fab_clear);
+
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         userId = sharedPreferences.getString(Preferences.USERID, null);
+
+        //Database reference for each of the diet
         if (userId != null) {
             databaseReferenceBreakfast = FirebaseDatabase.getInstance().getReference().child("users").child(userId).child("diet").child("breakfast");
             databaseReferenceLunch = FirebaseDatabase.getInstance().getReference().child("users").child(userId).child("diet").child("lunch");
             databaseReferenceDinner = FirebaseDatabase.getInstance().getReference().child("users").child(userId).child("diet").child("dinner");
             databaseReferenceSnacks = FirebaseDatabase.getInstance().getReference().child("users").child(userId).child("diet").child("snacks");
         }
+
+        //Recycler view initialization for breakfast
         recyclerViewBreakfast = (RecyclerView) view.findViewById(R.id.breakfast_recycler);
         recyclerViewBreakfast.setNestedScrollingEnabled(false);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
@@ -129,6 +146,7 @@ public class DietFragment extends Fragment {
 
         totalCals = (TextView) view.findViewById(R.id.totalCals);
 
+        /* Database call for finding out the total calories in the breakfast*/
         databaseReferenceBreakfast.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -156,12 +174,14 @@ public class DietFragment extends Fragment {
 
         registerForContextMenu(recyclerViewBreakfast);
 
+        //Recycler view initialization for lunch
         recyclerViewLunch = (RecyclerView) view.findViewById(R.id.lunch_recycler);
         recyclerViewLunch.setNestedScrollingEnabled(false);
         RecyclerView.LayoutManager mLayoutManagerLunch = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         mLunchAdapter = new LunchAdapter(getContext(), lunchArrayList);
         recyclerViewLunch.setLayoutManager(mLayoutManagerLunch);
 
+         /* Database call for finding out the total calories in the lunch*/
         databaseReferenceLunch.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -189,11 +209,14 @@ public class DietFragment extends Fragment {
 
         registerForContextMenu(recyclerViewLunch);
 
+        //Recycler view initialization for dinner
         recyclerViewDinner = (RecyclerView) view.findViewById(R.id.dinner_recycler);
         recyclerViewDinner.setNestedScrollingEnabled(false);
         RecyclerView.LayoutManager mLayoutManagerDinner = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         mDinnerAdapter = new DinnerAdapter(getContext(), dinnerArrayList);
         recyclerViewDinner.setLayoutManager(mLayoutManagerDinner);
+
+        /* Database call for finding out the total calories in the dinner*/
         databaseReferenceDinner.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -221,12 +244,14 @@ public class DietFragment extends Fragment {
 
         registerForContextMenu(recyclerViewDinner);
 
+        //Recycler view initialization for dinner
         recyclerViewSnacks = (RecyclerView) view.findViewById(R.id.snacks_recycler);
         recyclerViewSnacks.setNestedScrollingEnabled(false);
         RecyclerView.LayoutManager mLayoutManagerSnacks = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         mSnacksAdapter = new SnacksAdapter(getContext(), snacksArrayList);
         recyclerViewSnacks.setLayoutManager(mLayoutManagerSnacks);
 
+        /* Database call for finding out the total calories in the snacks*/
         databaseReferenceSnacks.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -477,20 +502,15 @@ public class DietFragment extends Fragment {
             }
 
         });
-        setHasOptionsMenu(true);
-        return view;
-    }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        selectDate = menu.add("Date").setIcon(R.drawable.ic_date_range_black_24dp).setShowAsActionFlags(1);
-
-        selectDate.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            int mYear;
-            int mMonth;
-            int mDay;
+        //Filter Operation
+        fab_calendar.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onMenuItemClick(MenuItem item) {
+            public void onClick(View v) {
+                fam.collapse();
+                int mYear;
+                int mMonth;
+                int mDay;
                 final Calendar c = Calendar.getInstance();
                 mYear = c.get(Calendar.YEAR);
                 mMonth = c.get(Calendar.MONTH);
@@ -620,12 +640,20 @@ public class DietFragment extends Fragment {
                         }, mYear, mMonth, mDay);
                 datePickerDialog.show();
 
-
-                return false;
             }
         });
 
-        super.onCreateOptionsMenu(menu, inflater);
+        //Clearing the filter
+        fab_clear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), PhmsActivity.class);
+                intent.putExtra("dietFlag", true);
+                getContext().startActivity(intent);
+            }
+        });
+
+        return view;
     }
 
 }

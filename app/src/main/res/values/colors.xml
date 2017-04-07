@@ -4,4 +4,10 @@
     <color name="colorPrimaryDark">#4C216D</color>
     <color name="colorAccent">#7030A0</color>
     <color name="bg">#F5F5F5</color>
+
+    <color name="accent_dark">#ff2929</color>
+    <color name="accent">#ff5252</color>
+    <color name="secondary_text">#727272</color>
+    <color name="white">#FFFFFF</color>
+    <color name="white_overlay">#F3F3F3</color>
 </resources>

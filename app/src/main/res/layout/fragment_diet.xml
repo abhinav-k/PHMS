@@ -1,204 +1,250 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/frameLayout"
+    android:background="@android:color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/diet_key"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="start"
-            android:text=""
-            android:visibility="gone" />
+        android:layout_height="wrap_content">
 
         <LinearLayout
-            android:padding="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/totalcals"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/totalCals"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:text="@string/zerocal"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-        </LinearLayout>
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/breakfastToolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorPrimary"
-            android:elevation="6dp"
-            android:minHeight="?attr/actionBarSize"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:title="@string/breakfast"
-            app:titleTextColor="@android:color/white" />
-
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="10dp">
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/breakfast_recycler"
+                android:id="@+id/diet_key"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+                android:gravity="start"
+                android:text=""
+                android:visibility="gone" />
 
-
-            <com.mikepenz.iconics.view.IconicsTextView
-                android:id="@+id/addBreakfastIcon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:gravity="center|start"
-                android:text="{gmd_plus_circle} Add food"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="18sp" />
-
-        </LinearLayout>
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/lunchToolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorPrimary"
-            android:elevation="6dp"
-            android:minHeight="?attr/actionBarSize"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:title="@string/lunch"
-            app:titleTextColor="@android:color/white" />
-
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="10dp">
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/lunch_recycler"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+                android:orientation="horizontal"
+                android:padding="10dp">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/totalcals"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
-            <com.mikepenz.iconics.view.IconicsTextView
-                android:id="@+id/addLunchIcon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:gravity="center|start"
-                android:text="{gmd_plus_circle} Add Food"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="18sp" />
+                <TextView
+                    android:id="@+id/totalCals"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="@string/zerocal"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
-        </LinearLayout>
+            </LinearLayout>
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/dinnerToolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorPrimary"
-            android:elevation="6dp"
-            android:minHeight="?attr/actionBarSize"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:title="@string/dinner"
-            app:titleTextColor="@android:color/white" />
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/breakfastToolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/colorPrimary"
+                android:elevation="6dp"
+                android:minHeight="?attr/actionBarSize"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:title="@string/breakfast"
+                app:titleTextColor="@android:color/white" />
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="10dp">
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/dinner_recycler"
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/breakfast_recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 
-            <com.mikepenz.iconics.view.IconicsTextView
-                android:id="@+id/addDinnerIcon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:gravity="center|start"
-                android:text="{gmd_plus_circle} Add Food"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="18sp" />
+                <com.mikepenz.iconics.view.IconicsTextView
+                    android:id="@+id/addBreakfastIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center|start"
+                    android:text="{gmd_plus_circle} Add food"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="18sp" />
 
-        </LinearLayout>
+            </LinearLayout>
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/snacksToolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorPrimary"
-            android:elevation="6dp"
-            android:minHeight="?attr/actionBarSize"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:title="@string/snacks"
-            app:titleTextColor="@android:color/white" />
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/lunchToolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/colorPrimary"
+                android:elevation="6dp"
+                android:minHeight="?attr/actionBarSize"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:title="@string/lunch"
+                app:titleTextColor="@android:color/white" />
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="10dp">
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/snacks_recycler"
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/lunch_recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 
-            <com.mikepenz.iconics.view.IconicsTextView
-                android:id="@+id/addSnacksIcon"
-                android:layout_width="wrap_content"
+                <com.mikepenz.iconics.view.IconicsTextView
+                    android:id="@+id/addLunchIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center|start"
+                    android:text="{gmd_plus_circle} Add Food"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/dinnerToolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/colorPrimary"
+                android:elevation="6dp"
+                android:minHeight="?attr/actionBarSize"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:title="@string/dinner"
+                app:titleTextColor="@android:color/white" />
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
-                android:gravity="center|start"
-                android:text="{gmd_plus_circle} Add Food"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="18sp" />
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/dinner_recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+
+                <com.mikepenz.iconics.view.IconicsTextView
+                    android:id="@+id/addDinnerIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center|start"
+                    android:text="{gmd_plus_circle} Add Food"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/snacksToolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/colorPrimary"
+                android:elevation="6dp"
+                android:minHeight="?attr/actionBarSize"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:title="@string/snacks"
+                app:titleTextColor="@android:color/white" />
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/snacks_recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+
+                <com.mikepenz.iconics.view.IconicsTextView
+                    android:id="@+id/addSnacksIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center|start"
+                    android:text="{gmd_plus_circle} Add Food"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
-    </LinearLayout>
+    </ScrollView>
 
-</ScrollView>
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:id="@+id/fab_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        fab:fab_addButtonColorNormal="@color/accent"
+        fab:fab_addButtonColorPressed="@color/accent_dark"
+        fab:fab_addButtonPlusIconColor="@color/white"
+        fab:fab_addButtonStrokeVisible="false"
+        fab:fab_labelStyle="@style/menu_labels_style"
+        fab:fab_labelsPosition="left">
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_calendar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_colorNormal="@color/accent"
+            fab:fab_colorPressed="@color/accent_dark"
+            fab:fab_plusIconColor="@color/white"
+            fab:fab_icon="@drawable/ic_date_range_white_24dp"
+            fab:fab_size="mini"
+            fab:fab_title="Calendar" />
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_colorNormal="@color/accent"
+            fab:fab_colorPressed="@color/accent_dark"
+            fab:fab_plusIconColor="@color/white"
+            fab:fab_icon="@drawable/ic_clear_all_white_24dp"
+            fab:fab_size="mini"
+            fab:fab_title="Clear" />
+
+
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
+</FrameLayout>
