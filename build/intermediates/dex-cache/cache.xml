@@ -2,22 +2,31 @@
 <items version="2" >
 
     <item
-        is-multidex="false"
-        jar="/Users/ramajseepha/.gradle/caches/modules-2/files-2.1/com.squareup.okio/okio/1.11.0/840897fcd7223a8143f1d9b6f69714e7be34fd50/okio-1.11.0.jar"
-        jumboMode="false"
+        is-multidex="true"
+        jar="/Users/vishwath/.gradle/caches/modules-2/files-2.1/com.github.PhilJay/MPAndroidChart/v3.0.2/5d4eb08a326bdbd7fbbddc769666898c9936b282/MPAndroidChart-v3.0.2.jar"
+        jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="840897fcd7223a8143f1d9b6f69714e7be34fd50">
-        <dex dex="/Users/ramajseepha/AndroidStudioProjects/PHMS/app/build/intermediates/pre-dexed/debug/okio-1.11.0_5802abf51c6f2deae02d7fec87251e833eea7f51.jar" />
+        sha1="5d4eb08a326bdbd7fbbddc769666898c9936b282">
+        <dex dex="/Users/vishwath/AndroidStudioProjects/PHMS/app/build/intermediates/transforms/dex/debug/folders/1000/10/MPAndroidChart-v3.0.2_ea3a10f65937b6f5deec177aa66b980d8ebbe47f/classes.dex" />
     </item>
     <item
-        is-multidex="false"
-        jar="/Users/ramajseepha/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/okhttp/3.6.0/69edde9fc4b01c9fd51d25b83428837478c27254/okhttp-3.6.0.jar"
-        jumboMode="false"
+        is-multidex="true"
+        jar="/Users/vishwath/AndroidStudioProjects/PHMS/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="69edde9fc4b01c9fd51d25b83428837478c27254">
-        <dex dex="/Users/ramajseepha/AndroidStudioProjects/PHMS/app/build/intermediates/pre-dexed/debug/okhttp-3.6.0_55e71b7f6e16906101ac4b6a83a66748766cfe5d.jar" />
+        sha1="4f76f1b4e3650650fd0c563ab86a65e9f4f0d98b">
+        <dex dex="/Users/vishwath/AndroidStudioProjects/PHMS/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_da56424b3b9f05ef107eb131cdda387e3037c6d5/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/vishwath/AndroidStudioProjects/PHMS/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="c82741bc129dd5f99f11a4ab8666ae24262053b6">
+        <dex dex="/Users/vishwath/AndroidStudioProjects/PHMS/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_742c783df11fe28bd1c4c4a1e8e0b632953443d0/classes.dex" />
     </item>
 
 </items>

@@ -24,7 +24,6 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,7 +31,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.project.group2.phms.R;
 import com.project.group2.phms.activities.PhmsActivity;
-import com.project.group2.phms.activities.VitalsActivity;
 import com.project.group2.phms.adapter.BreakfastAdapter;
 import com.project.group2.phms.adapter.DinnerAdapter;
 import com.project.group2.phms.adapter.LunchAdapter;
@@ -43,11 +41,9 @@ import com.project.group2.phms.model.Lunch;
 import com.project.group2.phms.model.Snacks;
 import com.project.group2.phms.preferences.Preferences;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -87,6 +83,11 @@ public class DietFragment extends Fragment {
     RecyclerView recyclerViewDinner;
     RecyclerView recyclerViewSnacks;
 
+    RecyclerView.Adapter mBreakFastAdapter;
+    RecyclerView.Adapter mLunchAdapter;
+    RecyclerView.Adapter mDinnerAdapter;
+    RecyclerView.Adapter mSnacksAdapter;
+
     ArrayList<Breakfast> breakfastArrayList;
     ArrayList<Lunch> lunchArrayList;
     ArrayList<Dinner> dinnerArrayList;
@@ -123,7 +124,7 @@ public class DietFragment extends Fragment {
         recyclerViewBreakfast = (RecyclerView) view.findViewById(R.id.breakfast_recycler);
         recyclerViewBreakfast.setNestedScrollingEnabled(false);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        final RecyclerView.Adapter mBreakFastAdapter = new BreakfastAdapter(getContext(), breakfastArrayList);
+        mBreakFastAdapter = new BreakfastAdapter(getContext(), breakfastArrayList);
         recyclerViewBreakfast.setLayoutManager(mLayoutManager);
 
         totalCals = (TextView) view.findViewById(R.id.totalCals);
@@ -140,7 +141,7 @@ public class DietFragment extends Fragment {
                 for(int i=0; i<breakfastArrayList.size();i++){
                     calculatedCalories = Integer.parseInt(breakfastArrayList.get(i).getCalories());
                     totalCalories += calculatedCalories;
-                    Toast.makeText(getContext(), "calCal" + calculatedCalories, Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getContext(), "calCal" + calculatedCalories, Toast.LENGTH_SHORT).show();
                 }
                 totalCals.setText(String.valueOf(totalCalories));
 
@@ -158,7 +159,7 @@ public class DietFragment extends Fragment {
         recyclerViewLunch = (RecyclerView) view.findViewById(R.id.lunch_recycler);
         recyclerViewLunch.setNestedScrollingEnabled(false);
         RecyclerView.LayoutManager mLayoutManagerLunch = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        final RecyclerView.Adapter mLunchAdapter = new LunchAdapter(getContext(), lunchArrayList);
+        mLunchAdapter = new LunchAdapter(getContext(), lunchArrayList);
         recyclerViewLunch.setLayoutManager(mLayoutManagerLunch);
 
         databaseReferenceLunch.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -173,7 +174,7 @@ public class DietFragment extends Fragment {
                 for(int i=0; i<lunchArrayList.size();i++){
                     calculatedCalories = Integer.parseInt(lunchArrayList.get(i).getCalories());
                     totalCalories += calculatedCalories;
-                    Toast.makeText(getContext(), "calCal" + calculatedCalories, Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getContext(), "calCal" + calculatedCalories, Toast.LENGTH_SHORT).show();
                 }
                 totalCals.setText(String.valueOf(totalCalories));
 
@@ -191,7 +192,7 @@ public class DietFragment extends Fragment {
         recyclerViewDinner = (RecyclerView) view.findViewById(R.id.dinner_recycler);
         recyclerViewDinner.setNestedScrollingEnabled(false);
         RecyclerView.LayoutManager mLayoutManagerDinner = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        final RecyclerView.Adapter mDinnerAdapter = new DinnerAdapter(getContext(), dinnerArrayList);
+        mDinnerAdapter = new DinnerAdapter(getContext(), dinnerArrayList);
         recyclerViewDinner.setLayoutManager(mLayoutManagerDinner);
         databaseReferenceDinner.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -205,7 +206,7 @@ public class DietFragment extends Fragment {
                 for(int i=0; i<dinnerArrayList.size();i++){
                     calculatedCalories = Integer.parseInt(dinnerArrayList.get(i).getCalories());
                     totalCalories += calculatedCalories;
-                    Toast.makeText(getContext(), "calCal" + calculatedCalories, Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getContext(), "calCal" + calculatedCalories, Toast.LENGTH_SHORT).show();
                 }
                 totalCals.setText(String.valueOf(totalCalories));
 
@@ -223,7 +224,7 @@ public class DietFragment extends Fragment {
         recyclerViewSnacks = (RecyclerView) view.findViewById(R.id.snacks_recycler);
         recyclerViewSnacks.setNestedScrollingEnabled(false);
         RecyclerView.LayoutManager mLayoutManagerSnacks = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        final RecyclerView.Adapter mSnacksAdapter = new SnacksAdapter(getContext(), snacksArrayList);
+        mSnacksAdapter = new SnacksAdapter(getContext(), snacksArrayList);
         recyclerViewSnacks.setLayoutManager(mLayoutManagerSnacks);
 
         databaseReferenceSnacks.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -238,7 +239,7 @@ public class DietFragment extends Fragment {
                 for(int i=0; i<snacksArrayList.size();i++){
                     calculatedCalories = Integer.parseInt(snacksArrayList.get(i).getCalories());
                     totalCalories += calculatedCalories;
-                    Toast.makeText(getContext(), "calCal" + calculatedCalories, Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getContext(), "calCal" + calculatedCalories, Toast.LENGTH_SHORT).show();
                 }
                 totalCals.setText(String.valueOf(totalCalories));
 
@@ -502,9 +503,124 @@ public class DietFragment extends Fragment {
                                                   int monthOfYear, int dayOfMonth) {
                                 Calendar calendar = Calendar.getInstance();
                                 calendar.set(year, monthOfYear, dayOfMonth);
+                                SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
+                                final String selectedDate = dateFormat.format(calendar.getTime());
+                                Log.d("date", selectedDate);
+                                totalCalories = 0;
+                                breakfastArrayList.clear();
+                                databaseReferenceBreakfast.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                            Breakfast breakfast = snapshot.getValue(Breakfast.class);
+                                            String breakfastKey = snapshot.getKey();
+                                            breakfast.setKey(breakfastKey);
+                                            if (selectedDate.equalsIgnoreCase(breakfast.getDate())) {
+                                                breakfastArrayList.add(breakfast);
+                                            }
+                                        }
+                                        for(int i=0; i<breakfastArrayList.size();i++){
+                                            calculatedCalories = Integer.parseInt(breakfastArrayList.get(i).getCalories());
+                                            totalCalories += calculatedCalories;
+                                        }
+                                        totalCals.setText(String.valueOf(totalCalories));
+                                        mBreakFastAdapter.notifyDataSetChanged();
+
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
+
+                                lunchArrayList.clear();
+                                databaseReferenceLunch.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                            Lunch lunch = snapshot.getValue(Lunch.class);
+                                            String lunchKey = snapshot.getKey();
+                                            lunch.setKey(lunchKey);
+                                            if (selectedDate.equalsIgnoreCase(lunch.getDate())) {
+                                                lunchArrayList.add(lunch);
+                                            }
+                                        }
+                                        for(int i=0; i<lunchArrayList.size();i++){
+                                            calculatedCalories = Integer.parseInt(lunchArrayList.get(i).getCalories());
+                                            totalCalories += calculatedCalories;
+                                        }
+                                        totalCals.setText(String.valueOf(totalCalories));
+                                        mLunchAdapter.notifyDataSetChanged();
+
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
+
+                                dinnerArrayList.clear();
+                                databaseReferenceDinner.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                            Dinner dinner = snapshot.getValue(Dinner.class);
+                                            String dinnerKey = snapshot.getKey();
+                                            dinner.setKey(dinnerKey);
+                                            if (selectedDate.equalsIgnoreCase(dinner.getDate())) {
+                                                dinnerArrayList.add(dinner);
+                                            }
+                                        }
+                                        for(int i=0; i<dinnerArrayList.size();i++){
+                                            calculatedCalories = Integer.parseInt(dinnerArrayList.get(i).getCalories());
+                                            totalCalories += calculatedCalories;
+                                        }
+                                        totalCals.setText(String.valueOf(totalCalories));
+                                        mDinnerAdapter.notifyDataSetChanged();
+
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
+
+                                snacksArrayList.clear();
+                                databaseReferenceSnacks.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                            Snacks snacks = snapshot.getValue(Snacks.class);
+                                            String snacksKey = snapshot.getKey();
+                                            snacks.setKey(snacksKey);
+                                            if (selectedDate.equalsIgnoreCase(snacks.getDate())) {
+                                                snacksArrayList.add(snacks);
+                                            }
+                                        }
+                                        for(int i=0; i<snacksArrayList.size();i++){
+                                            calculatedCalories = Integer.parseInt(snacksArrayList.get(i).getCalories());
+                                            totalCalories += calculatedCalories;
+                                        }
+                                        totalCals.setText(String.valueOf(totalCalories));
+                                        mSnacksAdapter.notifyDataSetChanged();
+
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
+
+
                             }
                         }, mYear, mMonth, mDay);
                 datePickerDialog.show();
+
+
                 return false;
             }
         });

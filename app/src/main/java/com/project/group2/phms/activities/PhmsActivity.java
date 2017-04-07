@@ -38,6 +38,7 @@ import com.project.group2.phms.R;
 import com.project.group2.phms.fragments.AppointmentsFragment;
 import com.project.group2.phms.fragments.DesigneeFragment;
 import com.project.group2.phms.fragments.DietFragment;
+import com.project.group2.phms.fragments.DietParentFragment;
 import com.project.group2.phms.fragments.HomeFragment;
 import com.project.group2.phms.fragments.MedicationFragment;
 import com.project.group2.phms.fragments.NotesFragment;
@@ -210,7 +211,7 @@ public class PhmsActivity extends BaseActivity {
         }
         if (dietFlag) {
             dietFlag = false;
-            Fragment fragment = new DietFragment();
+            Fragment fragment = new DietParentFragment();
             startFragment(fragment);
             result.setSelection(diet);
         }
@@ -241,7 +242,7 @@ public class PhmsActivity extends BaseActivity {
                         fragmentStack.add(medication);
                         break;
                     case 5:
-                        fragment = new DietFragment();
+                        fragment = new DietParentFragment();
                         fragmentStack.add(diet);
                         break;
                     case 6:

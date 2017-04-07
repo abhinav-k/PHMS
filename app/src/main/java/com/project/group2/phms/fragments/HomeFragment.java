@@ -101,7 +101,7 @@ public class HomeFragment extends Fragment {
         dietCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment DietFragment = new DietFragment();
+                Fragment DietFragment = new DietParentFragment();
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.replace(R.id.fragment_container, DietFragment);
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);

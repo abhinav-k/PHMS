@@ -46,5 +46,6 @@ dependencies {
     compile 'com.mikhaellopez:circularimageview:3.0.2'
     compile 'com.github.yesidlazaro:GmailBackground:1.2.0'
     compile 'com.android.support:support-annotations:25.2.0'
+    compile 'com.github.PhilJay:MPAndroidChart:v3.0.2'
     testCompile 'junit:junit:4.12'
 }
