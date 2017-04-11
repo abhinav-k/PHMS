@@ -247,6 +247,19 @@ public class AppointmentsActivity extends BaseActivity implements View.OnClickLi
         }
         Pattern patternEmail = Patterns.EMAIL_ADDRESS;
         Pattern patternPhone = Patterns.PHONE;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
+        Date appointmentDateParsed=null;
+        try {
+            appointmentDateParsed = dateFormat.parse(appointmentDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            // TODO: 4/11/17 Changed appointment date comparison
+        }if(appointmentDateParsed.before(new Date(System.currentTimeMillis() - 24*60*60*1000))){
+            appointmentDateInputLayout.setError("Date range should be within the date range");
+            valid = false;
+        }else{
+            appointmentDateInputLayout.setError(null);
+        }
         if(patternEmail.matcher(emailAddress).matches()){
             doctorEmailInputLayout.setError(null);
         }else{
@@ -282,22 +295,10 @@ public class AppointmentsActivity extends BaseActivity implements View.OnClickLi
                             calendar.set(year, monthOfYear, dayOfMonth);
                             SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
                             String visitDate = dateFormat.format(calendar.getTime());
-                            try {
-                                Date appointDate = dateFormat.parse(visitDate);
-                                Date currentDate = new Date();
-                                if(appointDate.before(currentDate)){
-                                    appointmentDateInputLayout.setError("Date selected is not within range!");
-                                }else{
-                                    appointmentDateEditText.setText(visitDate);
-                                    appointmentDateInputLayout.setError(null);
-                                }
-                            } catch (ParseException e) {
-                                e.printStackTrace();
-                            }
                             appointmentDateEditText.setText(visitDate);
                         }
                     }, mYear, mMonth, mDay);
-            datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
+            datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
             datePickerDialog.show();
         }
 

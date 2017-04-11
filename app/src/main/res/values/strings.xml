@@ -111,6 +111,8 @@
     <string name="initialTime">Initial Time</string>
     <string name="startdate">Start Date</string>
     <string name="enddate">End Date</string>
+    <string name="totalQuantity">Total Quantity</string>
+
 
     <!--Designee Fragment-->
     <string name="dnd">Doctor &amp; Designee</string>
@@ -142,5 +144,14 @@
     <string name="calories">Calories</string>
     <string name="cancel">Cancel</string>
     <string name="zerocal">0 cal</string>
+
+
+    <!-- Medication Notification -->
+    <string name="messagefromphms">Message From PHMS</string>
+    <string name="message">It is now time to taken the medicine. Please take your medication on time to avoid complications.</string>
+    <string name="snooze"> Snooze </string>
+    <string name="dismiss"> Dismiss </string>
+    <string name="takemedication">Take Medication </string>
+
 
 </resources>

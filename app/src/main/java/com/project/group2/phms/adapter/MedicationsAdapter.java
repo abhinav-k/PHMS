@@ -1,25 +1,34 @@
 package com.project.group2.phms.adapter;
 
+import android.app.AlarmManager;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RemoteViews;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.project.group2.phms.R;
+import com.project.group2.phms.activities.AlertReceiver;
 import com.project.group2.phms.activities.MedicationActivity;
 import com.project.group2.phms.activities.PhmsActivity;
 import com.project.group2.phms.model.Medication;
 
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 
 /**
  * Created by ramajseepha on 2/24/17.
@@ -53,6 +62,7 @@ public class MedicationsAdapter extends RecyclerView.Adapter<MedicationsAdapter.
         holder.endDate.setText(medication.getEndDate());
         holder.frequency.setText(medication.getFrequency());
         holder.medication_key.setText(medication.getKey());
+        holder.totalQuantity.setText(medication.getTotalQuantity());
     }
 
     @Override
@@ -65,7 +75,7 @@ public class MedicationsAdapter extends RecyclerView.Adapter<MedicationsAdapter.
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
-        TextView dateMed, medicationName, dosage, initialTime, startDate, endDate, frequency, medication_key;
+        TextView dateMed, medicationName, dosage, totalQuantity, initialTime, startDate, endDate, frequency, medication_key;
 
 
         ViewHolder(View v) {
@@ -74,6 +84,8 @@ public class MedicationsAdapter extends RecyclerView.Adapter<MedicationsAdapter.
             dateMed = (TextView) v.findViewById(R.id.dateMedAdd);
             medicationName = (TextView) v.findViewById(R.id.medicationName);
             dosage = (TextView) v.findViewById(R.id.dosage);
+            // TODO: 4/11/17 Added totalQuantity 
+            totalQuantity = (TextView) v.findViewById(R.id.totalQuantity);
             initialTime = (TextView) v.findViewById(R.id.initialTime);
             startDate = (TextView) v.findViewById(R.id.startDate);
             endDate = (TextView) v.findViewById(R.id.endDate);

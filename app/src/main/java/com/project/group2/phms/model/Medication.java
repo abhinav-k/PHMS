@@ -10,6 +10,8 @@ public class Medication {
     private String dosage;
     private String startDate;
     private String endDate;
+    // TODO: 4/11/17 Added totalQuantity 
+    private String totalQuantity;
     private String initialTime;
     private String frequency;
     private String dateMed;
@@ -19,11 +21,12 @@ public class Medication {
 
     }
 
-    public Medication(String dateMed, String medicationName, String dosage, String startDate, String endDate, String initialTime, String frequency) {
+    public Medication(String dateMed, String totalQuantity, String medicationName, String dosage, String startDate, String endDate, String initialTime, String frequency) {
         this.medicationName = medicationName;
         this.dateMed = dateMed;
         this.dosage = dosage;
         this.startDate = startDate;
+        this.totalQuantity = totalQuantity;
         this.endDate = endDate;
         this.initialTime = initialTime;
         this.frequency = frequency;
@@ -93,4 +96,8 @@ public class Medication {
     public void setDateMed(String dateMed) {
         this.dateMed = dateMed;
     }
+
+    public String getTotalQuantity() { return totalQuantity; }
+
+    public void setTotalQuantity(String totalQuantity) { this.totalQuantity = totalQuantity; }
 }

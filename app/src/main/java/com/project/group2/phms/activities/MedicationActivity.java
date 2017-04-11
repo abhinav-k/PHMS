@@ -1,6 +1,8 @@
 package com.project.group2.phms.activities;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -8,6 +10,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputEditText;
@@ -59,8 +62,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-import static com.project.group2.phms.R.id.startDateLayout;
-
 /**
  * Created by vishwath on 2/14/17.
  */
@@ -72,6 +73,12 @@ public class MedicationActivity extends BaseActivity implements View.OnClickList
     protected TextInputLayout medicationDosageInputText;
     @BindView(R.id.medicationDosageEditText)
     protected TextInputEditText medicationDosageEditText;
+    // TODO: 4/11/17 Added totalQuantityField to delibarately flag medication taken - start
+    @BindView(R.id.totalQuantityInputLayout)
+    protected TextInputLayout totalQuantityInputLayout;
+    @BindView(R.id.totalQuantityEditText)
+    protected TextInputEditText totalQuantityEditText;
+    // TODO: 4/11/17 Added totalQuantityField to delibarately flag medication taken - End
     @BindView(R.id.initialTimeEditText)
     protected TextInputEditText initialTimeEditText;
     @BindView(R.id.startDateEditText)
@@ -100,15 +107,15 @@ public class MedicationActivity extends BaseActivity implements View.OnClickList
     ValueEventListener valueEventListener;
 
     Medication medication;
-    String medicationName = "Drug A";
 
-    //Changes for populating the spinner with JSON data - Ramji
     ArrayList<String> medicationList = new ArrayList<String>();
     ArrayAdapter<String> adapter;
     HashMap<String, String> conflictsMap;
     ArrayList<String> medList;
 
     JSONObject jsonObject;
+    // TODO: 4/11/17  Declared medicationKey as global to pass the key to the medicationNotificationActivity
+    String medicationKey = null;
 
     //JSON_URL node information
     private static final String TAG_DATA = "results";
@@ -116,7 +123,7 @@ public class MedicationActivity extends BaseActivity implements View.OnClickList
     private static final String MAP_API_URL = "https://api.fda.gov/drug/label.json?count=openfda.brand_name.exact&limit=1000";
     HashMap<String, String> medicationsMap;
 
-    //Changes for populating the spinner with JSON data - Ramji End
+    
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -134,8 +141,8 @@ public class MedicationActivity extends BaseActivity implements View.OnClickList
         conflictsMap = new HashMap<>();
         medList = new ArrayList<>();
         createConflictsMap();
-
-        String medicationKey = null;
+        // TODO: 4/11/17 Change
+        medicationKey = null;
 
         if (intent != null) {
             medicationKey = intent.getStringExtra("medications_key");
@@ -165,6 +172,8 @@ public class MedicationActivity extends BaseActivity implements View.OnClickList
                     if (medication != null) {
                         medAutoTextView.setText(medication.getMedicationName());
                         medicationDosageEditText.setText(medication.getDosage());
+                        // TODO: 4/11/17 Added totalQuantity
+                        totalQuantityEditText.setText(medication.getTotalQuantity());
                         initialTimeEditText.setText(medication.getInitialTime());
                         startDateEditText.setText(medication.getStartDate());
                         endDateEditText.setText(medication.getEndDate());
@@ -186,7 +195,7 @@ public class MedicationActivity extends BaseActivity implements View.OnClickList
 
         doneButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 writeMedications();
             }
         });
@@ -304,18 +313,8 @@ public class MedicationActivity extends BaseActivity implements View.OnClickList
                             calendar.set(year, monthOfYear, dayOfMonth);
                             SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
                             String startDate = dateFormat.format(calendar.getTime());
-                            try {
-                                Date startDateParsed = dateFormat.parse(startDate);
-                                Date currentDate = new Date();
-                                if (startDateParsed.before(currentDate)) {
-                                    startDateLayout.setError("Please select a date within the date range");
-                                } else {
-                                    startDateLayout.setError(null);
-                                    startDateEditText.setText(startDate);
-                                }
-                            } catch (ParseException e) {
-                                e.printStackTrace();
-                            }
+                            // TODO: 4/11/17 Deleted the filter for startDate - Added in validateForm() method
+                            startDateEditText.setText(startDate);
                             //startDateEditText.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
 
 
@@ -367,12 +366,16 @@ public class MedicationActivity extends BaseActivity implements View.OnClickList
 
                             String am_pm = (hourOfDay < 12) ? "AM" : "PM";
 
+                            if(hourOfDay >12){
+                                hourString = String.valueOf(hourOfDay -12);
+                            }
+
                             String minuteSting;
                             if (minute < 10)
                                 minuteSting = "0" + minute;
                             else
                                 minuteSting = "" + minute;
-                            initialTimeEditText.setText(hourString + ":" + minuteSting + " " + am_pm);
+                            initialTimeEditText.setText(hourString + ":" + minuteSting+" " + am_pm);
                         }
                     }, mHour, mMinute, false);
             timePickerDialog.show();
@@ -384,19 +387,24 @@ public class MedicationActivity extends BaseActivity implements View.OnClickList
         showProgressDialog("Saving...");
         final String medicationName = medAutoTextView.getText().toString();
         final String dosage = medicationDosageEditText.getText().toString().trim();
+        // TODO: 4/11/17 totalQuantity
+        final String totalQuantity = totalQuantityEditText.getText().toString().trim();
         final String initialTime = initialTimeEditText.getText().toString().trim();
         final String startDate = startDateEditText.getText().toString().trim();
         final String endDate = endDateEditText.getText().toString().trim();
         final String frequencyDays = frequencyDaysEditText.getText().toString().trim();
         final String frequency = frequencySpinner.getSelectedItem().toString();
 
-        if (!validateForm(medicationName, dosage, initialTime, startDate, endDate,frequencyDays)) {
+        //// TODO: 4/11/17 Passed totalQuantity
+        if (!validateForm(medicationName, dosage,totalQuantity, initialTime, startDate, endDate,frequencyDays)) {
             hideProgressDialog();
             return;
         }
         medicationsMap.clear();
         medicationsMap.put("medicationName", medicationName);
         medicationsMap.put("dosage", dosage);
+        // TODO: 4/11/17 Added totalQuantity
+        medicationsMap.put("totalQuantity", totalQuantity);
         medicationsMap.put("initialTime", initialTime);
         medicationsMap.put("startDate", startDate);
         medicationsMap.put("endDate", endDate);
@@ -406,8 +414,12 @@ public class MedicationActivity extends BaseActivity implements View.OnClickList
             SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
             String formattedDate = df.format(c.getTime());
             medicationsMap.put("dateMed", formattedDate);
+            // TODO: 4/11/17 Added Alarm notifications
+            setAlarm(medicationName, initialTime, startDate,endDate, Integer.parseInt(frequencyDays), frequency);
         } else {
             medicationsMap.put("dateMed", medication.getDateMed());
+            // TODO: 4/11/17 Added Alarm notifications
+            setAlarm(medicationName, initialTime, startDate,endDate, Integer.parseInt(frequencyDays), frequency);
         }
         boolean conflict = false;
         String oldMed = "";
@@ -435,6 +447,8 @@ public class MedicationActivity extends BaseActivity implements View.OnClickList
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             DesigneeDoctor designeeDoctor = dataSnapshot.getValue(DesigneeDoctor.class);
+                            // TODO: 4/11/17 Added null check
+                            if(designeeDoctor !=null){
                             String designeeEmail = designeeDoctor.getDesigneeEmail();
                             String doctorEmail = designeeDoctor.getDoctorEmail();
                             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MedicationActivity.this);
@@ -465,7 +479,10 @@ public class MedicationActivity extends BaseActivity implements View.OnClickList
                                             }
                                         })
                                         .send();
-                            } else {
+                            }else {
+                                Toast.makeText(MedicationActivity.this, "Add designee and doctor contact details", Toast.LENGTH_LONG).show();
+                            }
+                            } else{
                                 Toast.makeText(MedicationActivity.this, "Add designee and doctor contact details", Toast.LENGTH_LONG).show();
                             }
 
@@ -495,6 +512,82 @@ public class MedicationActivity extends BaseActivity implements View.OnClickList
         }
     }
 
+    // TODO: 4/11/17 Added set Alarm function to handle alarms - Start
+    public void setAlarm(String medicationName, String initialTime, String startDate, String endDate, int frequencyDays, String frequency){
+        //Long alertTime = new GregorianCalendar().getTimeInMillis()+5*1000;
+
+        int startDateday = 0;
+        int startDatemonth = 0;
+        int startDateyear = 0;
+
+        int endDateDay = 0;
+        int endDateMonth = 0;
+        int endDateYear = 0;
+        String[] startDateArray = startDate.split("-");
+        String[] endDateArray = endDate.split("-");
+
+        if(startDateArray.length > 0){
+            startDateday = Integer.parseInt(startDateArray[0]);
+            startDatemonth = convertMonthToInt(startDateArray[1]);
+            Log.d("Month value is :",String.valueOf(startDatemonth));
+            Log.d("Date Array", startDateArray[1]);
+            startDateyear = Integer.parseInt(startDateArray[2]);
+        }
+
+        if(endDateArray.length > 0){
+            endDateDay = Integer.parseInt(endDateArray[0]);
+            endDateMonth = convertMonthToInt(endDateArray[1]);
+            endDateYear = Integer.parseInt(endDateArray[2]);
+        }
+
+        String[] timeArray = initialTime.split(":");
+        int hours=0;
+        int minutes=0;
+        String amPm="AM";
+        if(timeArray.length >0){
+             hours = Integer.parseInt(timeArray[0]);
+            String[] array2 = timeArray[1].split(" ");
+            minutes = Integer.parseInt(array2[0]);
+            amPm = array2[1];
+        }
+
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR, hours);
+        calendar.set(Calendar.MINUTE, minutes);
+        calendar.set(Calendar.AM_PM, amPm.equalsIgnoreCase("AM")?0:1);
+        calendar.set(Calendar.DAY_OF_MONTH, startDateday);
+        calendar.set(Calendar.MONTH, startDatemonth);
+        calendar.set(Calendar.YEAR, startDateyear);
+
+        Calendar calendar1 = Calendar.getInstance();
+        calendar1.set(Calendar.DAY_OF_MONTH, endDateDay);
+        calendar1.set(Calendar.MONTH, endDateMonth);
+        calendar1.set(Calendar.YEAR, endDateYear);
+
+
+        Log.d("Milli", String.valueOf(calendar.getTimeInMillis()));
+
+        Intent alertIntent = new Intent(this, AlertReceiver.class);
+        alertIntent.putExtra("medName", medicationName);
+        alertIntent.putExtra("key", medicationKey);
+
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis() ,
+                PendingIntent.getBroadcast(this , (int)(calendar.getTimeInMillis()%2147483646) , alertIntent , PendingIntent.FLAG_UPDATE_CURRENT));
+        long startTimeMilliSec=calendar.getTimeInMillis();
+        long endTimeInMilliSec=calendar1.getTimeInMillis()+1000*60*60*24;
+        long mulFactor=getMultiplicationFactor(frequency)*frequencyDays;
+        for(long frequencyAlarm=startTimeMilliSec+mulFactor; frequencyAlarm<endTimeInMilliSec; frequencyAlarm = frequencyAlarm + mulFactor)
+        {
+            alarmManager.set(AlarmManager.RTC_WAKEUP, frequencyAlarm ,
+                    PendingIntent.getBroadcast(this , (int)frequencyAlarm%2147483646 , alertIntent , PendingIntent.FLAG_UPDATE_CURRENT));
+
+        }
+
+    }
+    // TODO: 4/11/17 Added set Alarm function to handle alarms - End
 
     public void dbPushFunction() {
         if (medication_keyTextView.getText().toString().equals("")) {
@@ -512,7 +605,8 @@ public class MedicationActivity extends BaseActivity implements View.OnClickList
         finish();
     }
 
-    private boolean validateForm(String medicationName, String dosage, String initialTime, String startDate, String endDate, String frequencyDays) {
+    // TODO: 4/11/17 Added totalQuantity
+    private boolean validateForm(String medicationName, String dosage,String totalQuantity, String initialTime, String startDate, String endDate, String frequencyDays) {
         boolean valid=true;
         if (TextUtils.isEmpty(medicationName) || TextUtils.isEmpty(dosage) || TextUtils.isEmpty(initialTime) || TextUtils.isEmpty(startDate) || TextUtils.isEmpty(endDate)) {
             return false;
@@ -524,8 +618,16 @@ public class MedicationActivity extends BaseActivity implements View.OnClickList
         try {
             startDateParsed = dateFormat.parse(startDate);
             endDateParsed = dateFormat.parse(endDate);
+
         } catch (ParseException e) {
             e.printStackTrace();
+        }
+        // TODO: 4/11/17 Changed startDate check condtion to include current date 
+        if(startDateParsed.before(new Date(System.currentTimeMillis() - 24*60*60*1000))){
+            startDateLayout.setError("Date range should be within the date range");
+            valid=false;
+        }else{
+            startDateLayout.setError(null);
         }
         if (endDateParsed.after(startDateParsed)) {
             endDateLayout.setError(null);
@@ -568,5 +670,44 @@ public class MedicationActivity extends BaseActivity implements View.OnClickList
         super.attachBaseContext(IconicsContextWrapper.wrap(newBase));
     }
 
-
+    // TODO: 4/11/17 Repeating alarms for Hours/Weeks/Months and also for Converting Months in the calendar - Start
+    public long getMultiplicationFactor(String frequency)
+    {
+        long multiplicationFactor=10;
+        if(frequency.equalsIgnoreCase("Hours"))
+        {
+            multiplicationFactor=1000*60*60;
+        }
+        else if(frequency.equalsIgnoreCase("Days"))
+        {
+            multiplicationFactor=1000*60*60*24;
+        }
+        else if(frequency.equalsIgnoreCase("Weeks"))
+        {
+            multiplicationFactor=1000*60*60*24*7;
+        }
+        else if(frequency.equalsIgnoreCase("Months"))
+        {
+            multiplicationFactor=1000*60*60*24*31;
+        }
+        return multiplicationFactor;
+    }
+    public int convertMonthToInt(String mon)
+    {
+        int val=4;
+        val=(mon.equalsIgnoreCase("Jan"))?1:val;
+        val=(mon.equalsIgnoreCase("Feb"))?2:val;
+        val=(mon.equalsIgnoreCase("Mar"))?3:val;
+        val=(mon.equalsIgnoreCase("Apr"))?4:val;
+        val=(mon.equalsIgnoreCase("May"))?5:val;
+        val=(mon.equalsIgnoreCase("Jun"))?6:val;
+        val=(mon.equalsIgnoreCase("Jul"))?7:val;
+        val=(mon.equalsIgnoreCase("Aug"))?8:val;
+        val=(mon.equalsIgnoreCase("Sep"))?9:val;
+        val=(mon.equalsIgnoreCase("Oct"))?10:val;
+        val=(mon.equalsIgnoreCase("Nov"))?11:val;
+        val=(mon.equalsIgnoreCase("Dec"))?12:val;
+        return val-1;
+    }
+    // TODO: 4/11/17 Repeating alarms for Hours/Weeks/Months and also for Converting Months in the calendar - End
 }

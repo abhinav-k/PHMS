@@ -5,6 +5,12 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
 
+    <!-- Sprint 4 - Ramji Notification Start -->
+
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <!-- Sprint 4 - Ramji Notification End -->
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -25,12 +31,34 @@
         <activity android:name=".activities.PhmsActivity" />
         <activity android:name=".activities.VitalsActivity" />
         <activity android:name=".activities.MedicationActivity" />
-        <activity android:name=".activities.ResetPassActivity"></activity><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
-     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
-        <activity android:name=".activities.AppointmentsActivity"/>
+        <activity android:name=".activities.ResetPassActivity" />
+        <!--
+ ATTENTION: This was auto-generated to add Google Play services to your project for
+     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
+        -->
+        <activity android:name=".activities.AppointmentsActivity" />
+
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+
+        <receiver android:name=".activities.AlertReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="DISMISS" />
+                <action android:name="SNOOZE" />
+                <action android:name="TAKE_MEDICATION"/>
+            </intent-filter>
+        </receiver>
+
+
+        <activity android:name=".activities.MedicationNotification"
+            android:label="More on Notification"
+            android:parentActivityName=".activities.MedicationActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.MedicationActivity"></meta-data>
+        </activity>
     </application>
 
 </manifest>
