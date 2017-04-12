@@ -198,17 +198,6 @@ public class MedicationNotification extends BaseActivity implements View.OnClick
                                 .send();
 
                     }
-<<<<<<< HEAD
-//                    else {
-//                        }
-//                    Intent intent = new Intent(MedicationNotification.this, PhmsActivity.class);
-//                    intent.putExtra("medFlag", true);
-//                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-//                    startActivity(intent);
-//                    finish();
-=======
->>>>>>> d3aec362a924638f27b0bc4799a678e9e8368f49
-
                 }
 
                 @Override

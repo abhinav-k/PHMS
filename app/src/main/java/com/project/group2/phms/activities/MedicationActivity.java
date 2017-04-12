@@ -573,7 +573,7 @@ public class MedicationActivity extends BaseActivity implements View.OnClickList
 //        Log.d("key",medicationKey);
 
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        
+
         alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
                 PendingIntent.getBroadcast(this, (int) (calendar.getTimeInMillis() % 2147483646), alertIntent, PendingIntent.FLAG_UPDATE_CURRENT));
         long startTimeMilliSec = calendar.getTimeInMillis();
