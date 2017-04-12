@@ -6,12 +6,17 @@
     </shared>
   </component>
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_LOG_LEVEL" value="error" />
+    <option name="TOOL_WINDOW_LOG_LEVEL" value="verbose" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="442c0cab-0f76-4d47-a6f5-2264579ed75a" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_medication_add.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_medication_add.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileHashes.bin" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileSnapshots.bin" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.bin" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.lock" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.lock" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/project/group2/phms/activities/MedicationNotification.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/project/group2/phms/activities/MedicationNotification.java" />
     </list>
     <ignored path="PHMS-master.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -46,17 +51,20 @@
       <file leaf-file-name="MedicationNotification.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/project/group2/phms/activities/MedicationNotification.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="390">
-              <caret line="193" column="83" selection-start-line="193" selection-start-column="83" selection-end-line="193" selection-end-column="83" />
-              <folding />
+            <state relative-caret-position="315">
+              <caret line="185" column="49" selection-start-line="185" selection-start-column="49" selection-end-line="185" selection-end-column="49" />
+              <folding>
+                <element signature="e#7410#8184#0" expanded="true" />
+                <element signature="e#8183#8184#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="activity_medication_add.xml" pinned="false" current-in-tab="true">
+      <file leaf-file-name="activity_medication_add.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_medication_add.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
+            <state relative-caret-position="720">
               <caret line="94" column="60" selection-start-line="94" selection-start-column="60" selection-end-line="94" selection-end-column="60" />
               <folding />
             </state>
@@ -89,10 +97,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MedicationActivity.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="MedicationActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/project/group2/phms/activities/MedicationActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="363">
+            <state relative-caret-position="348">
               <caret line="711" column="113" selection-start-line="711" selection-start-column="113" selection-end-line="711" selection-end-column="113" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -2203,8 +2211,8 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/project/group2/phms/adapter/MedicationsAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/project/group2/phms/model/Medication.java" />
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/project/group2/phms/activities/MedicationNotification.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_medication_add.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/project/group2/phms/activities/MedicationNotification.java" />
       </list>
     </option>
   </component>
@@ -3260,16 +3268,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/project/group2/phms/activities/MedicationActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="363">
-          <caret line="711" column="113" selection-start-line="711" selection-start-column="113" selection-end-line="711" selection-end-column="113" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/project/group2/phms/activities/AppointmentsActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-861">
@@ -3318,23 +3316,36 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/project/group2/phms/activities/MedicationNotification.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="193" column="83" selection-start-line="193" selection-start-column="83" selection-end-line="193" selection-end-column="83" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_medication_add.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
+        <state relative-caret-position="720">
           <caret line="94" column="60" selection-start-line="94" selection-start-column="60" selection-end-line="94" selection-end-column="60" />
           <folding />
         </state>
       </provider>
       <provider editor-type-id="android-designer2">
         <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/project/group2/phms/activities/MedicationNotification.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="185" column="49" selection-start-line="185" selection-start-column="49" selection-end-line="185" selection-end-column="49" />
+          <folding>
+            <element signature="e#7410#8184#0" expanded="true" />
+            <element signature="e#8183#8184#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/project/group2/phms/activities/MedicationActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="348">
+          <caret line="711" column="113" selection-start-line="711" selection-start-column="113" selection-end-line="711" selection-end-column="113" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
       </provider>
     </entry>
   </component>

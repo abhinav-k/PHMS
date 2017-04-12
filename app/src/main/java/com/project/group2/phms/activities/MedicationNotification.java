@@ -179,6 +179,11 @@ public class MedicationNotification extends BaseActivity implements View.OnClick
                                     public void onSuccess() {
                                         //do some magic
                                         Log.d("Email", "Sent Success");
+                                        Intent intent = new Intent(MedicationNotification.this, PhmsActivity.class);
+                                        intent.putExtra("medFlag", true);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        startActivity(intent);
+                                        finish();
                                     }
                                 })
                                 .withOnFailCallback(new BackgroundMail.OnFailCallback() {
@@ -191,11 +196,6 @@ public class MedicationNotification extends BaseActivity implements View.OnClick
                     } else {
                         Toast.makeText(MedicationNotification.this, "Add designee and doctor contact details", Toast.LENGTH_LONG).show();
                     }
-                    Intent intent = new Intent(MedicationNotification.this, PhmsActivity.class);
-                    intent.putExtra("medFlag", true);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
-                    finish();
 
                 }
 
