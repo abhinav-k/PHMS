@@ -68,6 +68,7 @@ public class MedicationNotification extends BaseActivity implements View.OnClick
 
     @BindView(R.id.denyMedicationButton)
     protected Button denyButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,7 +89,7 @@ public class MedicationNotification extends BaseActivity implements View.OnClick
 
         Intent intent = getIntent();
 
-        if(intent !=null){
+        if (intent != null) {
             medicationNameDisplay = intent.getStringExtra("medicationName");
             key = intent.getStringExtra("key");
             Toast.makeText(this, "key" + key, Toast.LENGTH_SHORT).show();
@@ -103,16 +104,16 @@ public class MedicationNotification extends BaseActivity implements View.OnClick
     @Override
     public void onClick(View view) {
 
-        if(view == snoozeButton){
-            long timeInMilliseconds = System.currentTimeMillis() + 15*60*1000;
+        if (view == snoozeButton) {
+            long timeInMilliseconds = System.currentTimeMillis() + 1000;
             // TODO: 4/11/17 Change long timeInMilliseconds = System.currentTimeMillis() + 5*1000; for the sake of demo
             Intent alertIntent = new Intent(this, AlertReceiver.class);
             alertIntent.putExtra("medName", medicationNameDisplay);
-
+            alertIntent.putExtra("key", key);
             AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
-            alarmManager.set(AlarmManager.RTC_WAKEUP, timeInMilliseconds ,
-                    PendingIntent.getBroadcast(this ,  (int) timeInMilliseconds%2147483646 , alertIntent , PendingIntent.FLAG_UPDATE_CURRENT));
+            alarmManager.set(AlarmManager.RTC_WAKEUP, timeInMilliseconds,
+                    PendingIntent.getBroadcast(this, (int) timeInMilliseconds % 2147483646, alertIntent, PendingIntent.FLAG_UPDATE_CURRENT));
             Toast.makeText(this, "Snoozed! Alarm will remind you in the next 15 minutes to take your medication", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, PhmsActivity.class);
             intent.putExtra("medFlag", true);
@@ -122,18 +123,18 @@ public class MedicationNotification extends BaseActivity implements View.OnClick
         }
 
 
-        if(view == takeMedicationButton){
+        if (view == takeMedicationButton) {
 
             databaseReferenceMedication.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     DataSnapshot snap = dataSnapshot.child(key);
                     Medication medication = snap.getValue(Medication.class);
-                    if(medication !=null){
-                     totalQuantity = medication.getTotalQuantity();
-                     quantityUpdate = Integer.parseInt(totalQuantity);
-                     quantityUpdate--;
-                     totalQuantity = String.valueOf(quantityUpdate);
+                    if (medication != null) {
+                        totalQuantity = medication.getTotalQuantity();
+                        quantityUpdate = Integer.parseInt(totalQuantity);
+                        quantityUpdate--;
+                        totalQuantity = String.valueOf(quantityUpdate);
                     }
                     databaseReferenceMedication.child(key).child("totalQuantity").setValue(totalQuantity);
                 }
@@ -151,7 +152,7 @@ public class MedicationNotification extends BaseActivity implements View.OnClick
             finish();
         }
 
-        if(view == denyButton){
+        if (view == denyButton) {
             designeeReference.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -160,7 +161,7 @@ public class MedicationNotification extends BaseActivity implements View.OnClick
                     String doctorEmail = designeeDoctor.getDoctorEmail();
                     SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MedicationNotification.this);
                     String fullName = sharedPreferences.getString(Preferences.NAME, "");
-                    if(medicationNameDisplay == null){
+                    if (medicationNameDisplay == null) {
                         medicationNameDisplay = "medicine";
                     }
                     String subject = "Warning!";
@@ -179,23 +180,31 @@ public class MedicationNotification extends BaseActivity implements View.OnClick
                                     public void onSuccess() {
                                         //do some magic
                                         Log.d("Email", "Sent Success");
+                                        Intent intent = new Intent(MedicationNotification.this, PhmsActivity.class);
+                                        intent.putExtra("medFlag", true);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        startActivity(intent);
+                                        finish();
                                     }
                                 })
                                 .withOnFailCallback(new BackgroundMail.OnFailCallback() {
                                     @Override
                                     public void onFail() {
                                         //do some magic
+                                        Toast.makeText(MedicationNotification.this, "Add designee and doctor contact details", Toast.LENGTH_LONG).show();
+
                                     }
                                 })
                                 .send();
-                    } else {
-                        Toast.makeText(MedicationNotification.this, "Add designee and doctor contact details", Toast.LENGTH_LONG).show();
+
                     }
-                    Intent intent = new Intent(MedicationNotification.this, PhmsActivity.class);
-                    intent.putExtra("medFlag", true);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
-                    finish();
+//                    else {
+//                        }
+//                    Intent intent = new Intent(MedicationNotification.this, PhmsActivity.class);
+//                    intent.putExtra("medFlag", true);
+//                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+//                    startActivity(intent);
+//                    finish();
 
                 }
 
@@ -207,6 +216,7 @@ public class MedicationNotification extends BaseActivity implements View.OnClick
         }
 
     }
+
     private void onAuthFailure() {
         // Write new user
         Intent intent = new Intent(MedicationNotification.this, SignInSignUpActivity.class);
