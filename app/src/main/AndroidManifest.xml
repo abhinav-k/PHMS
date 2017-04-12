@@ -32,6 +32,7 @@
         <activity android:name=".activities.VitalsActivity" />
         <activity android:name=".activities.MedicationActivity" />
         <activity android:name=".activities.ResetPassActivity" />
+        <activity android:name=".activities.NotesActivity"/>
         <!--
  ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -59,6 +60,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.MedicationActivity"></meta-data>
         </activity>
+
     </application>
 
 </manifest>

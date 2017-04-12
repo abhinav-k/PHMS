@@ -215,7 +215,12 @@ public class PhmsActivity extends BaseActivity {
             startFragment(fragment);
             result.setSelection(diet);
         }
-
+        if (notesFlag) {
+            notesFlag = false;
+            Fragment fragment = new NotesFragment();
+            startFragment(fragment);
+            result.setSelection(notes);
+        }
         result.setOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
             @Override
             public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {

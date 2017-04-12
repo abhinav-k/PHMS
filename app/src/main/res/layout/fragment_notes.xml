@@ -1,14 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="5dp"
     tools:context="com.project.group2.phms.fragments.NotesFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/notes_recycler"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/notes" />
+        android:layout_height="wrap_content"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/addNotesButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="10dp"
+        android:src="@mipmap/ic_add_white_24dp"
+        android:translationZ="12dp"
+        app:fabSize="normal" />
 
 </FrameLayout>

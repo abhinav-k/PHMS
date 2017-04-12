@@ -5,9 +5,8 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -22,13 +21,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.project.group2.phms.R;
-import com.project.group2.phms.fragments.MedicationFragment;
 import com.project.group2.phms.model.DesigneeDoctor;
 import com.project.group2.phms.model.Medication;
 import com.project.group2.phms.preferences.Preferences;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.HashMap;
 
 import butterknife.BindView;
@@ -198,6 +194,7 @@ public class MedicationNotification extends BaseActivity implements View.OnClick
                                 .send();
 
                     }
+
                 }
 
                 @Override
