@@ -54,14 +54,14 @@
             android:id="@+id/snoozeButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ic_snooze_black_24dp"
+            android:drawableStart="@drawable/ic_snooze_black_24dp"
             android:text="@string/snooze"/>
 
         <Button
             android:id="@+id/denyMedicationButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ic_alarm_off_black_24dp"
+            android:drawableStart="@drawable/ic_alarm_off_black_24dp"
             android:text="@string/dismiss"/>
 
 
@@ -70,7 +70,7 @@
             android:id="@+id/takeMedicationButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ic_check_circle_black_24dp"
+            android:drawableStart="@drawable/ic_check_circle_black_24dp"
             android:text="@string/takemedication"/>
 
 

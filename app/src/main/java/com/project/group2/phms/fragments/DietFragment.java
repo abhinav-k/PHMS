@@ -113,6 +113,8 @@ public class DietFragment extends Fragment {
         toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
         toolbar.setTitle(getString(R.string.diet));
 
+        Log.d("enter","enter");
+
         //ArrayList for storing each diet objects
         breakfastArrayList = new ArrayList<>();
         lunchArrayList = new ArrayList<>();

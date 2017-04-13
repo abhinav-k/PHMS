@@ -101,7 +101,7 @@ public class MedicationNotification extends BaseActivity implements View.OnClick
     public void onClick(View view) {
 
         if (view == snoozeButton) {
-            long timeInMilliseconds = System.currentTimeMillis() + 1000;
+            long timeInMilliseconds = System.currentTimeMillis() + 3 * 1000;
             // TODO: 4/11/17 Change long timeInMilliseconds = System.currentTimeMillis() + 5*1000; for the sake of demo
             Intent alertIntent = new Intent(this, AlertReceiver.class);
             alertIntent.putExtra("medName", medicationNameDisplay);

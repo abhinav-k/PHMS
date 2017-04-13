@@ -211,7 +211,7 @@ public class PhmsActivity extends BaseActivity {
         }
         if (dietFlag) {
             dietFlag = false;
-            Fragment fragment = new DietParentFragment();
+            Fragment fragment = new DietFragment();
             startFragment(fragment);
             result.setSelection(diet);
         }
@@ -247,7 +247,7 @@ public class PhmsActivity extends BaseActivity {
                         fragmentStack.add(medication);
                         break;
                     case 5:
-                        fragment = new DietParentFragment();
+                        fragment = new DietFragment();
                         fragmentStack.add(diet);
                         break;
                     case 6:

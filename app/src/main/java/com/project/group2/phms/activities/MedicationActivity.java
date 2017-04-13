@@ -47,6 +47,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -130,7 +131,8 @@ public class MedicationActivity extends BaseActivity implements View.OnClickList
         setContentView(R.layout.activity_medication_add);
         ButterKnife.bind(this);
 
-
+        String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
+        Log.d("Time",currentDateTimeString);
         setSupportActionBar(toolbar);
         Intent intent = getIntent();
 
