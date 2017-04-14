@@ -65,6 +65,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/doctorName"
+                            android:inputType="text"
                             tools:ignore="MissingPrefix" />
 
                     </android.support.design.widget.TextInputLayout>
@@ -117,6 +118,7 @@
                             android:id="@+id/doctorEmailEditText"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:inputType="textEmailAddress"
                             android:hint="@string/emailHint" />
 
                     </android.support.design.widget.TextInputLayout>
