@@ -101,21 +101,86 @@ public class MedicationNotification extends BaseActivity implements View.OnClick
     public void onClick(View view) {
 
         if (view == snoozeButton) {
-            long timeInMilliseconds = System.currentTimeMillis() + 3 * 1000;
-            // TODO: 4/11/17 Change long timeInMilliseconds = System.currentTimeMillis() + 5*1000; for the sake of demo
-            Intent alertIntent = new Intent(this, AlertReceiver.class);
-            alertIntent.putExtra("medName", medicationNameDisplay);
-            alertIntent.putExtra("key", key);
-            AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MedicationNotification.this);
+            int snooze_counter = sharedPreferences.getInt(Preferences.SNOOZE_COUNTER, 0);
+            snooze_counter++;
 
-            alarmManager.set(AlarmManager.RTC_WAKEUP, timeInMilliseconds,
-                    PendingIntent.getBroadcast(this, (int) timeInMilliseconds % 2147483646, alertIntent, PendingIntent.FLAG_UPDATE_CURRENT));
-            Toast.makeText(this, "Snoozed! Alarm will remind you in the next 15 minutes to take your medication", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(this, PhmsActivity.class);
-            intent.putExtra("medFlag", true);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-            finish();
+            if(snooze_counter == 3){
+                designeeReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        DesigneeDoctor designeeDoctor = dataSnapshot.getValue(DesigneeDoctor.class);
+                        String designeeEmail = designeeDoctor.getDesigneeEmail();
+                        String doctorEmail = designeeDoctor.getDoctorEmail();
+                        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MedicationNotification.this);
+                        String fullName = sharedPreferences.getString(Preferences.NAME, "");
+                        if (medicationNameDisplay == null) {
+                            medicationNameDisplay = "medicine";
+                        }
+                        String subject = "Warning!";
+                        String body = "Hi,\nThis email is to inform you that Mr." + fullName + " has not taken the " + medicationNameDisplay
+                                + " to be taken as per prescription. After repeated notifications, he has not taken the medication. It is advised to contact " + fullName + " and immediately advise him to take his medications.\n\nRegards,\nPHMS.";
+                        if (!TextUtils.isEmpty(designeeEmail) || !TextUtils.isEmpty(doctorEmail)) {
+                            BackgroundMail.newBuilder(MedicationNotification.this)
+                                    .withUsername("phmsgroup2@gmail.com")
+                                    .withPassword("science100")
+                                    .withMailto(designeeEmail + "," + doctorEmail)
+                                    .withType(BackgroundMail.TYPE_PLAIN)
+                                    .withSubject(subject)
+                                    .withBody(body)
+                                    .withOnSuccessCallback(new BackgroundMail.OnSuccessCallback() {
+                                        @Override
+                                        public void onSuccess() {
+                                            //do some magic
+                                            Log.d("Email", "Sent Success");
+                                            Intent intent = new Intent(MedicationNotification.this, PhmsActivity.class);
+                                            intent.putExtra("medFlag", true);
+                                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                            startActivity(intent);
+                                            finish();
+                                        }
+                                    })
+                                    .withOnFailCallback(new BackgroundMail.OnFailCallback() {
+                                        @Override
+                                        public void onFail() {
+                                            //do some magic
+                                            Toast.makeText(MedicationNotification.this, "Add designee and doctor contact details", Toast.LENGTH_LONG).show();
+
+                                        }
+                                    })
+                                    .send();
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+              snooze_counter = 0;
+
+            }
+            else {
+                long timeInMilliseconds = System.currentTimeMillis() + 3 * 1000;
+                // TODO: 4/11/17 Change long timeInMilliseconds = System.currentTimeMillis() + 5*1000; for the sake of demo
+                Intent alertIntent = new Intent(this, AlertReceiver.class);
+                alertIntent.putExtra("medName", medicationNameDisplay);
+                alertIntent.putExtra("key", key);
+                AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+                alarmManager.set(AlarmManager.RTC_WAKEUP, timeInMilliseconds,
+                        PendingIntent.getBroadcast(this, (int) timeInMilliseconds % 2147483646, alertIntent, PendingIntent.FLAG_UPDATE_CURRENT));
+                Toast.makeText(this, "Snoozed! Alarm will remind you in the next 15 minutes to take your medication", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this, PhmsActivity.class);
+                intent.putExtra("medFlag", true);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish();
+            }
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putInt(Preferences.SNOOZE_COUNTER, snooze_counter);
+            editor.commit();
         }
 
 
