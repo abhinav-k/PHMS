@@ -37,7 +37,6 @@ public class AlertReceiver extends BroadcastReceiver {
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, medicationNotificationIntent
                 , PendingIntent.FLAG_UPDATE_CURRENT);
 
-
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
                 .setSmallIcon(R.drawable.cardiogram)
                 .setContentTitle(msgTitle)
