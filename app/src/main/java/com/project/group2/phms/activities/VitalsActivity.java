@@ -151,7 +151,7 @@ public class VitalsActivity extends BaseActivity {
         if(keyEditText.getText().toString().equals("")) {
             Calendar c = Calendar.getInstance();
             System.out.println("Current time => " + c.getTime());
-            SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
+            SimpleDateFormat df = new SimpleDateFormat("dd-MMMM-yyyy");
             String formattedDate = df.format(c.getTime());
 
             vitalsMap.put("date", formattedDate);

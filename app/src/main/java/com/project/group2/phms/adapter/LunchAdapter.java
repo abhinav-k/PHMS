@@ -64,7 +64,7 @@ public class LunchAdapter extends RecyclerView.Adapter<LunchAdapter.ViewHolder> 
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.diet_adapter, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.diet_pager, parent, false);
         return new ViewHolder(itemView);
     }
 
@@ -101,11 +101,11 @@ public class LunchAdapter extends RecyclerView.Adapter<LunchAdapter.ViewHolder> 
             super(v);
             v.setOnCreateContextMenuListener(this);
             brandName = (TextView) v.findViewById(R.id.brandName);
-            foodDescription = (TextView) v.findViewById(R.id.foodDescription);
+            foodDescription = (TextView) v.findViewById(R.id.foodName);
             servingSize = (TextView) v.findViewById(R.id.servingSize);
             calories = (TextView) v.findViewById(R.id.calories);
-            date = (TextView) v.findViewById(R.id.dateDiet);
-            key = (TextView) v.findViewById(R.id.diet_recycler_key);
+            date = (TextView) v.findViewById(R.id.date);
+            key = (TextView) v.findViewById(R.id.dietkey);
 
         }
 

@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <!-- Sprint 4 - Ramji Notification Start -->
 
@@ -28,11 +29,21 @@
         <activity android:name=".activities.SignInActivity" />
         <activity android:name=".activities.UserDetailsActivity" />
         <activity android:name=".activities.RegisterActivity" />
-        <activity android:name=".activities.PhmsActivity" />
+        <activity
+            android:name=".activities.PhmsActivity"
+            android:configChanges="orientation|screenSize"
+            android:windowSoftInputMode="stateHidden">
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+        </activity>
         <activity android:name=".activities.VitalsActivity" />
         <activity android:name=".activities.MedicationActivity" />
         <activity android:name=".activities.ResetPassActivity" />
-        <activity android:name=".activities.NotesActivity"/>
+        <activity android:name=".activities.NotesActivity" />
         <!--
  ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -48,12 +59,13 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="DISMISS" />
                 <action android:name="SNOOZE" />
-                <action android:name="TAKE_MEDICATION"/>
+                <action android:name="TAKE_MEDICATION" />
             </intent-filter>
         </receiver>
 
 
-        <activity android:name=".activities.MedicationNotification"
+        <activity
+            android:name=".activities.MedicationNotification"
             android:label="More on Notification"
             android:parentActivityName=".activities.MedicationActivity">
             <meta-data

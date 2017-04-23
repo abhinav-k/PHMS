@@ -93,6 +93,7 @@ public class ProfileFragment extends Fragment {
         }
         toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
         toolbar.setTitle(getString(R.string.profile));
+        toolbar.setVisibility(View.VISIBLE);
         imageView = (CircularImageView) view.findViewById(R.id.profilePicture);
         displayName = (TextView) view.findViewById(R.id.displayName);
         galleryButton = (FancyButton) view.findViewById(R.id.galleryButton);

@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
@@ -14,12 +15,12 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnticipateInterpolator;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +31,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.hookedonplay.decoviewlib.DecoView;
+import com.hookedonplay.decoviewlib.charts.DecoDrawEffect;
+import com.hookedonplay.decoviewlib.charts.SeriesItem;
+import com.hookedonplay.decoviewlib.events.DecoEvent;
 import com.project.group2.phms.R;
 import com.project.group2.phms.activities.PhmsActivity;
 import com.project.group2.phms.adapter.BreakfastAdapter;
@@ -51,12 +56,15 @@ import java.util.HashMap;
  * Created by vishwath on 2/13/17.
  */
 
-public class DietFragment extends Fragment {
+public class DietFragment extends Fragment implements View.OnClickListener {
     Toolbar toolbar;
     TextView addBreakfast;
     TextView addLunch;
     TextView addDinner;
     TextView addSnacks;
+
+    TextView breakfastCalorieTextView, lunchCalorieTextView, dinnerCalorieTextView, snacksCalorieTextView,
+            caloriesPercentage, caloriesRemaining;
 
     String userId;
 
@@ -79,7 +87,9 @@ public class DietFragment extends Fragment {
 
     TextView totalCals;
     int calculatedCalories = 0;
-    int totalCalories =0;
+    int totalCalories = 0;
+    int breakfastCalories = 0, lunchCalories = 0, dinnerCalories = 0, snacksCalories = 0;
+    int targetCalories = 1000;
 
     RecyclerView recyclerViewBreakfast;
     RecyclerView recyclerViewLunch;
@@ -95,6 +105,17 @@ public class DietFragment extends Fragment {
     ArrayList<Lunch> lunchArrayList;
     ArrayList<Dinner> dinnerArrayList;
     ArrayList<Snacks> snacksArrayList;
+
+    LinearLayout totalCalorieLayout;
+    DecoView arcView;
+
+    private int mBackIndex;
+    private int mSeries1Index;
+    private int mSeries2Index;
+    private int mSeries3Index;
+    private int mSeries4Index;
+
+    private int mSeriesMax = 1000;
 
 
     public DietFragment() {
@@ -113,7 +134,7 @@ public class DietFragment extends Fragment {
         toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
         toolbar.setTitle(getString(R.string.diet));
 
-        Log.d("enter","enter");
+        Log.d("enter", "enter");
 
         //ArrayList for storing each diet objects
         breakfastArrayList = new ArrayList<>();
@@ -146,7 +167,17 @@ public class DietFragment extends Fragment {
         mBreakFastAdapter = new BreakfastAdapter(getContext(), breakfastArrayList);
         recyclerViewBreakfast.setLayoutManager(mLayoutManager);
 
+        totalCalorieLayout = (LinearLayout) view.findViewById(R.id.totalCalsLayout);
         totalCals = (TextView) view.findViewById(R.id.totalCals);
+
+        arcView = (DecoView) view.findViewById(R.id.dynamicArcView);
+
+        breakfastCalorieTextView = (TextView) view.findViewById(R.id.breakfastCalories);
+        lunchCalorieTextView = (TextView) view.findViewById(R.id.lunchCalories);
+        dinnerCalorieTextView = (TextView) view.findViewById(R.id.dinnerCalories);
+        snacksCalorieTextView = (TextView) view.findViewById(R.id.snacksCalories);
+        caloriesPercentage = (TextView) view.findViewById(R.id.textPercentage);
+        caloriesRemaining = (TextView) view.findViewById(R.id.textRemaining);
 
         /* Database call for finding out the total calories in the breakfast*/
         databaseReferenceBreakfast.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -158,12 +189,6 @@ public class DietFragment extends Fragment {
                     breakfast.setKey(breakfastKey);
                     breakfastArrayList.add(breakfast);
                 }
-                for(int i=0; i<breakfastArrayList.size();i++){
-                    calculatedCalories = Integer.parseInt(breakfastArrayList.get(i).getCalories());
-                    totalCalories += calculatedCalories;
-//                    Toast.makeText(getContext(), "calCal" + calculatedCalories, Toast.LENGTH_SHORT).show();
-                }
-                totalCals.setText(String.valueOf(totalCalories));
 
                 recyclerViewBreakfast.setAdapter(mBreakFastAdapter);
             }
@@ -193,12 +218,6 @@ public class DietFragment extends Fragment {
                     lunch.setKey(lunchKey);
                     lunchArrayList.add(lunch);
                 }
-                for(int i=0; i<lunchArrayList.size();i++){
-                    calculatedCalories = Integer.parseInt(lunchArrayList.get(i).getCalories());
-                    totalCalories += calculatedCalories;
-//                    Toast.makeText(getContext(), "calCal" + calculatedCalories, Toast.LENGTH_SHORT).show();
-                }
-                totalCals.setText(String.valueOf(totalCalories));
 
                 recyclerViewLunch.setAdapter(mLunchAdapter);
             }
@@ -228,12 +247,7 @@ public class DietFragment extends Fragment {
                     dinner.setKey(dinnerKey);
                     dinnerArrayList.add(dinner);
                 }
-                for(int i=0; i<dinnerArrayList.size();i++){
-                    calculatedCalories = Integer.parseInt(dinnerArrayList.get(i).getCalories());
-                    totalCalories += calculatedCalories;
-//                    Toast.makeText(getContext(), "calCal" + calculatedCalories, Toast.LENGTH_SHORT).show();
-                }
-                totalCals.setText(String.valueOf(totalCalories));
+
 
                 recyclerViewDinner.setAdapter(mDinnerAdapter);
             }
@@ -263,13 +277,6 @@ public class DietFragment extends Fragment {
                     snacks.setKey(snacksKey);
                     snacksArrayList.add(snacks);
                 }
-                for(int i=0; i<snacksArrayList.size();i++){
-                    calculatedCalories = Integer.parseInt(snacksArrayList.get(i).getCalories());
-                    totalCalories += calculatedCalories;
-//                    Toast.makeText(getContext(), "calCal" + calculatedCalories, Toast.LENGTH_SHORT).show();
-                }
-                totalCals.setText(String.valueOf(totalCalories));
-
                 recyclerViewSnacks.setAdapter(mSnacksAdapter);
 
             }
@@ -284,226 +291,15 @@ public class DietFragment extends Fragment {
         registerForContextMenu(recyclerViewSnacks);
 
         addBreakfast = (TextView) view.findViewById(R.id.addBreakfastIcon);
-        addBreakfast.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final Dialog dialog = new Dialog(getContext());
-                dialog.setTitle("Add Food");
-                dialog.setContentView(R.layout.dialog_add_food);
-                dialog.show();
-
-                //Edit Texts from Dialog
-                brandNameEditText = (TextInputEditText) dialog.findViewById(R.id.brandNameEditText);
-                foodDescriptionEditText = (TextInputEditText) dialog.findViewById(R.id.foodDescriptionEditText);
-                servingSizeEditText = (TextInputEditText) dialog.findViewById(R.id.servingSizeEditText);
-                caloriesEditText = (TextInputEditText) dialog.findViewById(R.id.caloriesEditText);
-
-                //Buttons from Dialog
-                addFoodButton = (Button) dialog.findViewById(R.id.addFoodButton);
-                cancelButton = (Button) dialog.findViewById(R.id.cancelButton);
-
-                addFoodButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        String brandName = brandNameEditText.getText().toString().trim();
-                        String foodDescription = foodDescriptionEditText.getText().toString().trim();
-                        String servingSize = servingSizeEditText.getText().toString().trim();
-                        String calories = caloriesEditText.getText().toString().trim();
-
-                        HashMap<String, String> breakfastMap = new HashMap<>();
-
-                        Calendar c = Calendar.getInstance();
-                        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
-                        String formattedDate = df.format(c.getTime());
-                        breakfastMap.put("date", formattedDate);
-                        breakfastMap.put("brandName", brandName);
-                        breakfastMap.put("foodDescription", foodDescription);
-                        breakfastMap.put("servingSize", servingSize);
-                        breakfastMap.put("calories", calories);
-                        databaseReferenceBreakfast.push().setValue(breakfastMap);
-                        Toast.makeText(getContext(), "Breakfast Item successfully added", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(getContext(),PhmsActivity.class);
-                        intent.putExtra("dietFlag", true);
-                        startActivity(intent);
-                    }
-                });
-
-                cancelButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });
-            }
-
-        });
-
         addLunch = (TextView) view.findViewById(R.id.addLunchIcon);
-        addLunch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final Dialog dialog = new Dialog(getContext());
-                dialog.setTitle("Add Food");
-                dialog.setContentView(R.layout.dialog_add_food);
-                dialog.show();
-
-                //Edit Texts from Dialog
-                brandNameEditText = (TextInputEditText) dialog.findViewById(R.id.brandNameEditText);
-                foodDescriptionEditText = (TextInputEditText) dialog.findViewById(R.id.foodDescriptionEditText);
-                servingSizeEditText = (TextInputEditText) dialog.findViewById(R.id.servingSizeEditText);
-                caloriesEditText = (TextInputEditText) dialog.findViewById(R.id.caloriesEditText);
-
-                //Buttons from Dialog
-                addFoodButton = (Button) dialog.findViewById(R.id.addFoodButton);
-                cancelButton = (Button) dialog.findViewById(R.id.cancelButton);
-
-                addFoodButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        String brandName = brandNameEditText.getText().toString().trim();
-                        String foodDescription = foodDescriptionEditText.getText().toString().trim();
-                        String servingSize = servingSizeEditText.getText().toString().trim();
-                        String calories = caloriesEditText.getText().toString().trim();
-
-                        HashMap<String, String> lunchMap = new HashMap<>();
-
-                        Calendar c = Calendar.getInstance();
-                        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
-                        String formattedDate = df.format(c.getTime());
-                        lunchMap.put("date", formattedDate);
-                        lunchMap.put("brandName", brandName);
-                        lunchMap.put("foodDescription", foodDescription);
-                        lunchMap.put("servingSize", servingSize);
-                        lunchMap.put("calories", calories);
-                        databaseReferenceLunch.push().setValue(lunchMap);
-                        Toast.makeText(getContext(), "Lunch Item successfully added", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(getContext(),PhmsActivity.class);
-                        intent.putExtra("dietFlag", true);
-                        startActivity(intent);
-                    }
-                });
-
-                cancelButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });
-
-
-            }
-
-        });
-
         addDinner = (TextView) view.findViewById(R.id.addDinnerIcon);
-        addDinner.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final Dialog dialog = new Dialog(getContext());
-                dialog.setTitle("Add Food");
-                dialog.setContentView(R.layout.dialog_add_food);
-                dialog.show();
-
-                //Edit Texts from Dialog
-                brandNameEditText = (TextInputEditText) dialog.findViewById(R.id.brandNameEditText);
-                foodDescriptionEditText = (TextInputEditText) dialog.findViewById(R.id.foodDescriptionEditText);
-                servingSizeEditText = (TextInputEditText) dialog.findViewById(R.id.servingSizeEditText);
-                caloriesEditText = (TextInputEditText) dialog.findViewById(R.id.caloriesEditText);
-
-                //Buttons from Dialog
-                addFoodButton = (Button) dialog.findViewById(R.id.addFoodButton);
-                cancelButton = (Button) dialog.findViewById(R.id.cancelButton);
-
-                addFoodButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        String brandName = brandNameEditText.getText().toString().trim();
-                        String foodDescription = foodDescriptionEditText.getText().toString().trim();
-                        String servingSize = servingSizeEditText.getText().toString().trim();
-                        String calories = caloriesEditText.getText().toString().trim();
-
-                        HashMap<String, String> dinnerMap = new HashMap<>();
-
-                        Calendar c = Calendar.getInstance();
-                        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
-                        String formattedDate = df.format(c.getTime());
-                        dinnerMap.put("date", formattedDate);
-                        dinnerMap.put("brandName", brandName);
-                        dinnerMap.put("foodDescription", foodDescription);
-                        dinnerMap.put("servingSize", servingSize);
-                        dinnerMap.put("calories", calories);
-                        databaseReferenceDinner.push().setValue(dinnerMap);
-                        Toast.makeText(getContext(), "Dinner Item successfully added", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(getContext(),PhmsActivity.class);
-                        intent.putExtra("dietFlag", true);
-                        startActivity(intent);
-                    }
-                });
-
-                cancelButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });
-            }
-
-        });
-
         addSnacks = (TextView) view.findViewById(R.id.addSnacksIcon);
-        addSnacks.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final Dialog dialog = new Dialog(getContext());
-                dialog.setTitle("Add Food");
-                dialog.setContentView(R.layout.dialog_add_food);
-                dialog.show();
 
-                //Edit Texts from Dialog
-                brandNameEditText = (TextInputEditText) dialog.findViewById(R.id.brandNameEditText);
-                foodDescriptionEditText = (TextInputEditText) dialog.findViewById(R.id.foodDescriptionEditText);
-                servingSizeEditText = (TextInputEditText) dialog.findViewById(R.id.servingSizeEditText);
-                caloriesEditText = (TextInputEditText) dialog.findViewById(R.id.caloriesEditText);
+        addBreakfast.setOnClickListener(this);
+        addLunch.setOnClickListener(this);
+        addDinner.setOnClickListener(this);
+        addSnacks.setOnClickListener(this);
 
-                //Buttons from Dialog
-                addFoodButton = (Button) dialog.findViewById(R.id.addFoodButton);
-                cancelButton = (Button) dialog.findViewById(R.id.cancelButton);
-
-                addFoodButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        String brandName = brandNameEditText.getText().toString().trim();
-                        String foodDescription = foodDescriptionEditText.getText().toString().trim();
-                        String servingSize = servingSizeEditText.getText().toString().trim();
-                        String calories = caloriesEditText.getText().toString().trim();
-
-                        HashMap<String, String> snacksMap = new HashMap<>();
-
-                        Calendar c = Calendar.getInstance();
-                        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
-                        String formattedDate = df.format(c.getTime());
-                        snacksMap.put("date", formattedDate);
-                        snacksMap.put("brandName", brandName);
-                        snacksMap.put("foodDescription", foodDescription);
-                        snacksMap.put("servingSize", servingSize);
-                        snacksMap.put("calories", calories);
-                        databaseReferenceSnacks.push().setValue(snacksMap);
-                        Toast.makeText(getContext(), "Snack successfully added", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(getContext(),PhmsActivity.class);
-                        intent.putExtra("dietFlag", true);
-                        startActivity(intent);
-                    }
-                });
-
-                cancelButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });
-            }
-
-        });
 
         //Filter Operation
         fab_calendar.setOnClickListener(new View.OnClickListener() {
@@ -523,12 +319,13 @@ public class DietFragment extends Fragment {
                             @Override
                             public void onDateSet(DatePicker view, int year,
                                                   int monthOfYear, int dayOfMonth) {
+                                totalCalorieLayout.setVisibility(View.VISIBLE);
                                 Calendar calendar = Calendar.getInstance();
                                 calendar.set(year, monthOfYear, dayOfMonth);
                                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
                                 final String selectedDate = dateFormat.format(calendar.getTime());
-                                Log.d("date", selectedDate);
                                 totalCalories = 0;
+                                breakfastCalories = lunchCalories = dinnerCalories = snacksCalories = 0;
                                 breakfastArrayList.clear();
                                 databaseReferenceBreakfast.addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
@@ -541,11 +338,13 @@ public class DietFragment extends Fragment {
                                                 breakfastArrayList.add(breakfast);
                                             }
                                         }
-                                        for(int i=0; i<breakfastArrayList.size();i++){
+                                        for (int i = 0; i < breakfastArrayList.size(); i++) {
                                             calculatedCalories = Integer.parseInt(breakfastArrayList.get(i).getCalories());
                                             totalCalories += calculatedCalories;
+                                            breakfastCalories += calculatedCalories;
                                         }
                                         totalCals.setText(String.valueOf(totalCalories));
+                                        breakfastCalorieTextView.setText(String.valueOf(breakfastCalories) + " kCal");
                                         mBreakFastAdapter.notifyDataSetChanged();
 
                                     }
@@ -568,11 +367,13 @@ public class DietFragment extends Fragment {
                                                 lunchArrayList.add(lunch);
                                             }
                                         }
-                                        for(int i=0; i<lunchArrayList.size();i++){
+                                        for (int i = 0; i < lunchArrayList.size(); i++) {
                                             calculatedCalories = Integer.parseInt(lunchArrayList.get(i).getCalories());
                                             totalCalories += calculatedCalories;
+                                            lunchCalories += calculatedCalories;
                                         }
                                         totalCals.setText(String.valueOf(totalCalories));
+                                        lunchCalorieTextView.setText(String.valueOf(lunchCalories) + " kCal");
                                         mLunchAdapter.notifyDataSetChanged();
 
                                     }
@@ -595,11 +396,13 @@ public class DietFragment extends Fragment {
                                                 dinnerArrayList.add(dinner);
                                             }
                                         }
-                                        for(int i=0; i<dinnerArrayList.size();i++){
+                                        for (int i = 0; i < dinnerArrayList.size(); i++) {
                                             calculatedCalories = Integer.parseInt(dinnerArrayList.get(i).getCalories());
                                             totalCalories += calculatedCalories;
+                                            dinnerCalories += calculatedCalories;
                                         }
                                         totalCals.setText(String.valueOf(totalCalories));
+                                        dinnerCalorieTextView.setText(String.valueOf(dinnerCalories) + " kCal");
                                         mDinnerAdapter.notifyDataSetChanged();
 
                                     }
@@ -622,12 +425,35 @@ public class DietFragment extends Fragment {
                                                 snacksArrayList.add(snacks);
                                             }
                                         }
-                                        for(int i=0; i<snacksArrayList.size();i++){
+                                        for (int i = 0; i < snacksArrayList.size(); i++) {
                                             calculatedCalories = Integer.parseInt(snacksArrayList.get(i).getCalories());
                                             totalCalories += calculatedCalories;
+                                            snacksCalories += calculatedCalories;
                                         }
                                         totalCals.setText(String.valueOf(totalCalories));
+                                        snacksCalorieTextView.setText(String.valueOf(snacksCalories) + " kCal");
                                         mSnacksAdapter.notifyDataSetChanged();
+
+                                        int tCal = Integer.parseInt(totalCals.getText().toString());
+                                        Log.d("totalCals", String.valueOf(tCal));
+                                        int percentageCals = (int) ((double) tCal / 1000 * 100);
+                                        Log.d("percentage", String.valueOf(percentageCals));
+                                        int remainingCals = targetCalories - tCal;
+
+                                        caloriesPercentage.setText(String.valueOf(percentageCals) + "%");
+
+                                        if (remainingCals > 0) {
+                                            caloriesRemaining.setText(String.valueOf(remainingCals) + " to goal");
+                                        } else {
+                                            caloriesRemaining.setText("Goal Reached!");
+                                        }
+
+                                        createBackSeries();
+                                        createDataSeries1();
+                                        createDataSeries2();
+                                        createDataSeries3();
+                                        createDataSeries4();
+                                        createEvents(breakfastCalories, lunchCalories, dinnerCalories, snacksCalories);
 
                                     }
 
@@ -656,6 +482,326 @@ public class DietFragment extends Fragment {
         });
 
         return view;
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()) {
+            case R.id.addBreakfastIcon:
+                addFoodFunction("breakfast");
+                break;
+            case R.id.addLunchIcon:
+                addFoodFunction("lunch");
+                break;
+            case R.id.addDinnerIcon:
+                addFoodFunction("dinner");
+                break;
+            case R.id.addSnacksIcon:
+                addFoodFunction("snacks");
+                break;
+        }
+
+    }
+
+    private void addFoodFunction(final String diet) {
+
+        final Dialog dialog = new Dialog(getContext());
+        dialog.setTitle("Add Food");
+        dialog.setContentView(R.layout.dialog_add_food);
+        dialog.show();
+
+        //Edit Texts from Dialog
+        brandNameEditText = (TextInputEditText) dialog.findViewById(R.id.brandNameEditText);
+        foodDescriptionEditText = (TextInputEditText) dialog.findViewById(R.id.foodDescriptionEditText);
+        servingSizeEditText = (TextInputEditText) dialog.findViewById(R.id.servingSizeEditText);
+        caloriesEditText = (TextInputEditText) dialog.findViewById(R.id.caloriesEditText);
+
+        //Buttons from Dialog
+        addFoodButton = (Button) dialog.findViewById(R.id.addFoodButton);
+        cancelButton = (Button) dialog.findViewById(R.id.cancelButton);
+
+        addFoodButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String brandName = brandNameEditText.getText().toString().trim();
+                String foodDescription = foodDescriptionEditText.getText().toString().trim();
+                String servingSize = servingSizeEditText.getText().toString().trim();
+                String calories = caloriesEditText.getText().toString().trim();
+                Calendar c = Calendar.getInstance();
+                SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
+                String formattedDate = df.format(c.getTime());
+
+                switch (diet) {
+
+                    case "breakfast":
+                        HashMap<String, String> breakfastMap = new HashMap<>();
+                        breakfastMap.put("date", formattedDate);
+                        breakfastMap.put("brandName", brandName);
+                        breakfastMap.put("foodDescription", foodDescription);
+                        breakfastMap.put("servingSize", servingSize);
+                        breakfastMap.put("calories", calories);
+                        databaseReferenceBreakfast.push().setValue(breakfastMap);
+                        Toast.makeText(getContext(), "Breakfast Item successfully added", Toast.LENGTH_SHORT).show();
+                        break;
+                    case "lunch":
+                        HashMap<String, String> lunchMap = new HashMap<>();
+                        lunchMap.put("date", formattedDate);
+                        lunchMap.put("brandName", brandName);
+                        lunchMap.put("foodDescription", foodDescription);
+                        lunchMap.put("servingSize", servingSize);
+                        lunchMap.put("calories", calories);
+                        databaseReferenceBreakfast.push().setValue(lunchMap);
+                        Toast.makeText(getContext(), "Breakfast Item successfully added", Toast.LENGTH_SHORT).show();
+                        break;
+                    case "dinner":
+                        HashMap<String, String> dinnerMap = new HashMap<>();
+                        dinnerMap.put("date", formattedDate);
+                        dinnerMap.put("brandName", brandName);
+                        dinnerMap.put("foodDescription", foodDescription);
+                        dinnerMap.put("servingSize", servingSize);
+                        dinnerMap.put("calories", calories);
+                        databaseReferenceBreakfast.push().setValue(dinnerMap);
+                        Toast.makeText(getContext(), "Breakfast Item successfully added", Toast.LENGTH_SHORT).show();
+                        break;
+                    case "snacks":
+                        HashMap<String, String> snacksMap = new HashMap<>();
+                        snacksMap.put("date", formattedDate);
+                        snacksMap.put("brandName", brandName);
+                        snacksMap.put("foodDescription", foodDescription);
+                        snacksMap.put("servingSize", servingSize);
+                        snacksMap.put("calories", calories);
+                        databaseReferenceBreakfast.push().setValue(snacksMap);
+                        Toast.makeText(getContext(), "Breakfast Item successfully added", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+
+                Intent intent = new Intent(getContext(), PhmsActivity.class);
+                intent.putExtra("dietFlag", true);
+                startActivity(intent);
+            }
+        });
+
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+    }
+
+    private void createBackSeries() {
+        SeriesItem seriesItem = new SeriesItem.Builder(Color.parseColor("#FFE2E2E2"))
+                .setRange(0, mSeriesMax, 0)
+                .setInitialVisibility(true)
+                .build();
+
+        mBackIndex = arcView.addSeries(seriesItem);
+    }
+
+    private void createDataSeries1() {
+        final SeriesItem seriesItem = new SeriesItem.Builder(Color.parseColor("#FFD600"))
+                .setRange(0, mSeriesMax, 0)
+                .setInitialVisibility(false)
+                .build();
+
+//        final TextView textPercentage = (TextView) findViewById(R.id.textPercentage);
+        seriesItem.addArcSeriesItemListener(new SeriesItem.SeriesItemListener() {
+            @Override
+            public void onSeriesItemAnimationProgress(float percentComplete, float currentPosition) {
+//                float percentFilled = ((currentPosition - seriesItem.getMinValue()) / (seriesItem.getMaxValue() - seriesItem.getMinValue()));
+//                textPercentage.setText(String.format("%.0f%%", percentFilled * 100f));
+            }
+
+            @Override
+            public void onSeriesItemDisplayProgress(float percentComplete) {
+
+            }
+        });
+
+
+//        final TextView textToGo = (TextView) findViewById(R.id.textRemaining);
+        seriesItem.addArcSeriesItemListener(new SeriesItem.SeriesItemListener() {
+            @Override
+            public void onSeriesItemAnimationProgress(float percentComplete, float currentPosition) {
+//                textToGo.setText(String.format("%.1f Km to goal", seriesItem.getMaxValue() - currentPosition));
+
+            }
+
+            @Override
+            public void onSeriesItemDisplayProgress(float percentComplete) {
+
+            }
+        });
+
+//        final TextView textActivity1 = (TextView) findViewById(R.id.textActivity1);
+        seriesItem.addArcSeriesItemListener(new SeriesItem.SeriesItemListener() {
+            @Override
+            public void onSeriesItemAnimationProgress(float percentComplete, float currentPosition) {
+//                textActivity1.setText(String.format("%.0f Km", currentPosition));
+            }
+
+            @Override
+            public void onSeriesItemDisplayProgress(float percentComplete) {
+
+            }
+        });
+
+        mSeries1Index = arcView.addSeries(seriesItem);
+    }
+
+    private void createDataSeries2() {
+        final SeriesItem seriesItem = new SeriesItem.Builder(Color.parseColor("#8BC34A"))
+                .setRange(0, mSeriesMax, 0)
+                .setInitialVisibility(false)
+                .build();
+
+//        final TextView textActivity2 = (TextView) findViewById(R.id.textActivity2);
+
+        seriesItem.addArcSeriesItemListener(new SeriesItem.SeriesItemListener() {
+            @Override
+            public void onSeriesItemAnimationProgress(float percentComplete, float currentPosition) {
+//                textActivity2.setText(String.format("%.0f Km", currentPosition));
+
+            }
+
+            @Override
+            public void onSeriesItemDisplayProgress(float percentComplete) {
+
+            }
+        });
+
+        mSeries2Index = arcView.addSeries(seriesItem);
+    }
+
+    private void createDataSeries3() {
+        final SeriesItem seriesItem = new SeriesItem.Builder(Color.parseColor("#FF6699FF"))
+                .setRange(0, mSeriesMax, 0)
+                .setInitialVisibility(false)
+                .build();
+
+//        final TextView textActivity3 = (TextView) findViewById(R.id.textActivity3);
+
+        seriesItem.addArcSeriesItemListener(new SeriesItem.SeriesItemListener() {
+            @Override
+            public void onSeriesItemAnimationProgress(float percentComplete, float currentPosition) {
+//                textActivity3.setText(String.format("%.2f Km", currentPosition));
+            }
+
+            @Override
+            public void onSeriesItemDisplayProgress(float percentComplete) {
+
+            }
+        });
+
+        mSeries3Index = arcView.addSeries(seriesItem);
+    }
+
+    private void createDataSeries4() {
+        final SeriesItem seriesItem = new SeriesItem.Builder(Color.parseColor("#F44336"))
+                .setRange(0, mSeriesMax, 0)
+                .setInitialVisibility(false)
+                .build();
+
+//        final TextView textActivity3 = (TextView) findViewById(R.id.textActivity3);
+
+        seriesItem.addArcSeriesItemListener(new SeriesItem.SeriesItemListener() {
+            @Override
+            public void onSeriesItemAnimationProgress(float percentComplete, float currentPosition) {
+//                textActivity3.setText(String.format("%.2f Km", currentPosition));
+            }
+
+            @Override
+            public void onSeriesItemDisplayProgress(float percentComplete) {
+
+            }
+        });
+
+        mSeries4Index = arcView.addSeries(seriesItem);
+    }
+
+    private void createEvents(int breakfastCalories, int lunchCalories, int dinnerCalories, int snacksCalories) {
+        arcView.executeReset();
+
+        arcView.addEvent(new DecoEvent.Builder(mSeriesMax)
+                .setIndex(mBackIndex)
+                .setDuration(1000)
+                .setDelay(100)
+                .build());
+
+
+        arcView.addEvent(new DecoEvent.Builder(DecoDrawEffect.EffectType.EFFECT_SPIRAL_OUT)
+                .setIndex(mSeries1Index)
+                .setDuration(1000)
+                .setDelay(1250)
+                .build());
+
+        arcView.addEvent(new DecoEvent.Builder(breakfastCalories)
+                .setIndex(mSeries1Index)
+                .setDelay(2250)
+                .build());
+
+
+        arcView.addEvent(new DecoEvent.Builder(DecoDrawEffect.EffectType.EFFECT_SPIRAL_OUT)
+                .setIndex(mSeries2Index)
+                .setDuration(1000)
+                .setEffectRotations(1)
+                .setDelay(3000)
+                .build());
+
+        arcView.addEvent(new DecoEvent.Builder(lunchCalories)
+                .setIndex(mSeries2Index)
+                .setDelay(4000)
+                .build());
+
+        arcView.addEvent(new DecoEvent.Builder(DecoDrawEffect.EffectType.EFFECT_SPIRAL_OUT)
+                .setIndex(mSeries3Index)
+                .setDuration(1000)
+                .setEffectRotations(1)
+                .setDelay(5000)
+                .build());
+
+        arcView.addEvent(new DecoEvent.Builder(dinnerCalories)
+                .setIndex(mSeries3Index)
+                .setDelay(6000)
+                .build());
+
+        arcView.addEvent(new DecoEvent.Builder(DecoDrawEffect.EffectType.EFFECT_SPIRAL_OUT)
+                .setIndex(mSeries4Index)
+                .setDuration(1000)
+                .setEffectRotations(1)
+                .setDelay(7500)
+                .build());
+
+        arcView.addEvent(new DecoEvent.Builder(snacksCalories)
+                .setIndex(mSeries4Index)
+                .setDelay(9000)
+                .build());
+
+        if (breakfastCalories + lunchCalories + dinnerCalories + snacksCalories > targetCalories) {
+
+
+            arcView.addEvent(new DecoEvent.Builder(DecoDrawEffect.EffectType.EFFECT_SPIRAL_EXPLODE)
+                    .setIndex(mSeries1Index)
+                    .setDelay(12000)
+                    .setDuration(3000)
+                    .setDisplayText("GOAL!")
+                    .setListener(new DecoEvent.ExecuteEventListener() {
+                        @Override
+                        public void onEventStart(DecoEvent decoEvent) {
+
+                        }
+
+                        @Override
+                        public void onEventEnd(DecoEvent decoEvent) {
+
+                        }
+                    })
+                    .build());
+        }
+
+
     }
 
 }

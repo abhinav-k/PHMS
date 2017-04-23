@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="15dp"
+    android:background="@color/colorPrimaryDark"
     tools:context="com.project.group2.phms.fragments.MedicationFragment">
 
     <android.support.v7.widget.RecyclerView
@@ -20,6 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
+        android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
         android:src="@mipmap/ic_add_white_24dp"
         android:translationZ="12dp"

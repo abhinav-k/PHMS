@@ -24,6 +24,7 @@ import com.project.group2.phms.R;
 import com.project.group2.phms.activities.AppointmentsActivity;
 import com.project.group2.phms.adapter.AppointmentsAdapter;
 import com.project.group2.phms.model.Appointments;
+import com.project.group2.phms.other.SimpleDividerItemDecoration;
 import com.project.group2.phms.preferences.Preferences;
 
 import java.util.ArrayList;
@@ -59,11 +60,13 @@ public class AppointmentsFragment extends Fragment {
         }
         toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
         toolbar.setTitle(getString(R.string.appointment));
+        toolbar.setVisibility(View.VISIBLE);
         addAppointmentsButton = (FloatingActionButton) view.findViewById(R.id.addAppointmentsButton);
         recyclerView = (RecyclerView) view.findViewById(R.id.appointments_recycler);
         recyclerView.setNestedScrollingEnabled(false);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.addItemDecoration(new SimpleDividerItemDecoration(getContext()));
         final RecyclerView.Adapter mAdapter = new AppointmentsAdapter(getContext(),appointmentsArrayList);
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

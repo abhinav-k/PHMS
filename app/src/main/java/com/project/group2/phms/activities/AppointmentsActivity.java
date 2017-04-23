@@ -216,7 +216,7 @@ public class AppointmentsActivity extends BaseActivity implements View.OnClickLi
         appointmentsMap.put("prescription", prescription);
         if (appoint_key_textView.getText().toString().equals("")) {
             Calendar c = Calendar.getInstance();
-            SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
+            SimpleDateFormat df = new SimpleDateFormat("dd-MMMM-yyyy");
             String formattedDate = df.format(c.getTime());
             appointmentsMap.put("date", formattedDate);
             databaseReference.push().setValue(appointmentsMap);
@@ -247,7 +247,7 @@ public class AppointmentsActivity extends BaseActivity implements View.OnClickLi
         }
         Pattern patternEmail = Patterns.EMAIL_ADDRESS;
         Pattern patternPhone = Patterns.PHONE;
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMMM-yyyy");
         Date appointmentDateParsed=null;
         try {
             appointmentDateParsed = dateFormat.parse(appointmentDate);
@@ -293,7 +293,7 @@ public class AppointmentsActivity extends BaseActivity implements View.OnClickLi
                                               int monthOfYear, int dayOfMonth) {
                             Calendar calendar = Calendar.getInstance();
                             calendar.set(year, monthOfYear, dayOfMonth);
-                            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
+                            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMMM-yyyy");
                             String visitDate = dateFormat.format(calendar.getTime());
                             appointmentDateEditText.setText(visitDate);
                         }

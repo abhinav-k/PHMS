@@ -312,7 +312,7 @@ public class MedicationActivity extends BaseActivity implements View.OnClickList
                                               int monthOfYear, int dayOfMonth) {
                             Calendar calendar = Calendar.getInstance();
                             calendar.set(year, monthOfYear, dayOfMonth);
-                            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
+                            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMMM-yyyy");
                             String startDate = dateFormat.format(calendar.getTime());
                             // TODO: 4/11/17 Deleted the filter for startDate - Added in validateForm() method
                             startDateEditText.setText(startDate);
@@ -339,7 +339,7 @@ public class MedicationActivity extends BaseActivity implements View.OnClickList
                                               int monthOfYear, int dayOfMonth) {
                             Calendar calendar = Calendar.getInstance();
                             calendar.set(year, monthOfYear, dayOfMonth);
-                            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
+                            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMMM-yyyy");
                             String endDate = dateFormat.format(calendar.getTime());
                             endDateEditText.setText(endDate);
 
@@ -412,7 +412,7 @@ public class MedicationActivity extends BaseActivity implements View.OnClickList
         medicationsMap.put("frequency", "Every " + frequencyDays + " " + frequency);
         if (medication_keyTextView.getText().toString().equals("")) {
             Calendar c = Calendar.getInstance();
-            SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
+            SimpleDateFormat df = new SimpleDateFormat("dd-MMMM-yyyy");
             String formattedDate = df.format(c.getTime());
             medicationsMap.put("dateMed", formattedDate);
             // TODO: 4/11/17 Added Alarm notifications
@@ -695,18 +695,18 @@ public class MedicationActivity extends BaseActivity implements View.OnClickList
 
     public int convertMonthToInt(String mon) {
         int val = 4;
-        val = (mon.equalsIgnoreCase("Jan")) ? 1 : val;
-        val = (mon.equalsIgnoreCase("Feb")) ? 2 : val;
-        val = (mon.equalsIgnoreCase("Mar")) ? 3 : val;
-        val = (mon.equalsIgnoreCase("Apr")) ? 4 : val;
+        val = (mon.equalsIgnoreCase("January")) ? 1 : val;
+        val = (mon.equalsIgnoreCase("February")) ? 2 : val;
+        val = (mon.equalsIgnoreCase("March")) ? 3 : val;
+        val = (mon.equalsIgnoreCase("April")) ? 4 : val;
         val = (mon.equalsIgnoreCase("May")) ? 5 : val;
-        val = (mon.equalsIgnoreCase("Jun")) ? 6 : val;
-        val = (mon.equalsIgnoreCase("Jul")) ? 7 : val;
-        val = (mon.equalsIgnoreCase("Aug")) ? 8 : val;
-        val = (mon.equalsIgnoreCase("Sep")) ? 9 : val;
-        val = (mon.equalsIgnoreCase("Oct")) ? 10 : val;
-        val = (mon.equalsIgnoreCase("Nov")) ? 11 : val;
-        val = (mon.equalsIgnoreCase("Dec")) ? 12 : val;
+        val = (mon.equalsIgnoreCase("June")) ? 6 : val;
+        val = (mon.equalsIgnoreCase("July")) ? 7 : val;
+        val = (mon.equalsIgnoreCase("August")) ? 8 : val;
+        val = (mon.equalsIgnoreCase("September")) ? 9 : val;
+        val = (mon.equalsIgnoreCase("October")) ? 10 : val;
+        val = (mon.equalsIgnoreCase("November")) ? 11 : val;
+        val = (mon.equalsIgnoreCase("December")) ? 12 : val;
         return val - 1;
     }
     // TODO: 4/11/17 Repeating alarms for Hours/Weeks/Months and also for Converting Months in the calendar - End

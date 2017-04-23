@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/frameLayout"
-    android:background="@android:color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
     android:orientation="vertical">
 
     <ScrollView
@@ -15,51 +15,174 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:theme="@style/textStyle">
 
-            <TextView
-                android:id="@+id/diet_key"
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/totalCalsLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="start"
-                android:text=""
-                android:visibility="gone" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:orientation="vertical"
+                android:visibility="gone"
                 android:padding="10dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/totalcals"
+                    android:id="@+id/totalCals"
+                    android:visibility="gone"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp">
+
+                    <TextView
+                        android:id="@+id/textPercentage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textSize="40sp" />
+
+                    <TextView
+                        android:id="@+id/textRemaining"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/textPercentage"
+                        android:layout_centerHorizontal="true"
+                        android:maxWidth="200dp"
+                        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+
+                    <com.hookedonplay.decoviewlib.DecoView xmlns:custom="http://schemas.android.com/apk/res-auto"
+                        android:id="@+id/dynamicArcView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        custom:dv_lineWidth="20dp">
+
+                    </com.hookedonplay.decoviewlib.DecoView>
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/breakfastPic"
+                            android:layout_width="wrap_content"
+                            android:layout_height="50dp"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/breakfast" />
+
+                        <TextView
+                            android:id="@+id/breakfastCalories"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="10Kcal" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/lunchPic"
+                            android:layout_width="wrap_content"
+                            android:layout_height="50dp"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/lunch" />
+
+                        <TextView
+                            android:id="@+id/lunchCalories"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="10Kcal" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/dinnerPic"
+                            android:layout_width="wrap_content"
+                            android:layout_height="50dp"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/dinner" />
+
+                        <TextView
+                            android:id="@+id/dinnerCalories"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="10Kcal" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/snacksPic"
+                            android:layout_width="wrap_content"
+                            android:layout_height="50dp"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/snacks" />
+
+                        <TextView
+                            android:id="@+id/snacksCalories"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="10Kcal" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/breakfast"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/totalCals"
+                    android:id="@+id/addBreakfastIcon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:text="@string/zerocal"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:gravity="center|start"
+                    android:text="{gmd_plus_circle}"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="18sp" />
 
             </LinearLayout>
-
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/breakfastToolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@color/colorPrimary"
-                android:elevation="6dp"
-                android:minHeight="?attr/actionBarSize"
-                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                app:title="@string/breakfast"
-                app:titleTextColor="@android:color/white" />
 
             <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -76,29 +199,38 @@
                     app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 
-                <com.mikepenz.iconics.view.IconicsTextView
-                    android:id="@+id/addBreakfastIcon"
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/bg" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:text="@string/lunch"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/addLunchIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
                     android:gravity="center|start"
-                    android:text="{gmd_plus_circle} Add food"
-                    android:textColor="@android:color/darker_gray"
+                    android:text="{gmd_plus_circle}"
+                    android:textColor="@color/colorAccent"
                     android:textSize="18sp" />
 
             </LinearLayout>
-
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/lunchToolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@color/colorPrimary"
-                android:elevation="6dp"
-                android:minHeight="?attr/actionBarSize"
-                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                app:title="@string/lunch"
-                app:titleTextColor="@android:color/white" />
 
             <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -114,30 +246,38 @@
                     app:layoutManager="android.support.v7.widget.LinearLayoutManager"
                     app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
+            </LinearLayout>
 
-                <com.mikepenz.iconics.view.IconicsTextView
-                    android:id="@+id/addLunchIcon"
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/bg" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:text="@string/dinner"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/addDinnerIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
                     android:gravity="center|start"
-                    android:text="{gmd_plus_circle} Add Food"
-                    android:textColor="@android:color/darker_gray"
+                    android:text="{gmd_plus_circle}"
+                    android:textColor="@color/colorAccent"
                     android:textSize="18sp" />
 
             </LinearLayout>
-
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/dinnerToolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@color/colorPrimary"
-                android:elevation="6dp"
-                android:minHeight="?attr/actionBarSize"
-                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                app:title="@string/dinner"
-                app:titleTextColor="@android:color/white" />
 
             <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -153,30 +293,38 @@
                     app:layoutManager="android.support.v7.widget.LinearLayoutManager"
                     app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
+            </LinearLayout>
 
-                <com.mikepenz.iconics.view.IconicsTextView
-                    android:id="@+id/addDinnerIcon"
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/bg" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:text="@string/snacks"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/addSnacksIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
                     android:gravity="center|start"
-                    android:text="{gmd_plus_circle} Add Food"
-                    android:textColor="@android:color/darker_gray"
+                    android:text="{gmd_plus_circle}"
+                    android:textColor="@color/colorAccent"
                     android:textSize="18sp" />
 
             </LinearLayout>
-
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/snacksToolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@color/colorPrimary"
-                android:elevation="6dp"
-                android:minHeight="?attr/actionBarSize"
-                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                app:title="@string/snacks"
-                app:titleTextColor="@android:color/white" />
 
             <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -192,18 +340,6 @@
                     app:layoutManager="android.support.v7.widget.LinearLayoutManager"
                     app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-
-                <com.mikepenz.iconics.view.IconicsTextView
-                    android:id="@+id/addSnacksIcon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginTop="10dp"
-                    android:gravity="center|start"
-                    android:text="{gmd_plus_circle} Add Food"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="18sp" />
-
             </LinearLayout>
 
         </LinearLayout>
@@ -215,8 +351,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
-        fab:fab_addButtonColorNormal="@color/accent"
-        fab:fab_addButtonColorPressed="@color/accent_dark"
+        fab:fab_addButtonColorNormal="@color/colorAccent"
+        fab:fab_addButtonColorPressed="@color/colorAccentDark"
         fab:fab_addButtonPlusIconColor="@color/white"
         fab:fab_addButtonStrokeVisible="false"
         fab:fab_labelStyle="@style/menu_labels_style"
@@ -226,10 +362,10 @@
             android:id="@+id/fab_calendar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            fab:fab_colorNormal="@color/accent"
-            fab:fab_colorPressed="@color/accent_dark"
-            fab:fab_plusIconColor="@color/white"
+            fab:fab_addButtonColorNormal="@color/colorAccent"
+            fab:fab_addButtonColorPressed="@color/colorAccentDark"
             fab:fab_icon="@drawable/ic_date_range_white_24dp"
+            fab:fab_plusIconColor="@color/white"
             fab:fab_size="mini"
             fab:fab_title="Calendar" />
 
@@ -237,10 +373,10 @@
             android:id="@+id/fab_clear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            fab:fab_colorNormal="@color/accent"
-            fab:fab_colorPressed="@color/accent_dark"
-            fab:fab_plusIconColor="@color/white"
+            fab:fab_addButtonColorNormal="@color/colorAccent"
+            fab:fab_addButtonColorPressed="@color/colorAccentDark"
             fab:fab_icon="@drawable/ic_clear_all_white_24dp"
+            fab:fab_plusIconColor="@color/white"
             fab:fab_size="mini"
             fab:fab_title="Clear" />
 

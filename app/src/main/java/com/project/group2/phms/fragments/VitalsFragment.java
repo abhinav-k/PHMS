@@ -27,6 +27,7 @@ import com.project.group2.phms.R;
 import com.project.group2.phms.activities.VitalsActivity;
 import com.project.group2.phms.adapter.VitalsAdapter;
 import com.project.group2.phms.model.Vitals;
+import com.project.group2.phms.other.SimpleDividerItemDecoration;
 import com.project.group2.phms.preferences.Preferences;
 
 import java.util.ArrayList;
@@ -66,11 +67,13 @@ public class VitalsFragment extends Fragment  {
         }
         toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
         toolbar.setTitle(getString(R.string.vitals));
+        toolbar.setVisibility(View.VISIBLE);
         addButton = (FloatingActionButton) view.findViewById(R.id.addButton);
         recyclerView = (RecyclerView) view.findViewById(R.id.vitals_recycler);
         recyclerView.setNestedScrollingEnabled(false);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.addItemDecoration(new SimpleDividerItemDecoration(getContext()));
         final RecyclerView.Adapter mAdapter = new VitalsAdapter(getContext(),vitalsList);
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

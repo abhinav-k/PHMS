@@ -128,7 +128,7 @@ public class NotesActivity extends BaseActivity {
         notesMap.put("note", notesText);
         if (notesKeyTextView.getText().toString().equals("")) {
             Calendar c = Calendar.getInstance();
-            SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
+            SimpleDateFormat df = new SimpleDateFormat("dd-MMMM-yyyy");
             String formattedDate = df.format(c.getTime());
             notesMap.put("date", formattedDate);
         } else {

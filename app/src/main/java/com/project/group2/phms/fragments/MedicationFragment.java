@@ -26,6 +26,7 @@ import com.project.group2.phms.activities.MedicationActivity;
 import com.project.group2.phms.activities.VitalsActivity;
 import com.project.group2.phms.adapter.MedicationsAdapter;
 import com.project.group2.phms.model.Medication;
+import com.project.group2.phms.other.SimpleDividerItemDecoration;
 import com.project.group2.phms.preferences.Preferences;
 
 import java.util.ArrayList;
@@ -62,11 +63,13 @@ public class MedicationFragment extends Fragment {
         }
         toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
         toolbar.setTitle(getString(R.string.medication));
+        toolbar.setVisibility(View.VISIBLE);
         addMedButton = (FloatingActionButton) view.findViewById(R.id.addMedicationButton);
         recyclerView = (RecyclerView) view.findViewById(R.id.medications_recycler);
         recyclerView.setNestedScrollingEnabled(false);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.addItemDecoration(new SimpleDividerItemDecoration(getContext()));
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

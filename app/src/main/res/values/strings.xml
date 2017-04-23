@@ -98,6 +98,16 @@
     <string name="appointment">Appointments</string>
     <string name="designee">Designee</string>
     <string name="doctor">Doctor</string>
+    <string name="filter">Filter</string>
+    <string name="category">Category</string>
+    <array name="categories">
+        <item>Vitals</item>
+        <item>Medication</item>
+        <item>Appointments</item>
+        <item>Notes</item>
+    </array>
+    <string name="fromDate">From</string>
+    <string name="toDate">To</string>
 
     <!--Medications Fragment -->
     <string name="medicationName">Medication Name</string>
@@ -152,6 +162,7 @@
     <string name="snooze"> Snooze </string>
     <string name="dismiss"> Dismiss </string>
     <string name="takemedication">Take Medication </string>
+    <string name="keyword">Keyword</string>
 
 
 </resources>

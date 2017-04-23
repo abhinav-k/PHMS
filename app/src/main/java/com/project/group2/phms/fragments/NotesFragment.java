@@ -23,6 +23,7 @@ import com.project.group2.phms.R;
 import com.project.group2.phms.activities.NotesActivity;
 import com.project.group2.phms.adapter.NotesAdapter;
 import com.project.group2.phms.model.Notes;
+import com.project.group2.phms.other.SimpleDividerItemDecoration;
 import com.project.group2.phms.preferences.Preferences;
 
 import java.util.ArrayList;
@@ -58,11 +59,13 @@ public class NotesFragment extends Fragment {
         }
         toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
         toolbar.setTitle(getString(R.string.notes));
+        toolbar.setVisibility(View.VISIBLE);
         addNotesButton = (FloatingActionButton) view.findViewById(R.id.addNotesButton);
         recyclerView = (RecyclerView) view.findViewById(R.id.notes_recycler);
         recyclerView.setNestedScrollingEnabled(false);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.addItemDecoration(new SimpleDividerItemDecoration(getContext()));
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
