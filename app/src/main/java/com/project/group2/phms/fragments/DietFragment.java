@@ -13,11 +13,14 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnticipateInterpolator;
+import android.widget.AdapterView;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
@@ -39,12 +42,15 @@ import com.project.group2.phms.R;
 import com.project.group2.phms.activities.PhmsActivity;
 import com.project.group2.phms.adapter.BreakfastAdapter;
 import com.project.group2.phms.adapter.DinnerAdapter;
+import com.project.group2.phms.adapter.FoodAutoCompleteAdapter;
 import com.project.group2.phms.adapter.LunchAdapter;
 import com.project.group2.phms.adapter.SnacksAdapter;
 import com.project.group2.phms.model.Breakfast;
 import com.project.group2.phms.model.Dinner;
+import com.project.group2.phms.model.Food;
 import com.project.group2.phms.model.Lunch;
 import com.project.group2.phms.model.Snacks;
+import com.project.group2.phms.other.DelayAutoCompleteTextView;
 import com.project.group2.phms.preferences.Preferences;
 
 import java.text.SimpleDateFormat;
@@ -77,6 +83,8 @@ public class DietFragment extends Fragment implements View.OnClickListener {
     TextInputEditText foodDescriptionEditText;
     TextInputEditText servingSizeEditText;
     TextInputEditText caloriesEditText;
+
+    DelayAutoCompleteTextView foodAutoComplete;
 
     FloatingActionsMenu fam;
     FloatingActionButton fab_calendar;
@@ -133,6 +141,7 @@ public class DietFragment extends Fragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.fragment_diet, container, false);
         toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
         toolbar.setTitle(getString(R.string.diet));
+        toolbar.setVisibility(View.VISIBLE);
 
         Log.d("enter", "enter");
 
@@ -511,11 +520,25 @@ public class DietFragment extends Fragment implements View.OnClickListener {
         dialog.setContentView(R.layout.dialog_add_food);
         dialog.show();
 
-        //Edit Texts from Dialog
         brandNameEditText = (TextInputEditText) dialog.findViewById(R.id.brandNameEditText);
-        foodDescriptionEditText = (TextInputEditText) dialog.findViewById(R.id.foodDescriptionEditText);
         servingSizeEditText = (TextInputEditText) dialog.findViewById(R.id.servingSizeEditText);
         caloriesEditText = (TextInputEditText) dialog.findViewById(R.id.caloriesEditText);
+
+        foodAutoComplete = (DelayAutoCompleteTextView) dialog.findViewById(R.id.foodAutoComplete);
+        foodAutoComplete.setThreshold(4);
+        foodAutoComplete.setAdapter(new FoodAutoCompleteAdapter(getContext()));
+        foodAutoComplete.setLoadingIndicator((android.widget.ProgressBar) dialog.findViewById(R.id.pb_loading_indicator));
+        foodAutoComplete.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Food food = (Food) parent.getItemAtPosition(position);
+                foodAutoComplete.setText(food.getFoodName());
+                brandNameEditText.setText(food.getBrandName());
+                servingSizeEditText.setText(String.valueOf(food.getServingSize()));
+                caloriesEditText.setText(String.valueOf(food.getCalories()));
+
+            }
+        });
 
         //Buttons from Dialog
         addFoodButton = (Button) dialog.findViewById(R.id.addFoodButton);
@@ -525,54 +548,40 @@ public class DietFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onClick(View v) {
                 String brandName = brandNameEditText.getText().toString().trim();
-                String foodDescription = foodDescriptionEditText.getText().toString().trim();
+                String foodDescription = foodAutoComplete.getText().toString().trim();
                 String servingSize = servingSizeEditText.getText().toString().trim();
                 String calories = caloriesEditText.getText().toString().trim();
                 Calendar c = Calendar.getInstance();
                 SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
                 String formattedDate = df.format(c.getTime());
 
+                if (!validateForm(brandName, foodDescription, servingSize, calories)) {
+                    Toast.makeText(getContext(), "All fields are mandatory", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                HashMap<String, String> dietMap = new HashMap<>();
+                dietMap.put("date", formattedDate);
+                dietMap.put("brandName", brandName);
+                dietMap.put("foodDescription", foodDescription);
+                dietMap.put("servingSize", servingSize);
+                dietMap.put("calories", calories);
                 switch (diet) {
 
                     case "breakfast":
-                        HashMap<String, String> breakfastMap = new HashMap<>();
-                        breakfastMap.put("date", formattedDate);
-                        breakfastMap.put("brandName", brandName);
-                        breakfastMap.put("foodDescription", foodDescription);
-                        breakfastMap.put("servingSize", servingSize);
-                        breakfastMap.put("calories", calories);
-                        databaseReferenceBreakfast.push().setValue(breakfastMap);
+                        databaseReferenceBreakfast.push().setValue(dietMap);
                         Toast.makeText(getContext(), "Breakfast Item successfully added", Toast.LENGTH_SHORT).show();
                         break;
                     case "lunch":
-                        HashMap<String, String> lunchMap = new HashMap<>();
-                        lunchMap.put("date", formattedDate);
-                        lunchMap.put("brandName", brandName);
-                        lunchMap.put("foodDescription", foodDescription);
-                        lunchMap.put("servingSize", servingSize);
-                        lunchMap.put("calories", calories);
-                        databaseReferenceBreakfast.push().setValue(lunchMap);
-                        Toast.makeText(getContext(), "Breakfast Item successfully added", Toast.LENGTH_SHORT).show();
+                        databaseReferenceLunch.push().setValue(dietMap);
+                        Toast.makeText(getContext(), "Lunch Item successfully added", Toast.LENGTH_SHORT).show();
                         break;
                     case "dinner":
-                        HashMap<String, String> dinnerMap = new HashMap<>();
-                        dinnerMap.put("date", formattedDate);
-                        dinnerMap.put("brandName", brandName);
-                        dinnerMap.put("foodDescription", foodDescription);
-                        dinnerMap.put("servingSize", servingSize);
-                        dinnerMap.put("calories", calories);
-                        databaseReferenceBreakfast.push().setValue(dinnerMap);
-                        Toast.makeText(getContext(), "Breakfast Item successfully added", Toast.LENGTH_SHORT).show();
+                        databaseReferenceDinner.push().setValue(dietMap);
+                        Toast.makeText(getContext(), "Dinner Item successfully added", Toast.LENGTH_SHORT).show();
                         break;
                     case "snacks":
-                        HashMap<String, String> snacksMap = new HashMap<>();
-                        snacksMap.put("date", formattedDate);
-                        snacksMap.put("brandName", brandName);
-                        snacksMap.put("foodDescription", foodDescription);
-                        snacksMap.put("servingSize", servingSize);
-                        snacksMap.put("calories", calories);
-                        databaseReferenceBreakfast.push().setValue(snacksMap);
-                        Toast.makeText(getContext(), "Breakfast Item successfully added", Toast.LENGTH_SHORT).show();
+                        databaseReferenceSnacks.push().setValue(dietMap);
+                        Toast.makeText(getContext(), "Snacks Item successfully added", Toast.LENGTH_SHORT).show();
                         break;
                 }
 
@@ -589,6 +598,14 @@ public class DietFragment extends Fragment implements View.OnClickListener {
             }
         });
 
+    }
+
+    private boolean validateForm(String brandName, String foodDescription, String servingSize, String calories) {
+        boolean valid = true;
+        if (TextUtils.isEmpty(brandName) || TextUtils.isEmpty(foodDescription) || TextUtils.isEmpty(servingSize) || TextUtils.isEmpty(calories)) {
+            valid = false;
+        }
+        return valid;
     }
 
     private void createBackSeries() {

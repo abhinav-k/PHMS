@@ -102,7 +102,7 @@ public class MedicationsAdapter extends RecyclerView.Adapter<MedicationsAdapter.
                 @Override
                 public boolean onMenuItemClick(MenuItem item) {
                     Intent editMedIntent = new Intent(mContext, MedicationActivity.class);
-                    editMedIntent.putExtra("medications_key", medication_key.getText());
+                    editMedIntent.putExtra("medications_key", medication_key.getText().toString());
                     mContext.startActivity(editMedIntent);
                     return false;
                 }

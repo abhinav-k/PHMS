@@ -4,9 +4,11 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.TextInputEditText;
+import android.support.v4.os.AsyncTaskCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -14,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.view.MenuItem;
@@ -27,11 +30,24 @@ import com.google.firebase.database.ValueEventListener;
 import com.project.group2.phms.R;
 import com.project.group2.phms.activities.PhmsActivity;
 import com.project.group2.phms.model.Snacks;
+import com.project.group2.phms.other.DelayAutoCompleteTextView;
 import com.project.group2.phms.preferences.Preferences;
+import com.squareup.picasso.Picasso;
 
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by ramajseepha on 3/24/17.
@@ -47,7 +63,7 @@ public class SnacksAdapter extends RecyclerView.Adapter<SnacksAdapter.ViewHolder
     ValueEventListener valueEventListener;
 
     TextInputEditText brandNameEditText;
-    TextInputEditText foodDescriptionEditText;
+    DelayAutoCompleteTextView foodAutoComplete;
     TextInputEditText servingSizeEditText;
     TextInputEditText caloriesEditText;
 
@@ -81,6 +97,64 @@ public class SnacksAdapter extends RecyclerView.Adapter<SnacksAdapter.ViewHolder
         holder.calories.setText(snacks.getCalories());
         holder.date.setText(snacks.getDate());
         holder.key.setText(snacks.getKey());
+        fetchImageUri(snacks.getFoodDescription(),holder);
+
+
+    }
+
+    private void fetchImageUri(final String foodName, final ViewHolder holder) {
+        AsyncTaskCompat.executeParallel(new AsyncTask<Void, Void, String>() {
+            @Override
+            protected String doInBackground(Void... params) {
+                String foodDescription = foodName.replaceAll("\\P{L}"," ").trim();
+                final List<String> queryList = new ArrayList<>(Arrays.asList(foodDescription.split(" ")));
+                if (queryList.size() > 1) {
+                    foodDescription = queryList.get(0) + "+" + queryList.get(1) ;
+                }else {
+                    foodDescription = queryList.get(0);
+                }
+                Log.d("foodName",foodDescription);
+                String imageLink = "";
+                String API_LINK = "https://api.cognitive.microsoft.com/bing/v5.0/images/search?q=" + foodDescription;
+                URL url;
+                try {
+                    url = new URL(API_LINK);
+                    HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                    urlConnection.setRequestMethod("GET");
+                    urlConnection.setRequestProperty("Ocp-Apim-Subscription-Key","a2c8ce5075cf46a8b75346edcc190c57");
+                    int responseCode = urlConnection.getResponseCode();
+                    BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+                    String inputLine;
+                    StringBuilder response = new StringBuilder();
+                    while ((inputLine = in.readLine()) != null) {
+                        response.append(inputLine);
+                    }
+                    in.close();
+                    JSONObject jsonObject = new JSONObject(response.toString());
+                    JSONArray imageArray = jsonObject.getJSONArray("value");
+                    if (imageArray.length() > 0) {
+                        JSONObject imageObject = imageArray.getJSONObject(0);
+                        imageLink = imageObject.getString("thumbnailUrl");
+                        Log.d("response", imageLink);
+                    }
+
+
+                } catch (IOException | JSONException e) {
+                    e.printStackTrace();
+                }
+                return imageLink;
+            }
+
+            @Override
+            protected void onPostExecute (String s){
+                if (!s.isEmpty()) {
+                    Picasso.with(mContext).load(s).centerInside().resize(300,300).error(R.drawable.food).into(holder.dietPic);
+                }
+                super.onPostExecute(s);
+
+
+            }
+        });
 
 
     }
@@ -96,7 +170,7 @@ public class SnacksAdapter extends RecyclerView.Adapter<SnacksAdapter.ViewHolder
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
         TextView brandName, foodDescription, servingSize, calories, date, key;
-
+        ImageView dietPic;
 
         ViewHolder(View v) {
             super(v);
@@ -107,6 +181,7 @@ public class SnacksAdapter extends RecyclerView.Adapter<SnacksAdapter.ViewHolder
             calories = (TextView) v.findViewById(R.id.calories);
             date = (TextView) v.findViewById(R.id.date);
             key = (TextView) v.findViewById(R.id.dietkey);
+            dietPic = (ImageView) v.findViewById(R.id.dietPicture);
 
         }
 
@@ -136,12 +211,12 @@ public class SnacksAdapter extends RecyclerView.Adapter<SnacksAdapter.ViewHolder
                                 snacks = snapshot.getValue(Snacks.class);
                                 if (snacks != null) {
                                     brandNameEditText = (TextInputEditText) dialog.findViewById(R.id.brandNameEditText);
-                                    foodDescriptionEditText = (TextInputEditText) dialog.findViewById(R.id.foodDescriptionEditText);
+                                    foodAutoComplete = (DelayAutoCompleteTextView) dialog.findViewById(R.id.foodAutoComplete);
                                     servingSizeEditText = (TextInputEditText) dialog.findViewById(R.id.servingSizeEditText);
                                     caloriesEditText = (TextInputEditText) dialog.findViewById(R.id.caloriesEditText);
 
                                     brandNameEditText.setText(snacks.getBrandName());
-                                    foodDescriptionEditText.setText(snacks.getFoodDescription());
+                                    foodAutoComplete.setText(snacks.getFoodDescription());
                                     servingSizeEditText.setText(snacks.getServingSize());
                                     caloriesEditText.setText(snacks.getCalories());
 
@@ -152,7 +227,7 @@ public class SnacksAdapter extends RecyclerView.Adapter<SnacksAdapter.ViewHolder
                                         @Override
                                         public void onClick(View v) {
                                             String brandName = brandNameEditText.getText().toString().trim();
-                                            String foodDescription = foodDescriptionEditText.getText().toString().trim();
+                                            String foodDescription = foodAutoComplete.getText().toString().trim();
                                             String servingSize = servingSizeEditText.getText().toString().trim();
                                             String calories = caloriesEditText.getText().toString().trim();
 

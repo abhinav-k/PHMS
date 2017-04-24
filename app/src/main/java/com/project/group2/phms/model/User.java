@@ -56,4 +56,36 @@ public class User {
     public String getProfile() {
         return profile;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public void setWeight(String weight) {
+        this.weight = weight;
+    }
+
+    public void setHeight(String height) {
+        this.height = height;
+    }
+
+    public void setProfile(String profile) {
+        this.profile = profile;
+    }
 }
