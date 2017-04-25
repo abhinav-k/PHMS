@@ -14,7 +14,7 @@
         android:minHeight="?attr/actionBarSize"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:title="@string/medication"
+        app:title="@string/notes"
         app:titleTextColor="@android:color/white" />
 
     <LinearLayout

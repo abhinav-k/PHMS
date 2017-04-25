@@ -39,6 +39,7 @@ import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader;
 import com.mikepenz.materialdrawer.util.DrawerImageLoader;
 import com.project.group2.phms.R;
 import com.project.group2.phms.fragments.AppointmentsFragment;
+import com.project.group2.phms.fragments.ContactUsFragment;
 import com.project.group2.phms.fragments.DesigneeFragment;
 import com.project.group2.phms.fragments.DietFragment;
 import com.project.group2.phms.fragments.DietParentFragment;
@@ -122,6 +123,7 @@ public class PhmsActivity extends BaseActivity {
         final PrimaryDrawerItem appointments = new PrimaryDrawerItem().withName("Appointments").withIdentifier(7).withIcon(FontAwesome.Icon.faw_users);
         final PrimaryDrawerItem designee = new PrimaryDrawerItem().withName("Doctor & Designee").withIdentifier(8).withIcon(GoogleMaterial.Icon.gmd_account_box_phone);
         final PrimaryDrawerItem logout = new PrimaryDrawerItem().withName("Logout").withIdentifier(9).withIcon(FontAwesome.Icon.faw_sign_out);
+        final PrimaryDrawerItem contactUs = new PrimaryDrawerItem().withName("Contact Us").withIdentifier(10).withIcon(FontAwesome.Icon.faw_mail_forward);
 
 
         DrawerImageLoader.init(new AbstractDrawerImageLoader() {
@@ -171,6 +173,7 @@ public class PhmsActivity extends BaseActivity {
                 .addDrawerItems(appointments)
                 .addDrawerItems(designee)
                 .addDrawerItems(new DividerDrawerItem())
+                .addDrawerItems(contactUs)
                 .addDrawerItems(logout)
                 .buildForFragment();
 
@@ -265,9 +268,12 @@ public class PhmsActivity extends BaseActivity {
                         fragment = new DesigneeFragment();
                         fragmentStack.add(designee);
                         break;
+                    case 10:
+                        fragment = new ContactUsFragment();
+                        fragmentStack.add(contactUs);
+                        break;
                     default:
                         fragment = new HomeFragment();
-
                         break;
                 }
                 if (drawItemId == 9) {

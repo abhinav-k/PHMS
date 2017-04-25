@@ -4,13 +4,12 @@
     android:id="@+id/cv"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    card_view:cardBackgroundColor="@color/darkGray"
-    card_view:cardCornerRadius="0dp"
-    card_view:cardElevation="0dp"
+    card_view:cardCornerRadius="2dp"
+    card_view:cardUseCompatPadding="true"
+    card_view:cardElevation="4dp"
     card_view:contentPadding="6dp">
 
     <LinearLayout
-        android:theme="@style/textStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">

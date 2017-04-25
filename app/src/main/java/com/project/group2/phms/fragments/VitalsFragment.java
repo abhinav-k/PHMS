@@ -73,7 +73,7 @@ public class VitalsFragment extends Fragment  {
         recyclerView.setNestedScrollingEnabled(false);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.addItemDecoration(new SimpleDividerItemDecoration(getContext()));
+//        recyclerView.addItemDecoration(new SimpleDividerItemDecoration(getContext()));
         final RecyclerView.Adapter mAdapter = new VitalsAdapter(getContext(),vitalsList);
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

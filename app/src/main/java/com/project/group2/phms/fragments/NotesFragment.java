@@ -65,7 +65,7 @@ public class NotesFragment extends Fragment {
         recyclerView.setNestedScrollingEnabled(false);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.addItemDecoration(new SimpleDividerItemDecoration(getContext()));
+//        recyclerView.addItemDecoration(new SimpleDividerItemDecoration(getContext()));
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

@@ -4,10 +4,10 @@
     android:id="@+id/cvMed"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    card_view:cardBackgroundColor="@color/darkGray"
+    card_view:cardCornerRadius="2dp"
+    card_view:cardUseCompatPadding="true"
     card_view:cardElevation="4dp"
-    card_view:cardCornerRadius="0dp"
-    card_view:contentPadding="10dp">
+    card_view:contentPadding="6dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,7 +20,6 @@
             android:layout_height="wrap_content"
             android:gravity="start"
             android:text=""
-            android:textColor="@color/white"
             android:visibility="gone" />
 
         <TextView
@@ -29,7 +28,6 @@
             android:layout_height="wrap_content"
             android:gravity="end"
             android:text="@string/date"
-            android:textColor="@color/white"
             android:textStyle="bold" />
 
         <LinearLayout
@@ -42,7 +40,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.4"
                 android:text="@string/medicationName"
-                android:textColor="@color/white"
                 android:textStyle="bold" />
 
             <TextView
@@ -50,9 +47,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.4"
-                android:text="@string/medicationName"
-                android:textColor="@color/white" />
-
+                android:text="@string/medicationName"/>
         </LinearLayout>
 
         <LinearLayout
@@ -66,7 +61,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.4"
                 android:text="@string/medDosage"
-                android:textColor="@color/white"
                 android:textStyle="bold" />
 
             <TextView
@@ -74,8 +68,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.4"
-                android:text="@string/medDosage"
-                android:textColor="@color/white" />
+                android:text="@string/medDosage" />
 
         </LinearLayout>
 
@@ -90,7 +83,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.4"
                 android:text="@string/totalQuantity"
-                android:textColor="@color/white"
                 android:textStyle="bold" />
 
             <TextView
@@ -98,8 +90,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.4"
-                android:text="@string/totalQuantity"
-                android:textColor="@color/white" />
+                android:text="@string/totalQuantity" />
 
         </LinearLayout>
 
@@ -114,7 +105,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.4"
                 android:text="@string/initialTime"
-                android:textColor="@color/white"
                 android:textStyle="bold" />
 
             <TextView
@@ -122,8 +112,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.4"
-                android:text="@string/initialTime"
-                android:textColor="@color/white" />
+                android:text="@string/initialTime" />
 
         </LinearLayout>
 
@@ -138,7 +127,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.4"
                 android:text="@string/startdate"
-                android:textColor="@color/white"
                 android:textStyle="bold" />
 
             <TextView
@@ -146,8 +134,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.4"
-                android:text="@string/startdate"
-                android:textColor="@color/white" />
+                android:text="@string/startdate" />
 
         </LinearLayout>
 
@@ -162,7 +149,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.4"
                 android:text="@string/enddate"
-                android:textColor="@color/white"
                 android:textStyle="bold" />
 
             <TextView
@@ -170,8 +156,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.4"
-                android:text="@string/enddate"
-                android:textColor="@color/white" />
+                android:text="@string/enddate" />
 
         </LinearLayout>
 
@@ -186,7 +171,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.4"
                 android:text="@string/frequency"
-                android:textColor="@color/white"
                 android:textStyle="bold" />
 
             <TextView
@@ -194,8 +178,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.4"
-                android:text="@string/frequency"
-                android:textColor="@color/white" />
+                android:text="@string/frequency" />
 
         </LinearLayout>
 

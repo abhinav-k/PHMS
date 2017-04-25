@@ -81,7 +81,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
                 @Override
                 public boolean onMenuItemClick(MenuItem item) {
                     Intent editNotesIntent = new Intent(mContext, NotesActivity.class);
-                    editNotesIntent.putExtra("notes_key", notesKey.getText());
+                    editNotesIntent.putExtra("notes_key", notesKey.getText().toString());
                     mContext.startActivity(editNotesIntent);
                     return false;
                 }
