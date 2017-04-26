@@ -747,54 +747,64 @@ public class DietFragment extends Fragment implements View.OnClickListener {
                 .setDelay(100)
                 .build());
 
+        if (breakfastCalories > 0) {
+            arcView.addEvent(new DecoEvent.Builder(DecoDrawEffect.EffectType.EFFECT_SPIRAL_OUT)
+                    .setIndex(mSeries1Index)
+                    .setDuration(1000)
+                    .setDelay(1250)
+                    .build());
 
-        arcView.addEvent(new DecoEvent.Builder(DecoDrawEffect.EffectType.EFFECT_SPIRAL_OUT)
-                .setIndex(mSeries1Index)
-                .setDuration(1000)
-                .setDelay(1250)
-                .build());
-
-        arcView.addEvent(new DecoEvent.Builder(breakfastCalories)
-                .setIndex(mSeries1Index)
-                .setDelay(2250)
-                .build());
+            arcView.addEvent(new DecoEvent.Builder(breakfastCalories)
+                    .setIndex(mSeries1Index)
+                    .setDelay(2250)
+                    .build());
+        }
 
 
-        arcView.addEvent(new DecoEvent.Builder(DecoDrawEffect.EffectType.EFFECT_SPIRAL_OUT)
-                .setIndex(mSeries2Index)
-                .setDuration(1000)
-                .setEffectRotations(1)
-                .setDelay(3000)
-                .build());
+        if (lunchCalories > 0) {
+            arcView.addEvent(new DecoEvent.Builder(DecoDrawEffect.EffectType.EFFECT_SPIRAL_OUT)
+                    .setIndex(mSeries2Index)
+                    .setDuration(1000)
+                    .setEffectRotations(1)
+                    .setDelay(3000)
+                    .build());
 
-        arcView.addEvent(new DecoEvent.Builder(lunchCalories)
-                .setIndex(mSeries2Index)
-                .setDelay(4000)
-                .build());
+            arcView.addEvent(new DecoEvent.Builder(lunchCalories)
+                    .setIndex(mSeries2Index)
+                    .setDelay(4000)
+                    .build());
 
-        arcView.addEvent(new DecoEvent.Builder(DecoDrawEffect.EffectType.EFFECT_SPIRAL_OUT)
-                .setIndex(mSeries3Index)
-                .setDuration(1000)
-                .setEffectRotations(1)
-                .setDelay(5000)
-                .build());
+        }
 
-        arcView.addEvent(new DecoEvent.Builder(dinnerCalories)
-                .setIndex(mSeries3Index)
-                .setDelay(6000)
-                .build());
+        if (dinnerCalories > 0) {
 
-        arcView.addEvent(new DecoEvent.Builder(DecoDrawEffect.EffectType.EFFECT_SPIRAL_OUT)
-                .setIndex(mSeries4Index)
-                .setDuration(1000)
-                .setEffectRotations(1)
-                .setDelay(7500)
-                .build());
+            arcView.addEvent(new DecoEvent.Builder(DecoDrawEffect.EffectType.EFFECT_SPIRAL_OUT)
+                    .setIndex(mSeries3Index)
+                    .setDuration(1000)
+                    .setEffectRotations(1)
+                    .setDelay(5000)
+                    .build());
 
-        arcView.addEvent(new DecoEvent.Builder(snacksCalories)
-                .setIndex(mSeries4Index)
-                .setDelay(9000)
-                .build());
+            arcView.addEvent(new DecoEvent.Builder(dinnerCalories)
+                    .setIndex(mSeries3Index)
+                    .setDelay(6000)
+                    .build());
+
+        }
+
+        if (snacksCalories > 0) {
+            arcView.addEvent(new DecoEvent.Builder(DecoDrawEffect.EffectType.EFFECT_SPIRAL_OUT)
+                    .setIndex(mSeries4Index)
+                    .setDuration(1000)
+                    .setEffectRotations(1)
+                    .setDelay(7500)
+                    .build());
+
+            arcView.addEvent(new DecoEvent.Builder(snacksCalories)
+                    .setIndex(mSeries4Index)
+                    .setDelay(9000)
+                    .build());
+        }
 
         if (breakfastCalories + lunchCalories + dinnerCalories + snacksCalories > targetCalories) {
 

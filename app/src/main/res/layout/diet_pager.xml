@@ -31,7 +31,7 @@
                     android:id="@+id/dietPicture"
                     android:layout_width="250dp"
                     android:layout_height="130dp"
-                    android:background="@color/bg"
+
                     android:scaleType="centerInside"
                     android:src="@drawable/food"
                     tools:ignore="ContentDescription" />

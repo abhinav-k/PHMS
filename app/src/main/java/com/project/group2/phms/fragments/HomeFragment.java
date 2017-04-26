@@ -266,6 +266,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         searchView.setIconifiedByDefault(false);
         searchView.setPadding(0, 0, 0, 0);
         searchView.setPaddingRelative(0, 0, 0, 0);
+        searchView.setEnabled(false);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {

@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -32,6 +33,7 @@ import com.project.group2.phms.R;
 import com.project.group2.phms.activities.MedicationActivity;
 import com.project.group2.phms.activities.PhmsActivity;
 import com.project.group2.phms.model.Breakfast;
+import com.project.group2.phms.model.Food;
 import com.project.group2.phms.other.DelayAutoCompleteTextView;
 import com.project.group2.phms.preferences.Preferences;
 import com.squareup.picasso.Picasso;
@@ -222,6 +224,21 @@ class ViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContext
                                 foodAutoComplete = (DelayAutoCompleteTextView) dialog.findViewById(R.id.foodAutoComplete);
                                 servingSizeEditText = (TextInputEditText) dialog.findViewById(R.id.servingSizeEditText);
                                 caloriesEditText = (TextInputEditText) dialog.findViewById(R.id.caloriesEditText);
+
+                                foodAutoComplete.setThreshold(4);
+                                foodAutoComplete.setAdapter(new FoodAutoCompleteAdapter(mContext));
+                                foodAutoComplete.setLoadingIndicator((android.widget.ProgressBar) dialog.findViewById(R.id.pb_loading_indicator));
+                                foodAutoComplete.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                    @Override
+                                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                        Food food = (Food) parent.getItemAtPosition(position);
+                                        foodAutoComplete.setText(food.getFoodName());
+                                        brandNameEditText.setText(food.getBrandName());
+                                        servingSizeEditText.setText(String.valueOf(food.getServingSize()));
+                                        caloriesEditText.setText(String.valueOf(food.getCalories()));
+
+                                    }
+                                });
 
                                 brandNameEditText.setText(breakfast.getBrandName());
                                 foodAutoComplete.setText(breakfast.getFoodDescription());
