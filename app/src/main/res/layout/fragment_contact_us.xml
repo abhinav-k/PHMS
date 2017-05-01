@@ -13,6 +13,13 @@
         android:padding="16dp">
 
         <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Send us your feedback, suggestions or app improvements from here."
+            android:textStyle="italic"
+            android:textSize="12sp"/>
+
+        <TextView
             android:id="@+id/notesKeyTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

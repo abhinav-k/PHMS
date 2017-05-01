@@ -88,7 +88,7 @@ public class MedicationNotification extends BaseActivity implements View.OnClick
         if (intent != null) {
             medicationNameDisplay = intent.getStringExtra("medicationName");
             key = intent.getStringExtra("key");
-            Toast.makeText(this, "key" + key, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "key" + key, Toast.LENGTH_SHORT).show();
         }
 
 
